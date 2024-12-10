@@ -9,12 +9,13 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import com.example.logginapp.R
 import com.google.firebase.firestore.FirebaseFirestore
 
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var usernameInput : EditText
+    private lateinit var usernameInput: EditText
     private lateinit var passwordInput: EditText
     private lateinit var emailInput: EditText
     private lateinit var loginBtn: Button
@@ -54,15 +55,15 @@ class MainActivity : AppCompatActivity() {
                 db.collection("pet owner").document(email)
                     .set(user)
                     .addOnSuccessListener {
-                        Log.i("Sign up try","User added successfully!")
+                        Log.i("Sign up try", "User added successfully!")
                         val intent = Intent(this, SignUp::class.java)
                         startActivity(intent)
                     }
                     .addOnFailureListener { e ->
-                        Log.i("Sign up try","Error adding user: ${e.message}")
+                        Log.i("Sign up try", "Error adding user: ${e.message}")
                     }
             } else {
-                Log.i("Sign up try","Please fill in all fields.")
+                Log.i("Sign up try", "Please fill in all fields.")
             }
         }
 
@@ -81,8 +82,8 @@ class MainActivity : AppCompatActivity() {
 
         // check if the user has typed in the username or password
         //usernameInput.addTextChangedListener {checkInputs()}
-        passwordInput.addTextChangedListener {checkInputs()}
-        emailInput.addTextChangedListener {checkInputs()}
+        passwordInput.addTextChangedListener { checkInputs() }
+        emailInput.addTextChangedListener { checkInputs() }
 
         loginBtn.setOnClickListener {
             val username = usernameInput.text.toString()
@@ -101,10 +102,5 @@ class MainActivity : AppCompatActivity() {
                 finish()
             }
         }
-
-
     }
-
-
-
 }
