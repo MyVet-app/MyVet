@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "670396823815",
+    "project_id": "myvet-d5b93",
+    "storage_bucket": "myvet-d5b93.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:670396823815:android:900c305c04493a05ff6da2",
+        "android_client_info": {
+          "package_name": "com.example.logginapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdPlH1NOpRaNahhuiGj7piLwv8YZmEL54"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
