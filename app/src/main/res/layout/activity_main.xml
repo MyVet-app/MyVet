@@ -21,19 +21,19 @@
             android:layout_marginTop="40dp"
             android:src="@drawable/icon_logo" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:hint="שם משתמש"
-            android:gravity="right"
-            android:textColor="#213646"
-            android:textColorHint="#213646"
-            android:textSize="20sp"
-            android:background="@drawable/rounded_corner"
-            android:padding="18dp"
-            android:inputType="text"
-            android:id="@+id/Username_input"/>
+<!--        <EditText-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="40dp"-->
+<!--            android:hint="שם משתמש"-->
+<!--            android:gravity="right"-->
+<!--            android:textColor="#213646"-->
+<!--            android:textColorHint="#213646"-->
+<!--            android:textSize="20sp"-->
+<!--            android:background="@drawable/rounded_corner"-->
+<!--            android:padding="18dp"-->
+<!--            android:inputType="text"-->
+<!--            android:id="@+id/Username_input"/>-->
 
         <EditText
             android:layout_width="match_parent"
@@ -88,12 +88,6 @@
             android:padding="18dp"
             android:inputType="textPassword"
             android:id="@+id/Password_input"/>
-
-        <Button
-            android:id="@+id/verify_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Verify Email" />
 
         <TextView
             android:id="@+id/error_message"

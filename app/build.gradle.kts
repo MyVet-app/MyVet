@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.logginapp"
+    namespace = "com.myvet.myvet"
     compileSdk = 35
 
     defaultConfig {

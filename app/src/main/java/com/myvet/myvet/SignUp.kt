@@ -7,7 +7,6 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.example.logginapp.R
 
 class SignUp : AppCompatActivity() {
 
