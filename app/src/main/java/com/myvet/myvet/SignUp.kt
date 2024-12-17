@@ -8,11 +8,12 @@ import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 
+
 class SignUp : AppCompatActivity() {
 
     private lateinit var Back_Btn: Button
-    private lateinit var Pet_Btn: Button
-    private lateinit var Vet_Btn: Button
+    private lateinit var Pet_Btn: ImageView
+    private lateinit var Vet_Btn: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +21,7 @@ class SignUp : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
 
         Back_Btn = findViewById(R.id.back_home)
-        //Pet_Btn = findViewById(R.id.pet_button)
+        Pet_Btn = findViewById(R.id.pet_button)
         //Vet_Btn = findViewById(R.id.vet_button)
 
         Back_Btn.setOnClickListener {
@@ -30,18 +31,9 @@ class SignUp : AppCompatActivity() {
             finish()
         }
 
-        val vet_icon: ImageView = findViewById(R.id.vet_button)
-        vet_icon.setOnClickListener {
-            Log.i("Test vet", "The user will go to the vet sign up page")
-            //val intent = Intent(this, VetSignUp::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-        val pet_icon: ImageView = findViewById(R.id.pet_button)
-        pet_icon.setOnClickListener {
-            Log.i("Test vet", "The user will go to the vet sign up page")
-            //val intent = Intent(this, PetSignUp::class.java)
+        Pet_Btn.setOnClickListener {
+            Log.i("Test pet", "The user will go to pet sign up page")
+            val intent = Intent(this, Pet_signUp::class.java)
             startActivity(intent)
             finish()
         }
