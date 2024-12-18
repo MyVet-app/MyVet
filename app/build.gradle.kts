@@ -11,7 +11,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.logginapp"
+        applicationId = "com.myvet.myvet"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
