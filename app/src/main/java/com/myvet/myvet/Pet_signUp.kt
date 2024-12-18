@@ -110,7 +110,8 @@ class Pet_signUp  : AppCompatActivity() {
                             .addOnFailureListener {
                                 Log.i("Registration pet owner", "The user has not been added to the database")
                             }
-                        val intent = Intent(this, MainActivity::class.java)//change to pet page
+                        val intent = Intent(this, Pet_owner_window::class.java)//change to pet page
+                        intent.putExtra("USERNAME", pet_owner_name.text.toString())
                         startActivity(intent)
                         finish()
                     }
