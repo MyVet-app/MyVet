@@ -27,6 +27,11 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
+        val auth = FirebaseAuth.getInstance()
+        if (auth.currentUser != null) {
+            // Signed in
+        }
+
         loginBtn = findViewById(R.id.Login_button)
         signUpBtn = findViewById(R.id.sign_up_button)
         errorMessage = findViewById(R.id.error_message)
@@ -63,9 +68,15 @@ class MainActivity : AppCompatActivity() {
     private fun handleSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         if (result.resultCode == RESULT_OK) {
             // Signed in successfully
-            val user = FirebaseAuth.getInstance().currentUser
+//            val user = FirebaseAuth.getInstance().currentUser
+
+            if (result.idpResponse!!.isNewUser) {
+                val intent = Intent(this, SignUp::class.java)
+                startActivity(intent)
+                finish()
+            }
         } else {
-            // Sign-in failed
+            errorMessage.text = "Sign in failed"
         }
     }
 }
