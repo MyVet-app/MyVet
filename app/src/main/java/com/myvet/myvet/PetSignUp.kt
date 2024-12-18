@@ -40,15 +40,15 @@ class PetSignUp : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_pet_signup)
 
-        pet_owner_name = findViewById(R.id.user_name_pet)
-        password = findViewById(R.id.password_pet)
-        email = findViewById(R.id.email_pet)
-        petName = findViewById(R.id.pet_name)
-        address = findViewById(R.id.home_address)
-        agePet = findViewById(R.id.age_pet)
-        Historical_medical = findViewById(R.id.historical_medical)
-        register = findViewById(R.id.sign_up_pet)
-        errorMessage = findViewById(R.id.error_message_register)
+        pet_owner_name = findViewById(R.id.username)
+        password = findViewById(R.id.password)
+        email = findViewById(R.id.email)
+        petName = findViewById(R.id.petName)
+        address = findViewById(R.id.homeAddress)
+        agePet = findViewById(R.id.petAge)
+        Historical_medical = findViewById(R.id.medicalHistory)
+        register = findViewById(R.id.submitButton)
+        errorMessage = findViewById(R.id.errorMessage)
 
         val db = FirebaseFirestore.getInstance()
 
@@ -124,7 +124,6 @@ class PetSignUp : AppCompatActivity() {
                         finish()
                     }
                 }
-
         }
     }
 }
