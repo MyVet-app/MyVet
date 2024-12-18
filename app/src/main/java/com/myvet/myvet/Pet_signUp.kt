@@ -2,6 +2,7 @@ package com.myvet.myvet
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -56,14 +57,14 @@ class Pet_signUp : AppCompatActivity() {
 
         //Function to check if the user has typed in all the information needed for the registration
         fun checkInputs() {
-            val pet_owner_name = pet_owner_name.text.toString()
+            val petOwnerName = pet_owner_name.text.toString()
             val password = password.text.toString()
             val email = email.text.toString()
             val petName = petName.text.toString()
             val address = address.text.toString()
             val agePet = agePet.text.toString()
             register.isEnabled = password.isNotEmpty() && email.isNotEmpty() &&
-                    pet_owner_name.isNotEmpty() && petName.isNotEmpty() && address.isNotEmpty() && agePet.isNotEmpty()
+                    petOwnerName.isNotEmpty() && petName.isNotEmpty() && address.isNotEmpty() && agePet.isNotEmpty()
         }
 
         pet_owner_name.addTextChangedListener { checkInputs() }
@@ -83,7 +84,7 @@ class Pet_signUp : AppCompatActivity() {
                         Log.i("Registration problem - pet owner", "The email already exists")
                         errorMessage.text = "המייל כבר קיים במערכת"
                         errorMessage.visibility = TextView.VISIBLE
-                        val handler = android.os.Handler()
+                        val handler = android.os.Handler(Looper.getMainLooper())
                         handler.postDelayed({
                             errorMessage.visibility = TextView.GONE
                         }, 5000)
