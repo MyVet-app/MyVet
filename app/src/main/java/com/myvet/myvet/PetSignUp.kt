@@ -15,13 +15,13 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 
 class PetSignUp : AppCompatActivity() {
-    private lateinit var pet_owner_name: EditText
+    private lateinit var username: EditText
     private lateinit var petName: EditText
     private lateinit var password: EditText
     private lateinit var email: EditText
     private lateinit var address: EditText
-    private lateinit var agePet: EditText
-    private lateinit var Historical_medical: EditText
+    private lateinit var petAge: EditText
+    private lateinit var medicalHistory: EditText
     private lateinit var register: Button
     private lateinit var errorMessage: TextView
 
@@ -40,13 +40,13 @@ class PetSignUp : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_pet_signup)
 
-        pet_owner_name = findViewById(R.id.username)
+        username = findViewById(R.id.username)
         password = findViewById(R.id.password)
         email = findViewById(R.id.email)
         petName = findViewById(R.id.petName)
         address = findViewById(R.id.homeAddress)
-        agePet = findViewById(R.id.petAge)
-        Historical_medical = findViewById(R.id.medicalHistory)
+        petAge = findViewById(R.id.petAge)
+        medicalHistory = findViewById(R.id.medicalHistory)
         register = findViewById(R.id.submitButton)
         errorMessage = findViewById(R.id.errorMessage)
 
@@ -57,27 +57,27 @@ class PetSignUp : AppCompatActivity() {
 
         //Function to check if the user has typed in all the information needed for the registration
         fun checkInputs() {
-            val petOwnerName = pet_owner_name.text.toString()
+            val username = username.text.toString()
             val password = password.text.toString()
             val email = email.text.toString()
             val petName = petName.text.toString()
             val address = address.text.toString()
-            val agePet = agePet.text.toString()
+            val petAge = petAge.text.toString()
             register.isEnabled = password.isNotEmpty() && email.isNotEmpty() &&
-                    petOwnerName.isNotEmpty() && petName.isNotEmpty() && address.isNotEmpty() && agePet.isNotEmpty()
+                    username.isNotEmpty() && petName.isNotEmpty() && address.isNotEmpty() && petAge.isNotEmpty()
         }
 
-        pet_owner_name.addTextChangedListener { checkInputs() }
+        username.addTextChangedListener { checkInputs() }
         password.addTextChangedListener { checkInputs() }
         email.addTextChangedListener { checkInputs() }
         petName.addTextChangedListener { checkInputs() }
         address.addTextChangedListener { checkInputs() }
-        agePet.addTextChangedListener { checkInputs() }
+        petAge.addTextChangedListener { checkInputs() }
 
         register.setOnClickListener {
-            val emailOfClient = email.text.toString()
+            val email = email.text.toString()
 
-            val documentRef = db.collection("pet owner").document(emailOfClient)
+            val documentRef = db.collection("pet owner").document(email)
             documentRef.get()
                 .addOnSuccessListener { document ->
                     if (document.exists()) {
@@ -88,25 +88,25 @@ class PetSignUp : AppCompatActivity() {
                         handler.postDelayed({
                             errorMessage.visibility = TextView.GONE
                         }, 5000)
-                        pet_owner_name.text.clear()
+                        username.text.clear()
                         password.text.clear()
-                        email.text.clear()
+                        this.email.text.clear()
                         petName.text.clear()
                         address.text.clear()
-                        agePet.text.clear()
-                        Historical_medical.text.clear()
+                        petAge.text.clear()
+                        medicalHistory.text.clear()
                     } else {
                         Log.i("Registration pet owner", "The email does not exist")
                         val user = hashMapOf(
-                            "pet owner name" to pet_owner_name.text.toString(),
+                            "pet owner name" to username.text.toString(),
                             "password" to password.text.toString(),
-                            "email" to email.text.toString(),
+                            "email" to this.email.text.toString(),
                             "pet name" to petName.text.toString(),
                             "address" to address.text.toString(),
-                            "age pet" to agePet.text.toString(),
-                            "historical medical" to Historical_medical.text.toString()
+                            "age pet" to petAge.text.toString(),
+                            "historical medical" to medicalHistory.text.toString()
                         )
-                        db.collection("pet owner").document(email.text.toString()).set(user)
+                        db.collection("pet owner").document(this.email.text.toString()).set(user)
                             .addOnSuccessListener {
                                 Log.i(
                                     "Registration pet owner",
