@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -38,7 +39,7 @@ class Pet_signUp  : AppCompatActivity() {
         agePet = findViewById(R.id.age_pet)
         Historical_medical = findViewById(R.id.historical_medical)
         register = findViewById(R.id.sign_up_pet)
-        errorMessage = findViewById(R.id.error_message)
+        errorMessage = findViewById(R.id.error_message_register)
 
         val db = FirebaseFirestore.getInstance()
 
@@ -49,60 +50,73 @@ class Pet_signUp  : AppCompatActivity() {
             finish()
         }
 
+        //Set the register button to be disabled
         register.isEnabled = false
-
-        if(pet_owner_name.text.isNotEmpty() && petName.text.isNotEmpty() && password.text.isNotEmpty() &&
-            email.text.isNotEmpty() && address.text.isNotEmpty()){
-            register.isEnabled = true
+        //Function to check if the user has typed in all the information needed for the registration
+        fun checkInputs() {
+            val pet_owner_name = pet_owner_name.text.toString()
+            val password = password.text.toString()
+            val email = email.text.toString()
+            val petName = petName.text.toString()
+            val address = address.text.toString()
+            val agePet = agePet.text.toString()
+            register.isEnabled = password.isNotEmpty() && email.isNotEmpty() &&
+                    pet_owner_name.isNotEmpty() && petName.isNotEmpty() && address.isNotEmpty() && agePet.isNotEmpty()
         }
 
-    register.setOnClickListener {
-        if (register.isEnabled == false){Log.i("Test rigister", "Not all the information are filled")}
-        //Log.i("Test rigister", "The user want to register")
+        pet_owner_name.addTextChangedListener { checkInputs() }
+        password.addTextChangedListener { checkInputs() }
+        email.addTextChangedListener { checkInputs() }
+        petName.addTextChangedListener { checkInputs() }
+        address.addTextChangedListener { checkInputs() }
+        agePet.addTextChangedListener { checkInputs() }
 
-        // if the email exist in the database, the user will not be able to register
-        // if the email does not exist in the database, the user will be able to register
-        // all the filled information will be stored in the database
-        db.collection("pet owner").document(email.text.toString()).get().addOnSuccessListener {
-            if (it.exists()) {
-                Log.i("Registration problem - pet owner", "The email already exists")
-                errorMessage.text = "The email already exists"
-                errorMessage.visibility = TextView.VISIBLE
-                val handler = android.os.Handler()
-                handler.postDelayed({
-                    errorMessage.visibility = TextView.GONE
-                }, 5000)
-                pet_owner_name.text.clear()
-                password.text.clear()
-                email.text.clear()
-                petName.text.clear()
-                address.text.clear()
-                agePet.text.clear()
-                Historical_medical.text.clear()
-            } else {
-                Log.i("Registration pet owner", "The email does not exist")
-                val user = hashMapOf(
-                    "pet owner name" to pet_owner_name.text.toString(),
-                    "password" to password.text.toString(),
-                    "email" to email.text.toString(),
-                    "pet name" to petName.text.toString(),
-                    "address" to address.text.toString(),
-                    "age pet" to agePet.text.toString(),
-                    "historical medical" to Historical_medical.text.toString()
-                )
-                db.collection("pet owner").document(email.text.toString()).set(user)
-                    .addOnSuccessListener {
-                        Log.i("Registration pet owner", "The user has been added to the database")
+        register.setOnClickListener {
+            val emailOfClient = email.text.toString()
+
+            val documentRef = db.collection("pet owner").document(emailOfClient)
+            documentRef.get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        Log.i("Registration problem - pet owner", "The email already exists")
+                        errorMessage.text = "המייל כבר קיים במערכת"
+                        errorMessage.visibility = TextView.VISIBLE
+                        val handler = android.os.Handler()
+                        handler.postDelayed({
+                            errorMessage.visibility = TextView.GONE
+                        }, 5000)
+                        pet_owner_name.text.clear()
+                        password.text.clear()
+                        email.text.clear()
+                        petName.text.clear()
+                        address.text.clear()
+                        agePet.text.clear()
+                        Historical_medical.text.clear()
+                    } else {
+                        Log.i("Registration pet owner", "The email does not exist")
+                        val user = hashMapOf(
+                            "pet owner name" to pet_owner_name.text.toString(),
+                            "password" to password.text.toString(),
+                            "email" to email.text.toString(),
+                            "pet name" to petName.text.toString(),
+                            "address" to address.text.toString(),
+                            "age pet" to agePet.text.toString(),
+                            "historical medical" to Historical_medical.text.toString()
+                        )
+                        db.collection("pet owner").document(email.text.toString()).set(user)
+                            .addOnSuccessListener {
+                                Log.i("Registration pet owner", "The user has been added to the database")
+                            }
+                            .addOnFailureListener {
+                                Log.i("Registration pet owner", "The user has not been added to the database")
+                            }
+                        val intent = Intent(this, MainActivity::class.java)//change to pet page
+                        startActivity(intent)
+                        finish()
                     }
-                    .addOnFailureListener {
-                        Log.i("Registration pet owner", "The user has not been added to the database")
-                    }
-            }
+                }
+
         }
-        val intent = Intent(this, MainActivity::class.java)//change to pet page
-        startActivity(intent)
-        finish()
-    }
 
 
 
