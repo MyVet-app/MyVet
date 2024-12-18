@@ -1,257 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_backround"
-    tools:context=".Pet_signUp">
+    android:padding="16dp"
+    android:background="@drawable/login_backround">
 
-    <Button
-        android:id="@+id/back_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="304dp"
-        android:layout_marginTop="16dp"
-        android:text="Back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="רישום חיה"
-        android:textColor="#213646"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.09" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="* שדה חובה "
-        android:textColor="#E20B2A"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.945"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.158" />
-
-    <EditText
-        android:id="@+id/pet_name"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corner"
-        android:gravity="right"
-        android:hint="שם החיה"
-        android:padding="7dp"
-        android:textColor="#213646"
-        android:textColorHint="#213646"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.075"
-        tools:layout_editor_absoluteX="0dp" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="* שדה חובה "
-        android:textColor="#E20B2A"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.951"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.271" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="רישום חיה"
+            android:textColor="#213646"
+            android:gravity="center"
+            android:layout_marginTop="50dp"
+            android:textSize="25sp" />
 
-    <EditText
-        android:id="@+id/user_name_pet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corner"
-        android:gravity="right"
-        android:hint="שם משתמש"
-        android:padding="7dp"
-        android:textColor="#213646"
-        android:textColorHint="#213646"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pet_name"
-        app:layout_constraintVertical_bias="0.075"
-        tools:layout_editor_absoluteX="0dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="שם החיה"
+            android:textSize="18sp"
+            android:textColor="#213646" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="* שדה חובה "
-        android:textColor="#E20B2A"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.951"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/back_home"
-        app:layout_constraintVertical_bias="0.312" />
+        <EditText
+            android:id="@+id/petName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="שדה חובה"
+            android:textSize="16sp"
+            android:background="@drawable/rounded_corner"
+            android:layout_marginBottom="16dp"
+            android:padding="8dp" />
 
-    <EditText
-        android:id="@+id/password_pet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corner"
-        android:gravity="right"
-        android:hint="סיסמא"
-        android:padding="7dp"
-        android:textColor="#213646"
-        android:textColorHint="#213646"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_name_pet"
-        app:layout_constraintVertical_bias="0.071"
-        tools:layout_editor_absoluteX="0dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="שם משתמש"
+            android:textSize="18sp"
+            android:textColor="#213646" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="* שדה חובה "
-        android:textColor="#E20B2A"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.951"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/back_home"
-        app:layout_constraintVertical_bias="0.42" />
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="שדה חובה"
+            android:textSize="16sp"
+            android:background="@drawable/rounded_corner"
+            android:layout_marginBottom="16dp"
+            android:padding="8dp" />
 
-    <EditText
-        android:id="@+id/email_pet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corner"
-        android:gravity="right"
-        android:hint="מייל"
-        android:padding="7dp"
-        android:textColor="#213646"
-        android:textColorHint="#213646"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_pet"
-        app:layout_constraintVertical_bias="0.08"
-        tools:layout_editor_absoluteX="0dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="סיסמה"
+            android:textSize="18sp"
+            android:textColor="#213646" />
 
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="* שדה חובה "
-        android:textColor="#E20B2A"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.951"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/back_home"
-        app:layout_constraintVertical_bias="0.539" />
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="שדה חובה"
+            android:textSize="16sp"
+            android:background="@drawable/rounded_corner"
+            android:layout_marginBottom="16dp"
+            android:inputType="textPassword"
+            android:gravity="end|center_vertical"
+            android:padding="8dp" />
 
-    <EditText
-        android:id="@+id/age_pet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="192dp"
-        android:background="@drawable/rounded_corner"
-        android:gravity="right"
-        android:hint="גיל החיה"
-        android:padding="7dp"
-        android:textColor="#213646"
-        android:textColorHint="#213646"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_pet"
-        app:layout_constraintVertical_bias="0.353"
-        tools:layout_editor_absoluteX="0dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="כתובת מייל"
+            android:textSize="18sp"
+            android:textColor="#213646" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="* שדה חובה "
-        android:textColor="#E20B2A"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.942"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/back_home"
-        app:layout_constraintVertical_bias="0.661" />
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="שדה חובה"
+            android:textSize="16sp"
+            android:background="@drawable/rounded_corner"
+            android:layout_marginBottom="16dp"
+            android:padding="8dp" />
 
-    <EditText
-        android:id="@+id/home_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corner"
-        android:gravity="right"
-        android:hint="כתובת מגורים"
-        android:padding="7dp"
-        android:textColor="#213646"
-        android:textColorHint="#213646"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/age_pet"
-        app:layout_constraintVertical_bias="0.172"
-        tools:layout_editor_absoluteX="0dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="גיל החיה"
+            android:textSize="18sp"
+            android:textColor="#213646" />
 
-    <EditText
-        android:id="@+id/historical_medical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corner"
-        android:gravity="right"
-        android:hint="הסטוריה רפואית"
-        android:padding="7dp"
-        android:textColor="#213646"
-        android:textColorHint="#213646"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_address"
-        app:layout_constraintVertical_bias="0.185"
-        tools:layout_editor_absoluteX="0dp" />
+        <EditText
+            android:id="@+id/petAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="שדה חובה"
+            android:textSize="16sp"
+            android:background="@drawable/rounded_corner"
+            android:layout_marginBottom="16dp"
+            android:padding="8dp" />
 
-    <Button
-        android:id="@+id/sign_up_pet"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#F3EFE4"
-        android:padding="5dp"
-        android:text="רישום"
-        android:textColor="#213646"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/historical_medical"
-        app:layout_constraintVertical_bias="0.384"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="כתובת מגורים"
+            android:textSize="18sp"
+            android:textColor="#213646" />
 
-    <TextView
-        android:id="@+id/error_message_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#161313"
-        android:visibility="gone"
-        android:text="לא כל השדות מלאים"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/homeAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="שדה חובה"
+            android:textSize="16sp"
+            android:background="@drawable/rounded_corner"
+            android:layout_marginBottom="16dp"
+            android:padding="8dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="היסטוריה רפואית"
+            android:textSize="18sp"
+            android:textColor="#213646" />
+
+        <EditText
+            android:id="@+id/medicalHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:background="@drawable/rounded_corner"
+            android:layout_marginBottom="16dp"
+            android:padding="8dp" />
+
+        <TextView
+            android:id="@+id/errorMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#161313"
+            android:visibility="gone"
+            android:text="לא כל השדות מלאים" />
+
+        <Button
+            android:id="@+id/submitButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:textSize="16sp"
+            android:layout_marginTop="24dp" />
+
+    </LinearLayout>
+</ScrollView>
