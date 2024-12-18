@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity() {
 //                        GoogleBuilder().build()
                     )
                 )
+                .setTheme(R.style.Theme_LogginApp)
                 .build()
             signInLauncher!!.launch(signInIntent)
         }
