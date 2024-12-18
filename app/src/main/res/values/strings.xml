@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">MyVet</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
@@ -10,4 +10,24 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_pet_sign_up">pet_signUp</string>
+    <string name="fui_sign_in_default">התחברות</string>
+    <string name="fui_email_hint">כתובת מייל</string>
+    <string name="fui_next_default">הבא</string>
+    <string name="fui_name_hint">שם מלא</string>
+    <string name="fui_new_password_hint">סיסמה חדשה</string>
+    <string name="fui_password_hint">סיסמה</string>
+    <string name="fui_missing_first_and_last_name">נא להזין שם מלא</string>
+    <string name="fui_button_text_save">שמור</string>
+    <string name="fui_welcome_back_email_header">ברוכים השבים!</string>
+    <string name="fui_welcome_back_password_prompt_body">
+        כבר התחברת בעבר עם הכתובת  <xliff:g example="jane.doe@example.com" id="email_addr" translation_description="">%1$s</xliff:g>.
+        נא להזין סיסמה.
+    </string>
+    <string name="fui_trouble_signing_in">בעיות התחברות?</string>
+    <string name="fui_password_recovery_body">נא להזין כתובת מייל אליו יישלחו הוראות לאיפוס סיסמה.</string>
+    <string name="fui_button_text_send">שליחה</string>
+    <plurals name="fui_error_weak_password">
+        <item quantity="one">סיסמה לא מספיק חזקה. יש להשתמש בלפחות תו אחד וערבוב של אותיות ומספרים.</item>
+        <item quantity="other">סיסמה לא מספיק חזקה. יש להשתמש בלפחות %1$d תוים אחד וערבוב של אותיות ומספרים.</item>
+    </plurals>
 </resources>
