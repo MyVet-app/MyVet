@@ -14,7 +14,7 @@
         android:theme="@style/Theme.LogginApp"
         tools:targetApi="31">
         <activity
-            android:name=".Pet_signUp"
+            android:name=".PetSignUp"
             android:exported="false"/>
         <activity
             android:name=".SecondPage"

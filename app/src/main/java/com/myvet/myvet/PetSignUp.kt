@@ -14,7 +14,7 @@ import androidx.core.widget.addTextChangedListener
 import com.google.firebase.firestore.FirebaseFirestore
 
 
-class Pet_signUp : AppCompatActivity() {
+class PetSignUp : AppCompatActivity() {
     private lateinit var pet_owner_name: EditText
     private lateinit var petName: EditText
     private lateinit var password: EditText
@@ -30,7 +30,7 @@ class Pet_signUp : AppCompatActivity() {
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val intent = Intent(this@Pet_signUp, SignUp::class.java)
+                val intent = Intent(this@PetSignUp, SignUp::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 startActivity(intent)
                 finish()
