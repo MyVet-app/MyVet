@@ -9,15 +9,15 @@
     android:background="@drawable/login_backround"
     tools:context=".Pet_signUp">
 
-    <Button
-        android:id="@+id/back_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="304dp"
-        android:layout_marginTop="16dp"
-        android:text="Back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <Button-->
+<!--        android:id="@+id/back_home"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="304dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:text="Back"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <TextView
         android:id="@+id/textView2"
