@@ -10,9 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 
 
 class SignUp : AppCompatActivity() {
-
     private lateinit var Pet_Btn: ImageView
-    private lateinit var Vet_Btn: ImageView
+//    private lateinit var Vet_Btn: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
