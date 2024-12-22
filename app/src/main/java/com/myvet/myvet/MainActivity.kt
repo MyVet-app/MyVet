@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
             errorMessage.visibility = TextView.GONE
             Log.i("Login", "Login successful - Username: ${user?.displayName}")
 
-            val intent = Intent(this, SecondPage::class.java)
+            val intent = Intent(this, PetOwnerWindow::class.java)
             intent.putExtra("USERNAME", user?.displayName)
             startActivity(intent)
             finish()
