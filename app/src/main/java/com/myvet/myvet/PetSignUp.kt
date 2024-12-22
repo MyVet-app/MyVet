@@ -16,17 +16,16 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class PetSignUp : AppCompatActivity() {
     private lateinit var username: EditText
-    private lateinit var petName: EditText
     private lateinit var password: EditText
     private lateinit var email: EditText
     private lateinit var address: EditText
-    private lateinit var petAge: EditText
-    private lateinit var medicalHistory: EditText
     private lateinit var register: Button
     private lateinit var errorMessage: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_pet_signup)
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -37,16 +36,10 @@ class PetSignUp : AppCompatActivity() {
             }
         })
 
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_pet_signup)
-
         username = findViewById(R.id.username)
         password = findViewById(R.id.password)
         email = findViewById(R.id.email)
-        petName = findViewById(R.id.petName)
         address = findViewById(R.id.homeAddress)
-        petAge = findViewById(R.id.petAge)
-        medicalHistory = findViewById(R.id.medicalHistory)
         register = findViewById(R.id.submitButton)
         errorMessage = findViewById(R.id.errorMessage)
 
@@ -60,19 +53,15 @@ class PetSignUp : AppCompatActivity() {
             val username = username.text.toString()
             val password = password.text.toString()
             val email = email.text.toString()
-            val petName = petName.text.toString()
             val address = address.text.toString()
-            val petAge = petAge.text.toString()
             register.isEnabled = password.isNotEmpty() && email.isNotEmpty() &&
-                    username.isNotEmpty() && petName.isNotEmpty() && address.isNotEmpty() && petAge.isNotEmpty()
+                    username.isNotEmpty() && address.isNotEmpty()
         }
 
         username.addTextChangedListener { checkInputs() }
         password.addTextChangedListener { checkInputs() }
         email.addTextChangedListener { checkInputs() }
-        petName.addTextChangedListener { checkInputs() }
         address.addTextChangedListener { checkInputs() }
-        petAge.addTextChangedListener { checkInputs() }
 
         register.setOnClickListener {
             val email = email.text.toString()
@@ -91,20 +80,14 @@ class PetSignUp : AppCompatActivity() {
                         username.text.clear()
                         password.text.clear()
                         this.email.text.clear()
-                        petName.text.clear()
                         address.text.clear()
-                        petAge.text.clear()
-                        medicalHistory.text.clear()
                     } else {
                         Log.i("Registration pet owner", "The email does not exist")
                         val user = hashMapOf(
                             "pet owner name" to username.text.toString(),
                             "password" to password.text.toString(),
                             "email" to this.email.text.toString(),
-                            "pet name" to petName.text.toString(),
                             "address" to address.text.toString(),
-                            "age pet" to petAge.text.toString(),
-                            "historical medical" to medicalHistory.text.toString()
                         )
                         db.collection("pet owner").document(this.email.text.toString()).set(user)
                             .addOnSuccessListener {
@@ -119,7 +102,10 @@ class PetSignUp : AppCompatActivity() {
                                     "The user has not been added to the database"
                                 )
                             }
-                        val intent = Intent(this, MainActivity::class.java)//change to pet page
+
+                        val intent = Intent(this, PetOwnerWindow::class.java)//change to pet page
+                        intent.putExtra("USERNAME", username.text.toString())
+                        intent.putExtra("EMAIL", email)
                         startActivity(intent)
                         finish()
                     }

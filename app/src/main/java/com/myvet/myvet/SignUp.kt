@@ -10,16 +10,17 @@ import androidx.appcompat.app.AppCompatActivity
 
 
 class SignUp : AppCompatActivity() {
-    private lateinit var Pet_Btn: ImageView
-//    private lateinit var Vet_Btn: ImageView
+
+    private lateinit var PetBtn: ImageView
+    private lateinit var VetBtn: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_sign_up)
 
-        Pet_Btn = findViewById(R.id.pet_button)
-        //Vet_Btn = findViewById(R.id.vet_button)
+        PetBtn = findViewById(R.id.pet_button)
+        VetBtn = findViewById(R.id.vet_button)
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -30,12 +31,18 @@ class SignUp : AppCompatActivity() {
             }
         })
 
-        Pet_Btn.setOnClickListener {
+        PetBtn.setOnClickListener {
             Log.i("Test pet", "The user will go to pet sign up page")
             val intent = Intent(this, PetSignUp::class.java)
             startActivity(intent)
             finish()
         }
-    }
 
+        VetBtn.setOnClickListener {
+            Log.i("Test pet", "The user will go to vet sign up page")
+            val intent = Intent(this, VeterinarianSignUp::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
 }

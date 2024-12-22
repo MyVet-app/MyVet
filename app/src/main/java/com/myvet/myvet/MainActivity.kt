@@ -2,6 +2,7 @@ package com.myvet.myvet
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -68,7 +69,15 @@ class MainActivity : AppCompatActivity() {
     private fun handleSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         if (result.resultCode == RESULT_OK) {
             // Signed in successfully
-//            val user = FirebaseAuth.getInstance().currentUser
+            val user = FirebaseAuth.getInstance().currentUser
+
+            errorMessage.visibility = TextView.GONE
+            Log.i("Login", "Login successful - Username: ${user?.displayName}")
+
+            val intent = Intent(this, SecondPage::class.java)
+            intent.putExtra("USERNAME", user?.displayName)
+            startActivity(intent)
+            finish()
 
             if (result.idpResponse!!.isNewUser) {
                 val intent = Intent(this, SignUp::class.java)
@@ -77,6 +86,12 @@ class MainActivity : AppCompatActivity() {
             }
         } else {
             errorMessage.text = "Sign in failed"
+            Log.i("Login", "Sign in failed")
+            errorMessage.visibility = TextView.VISIBLE
+            val handler = android.os.Handler()
+            handler.postDelayed({
+                errorMessage.visibility = TextView.GONE
+            }, 5000)
         }
     }
 }
