@@ -102,6 +102,7 @@ class PetSignUp : AppCompatActivity() {
                                     "The user has not been added to the database"
                                 )
                             }
+
                         val intent = Intent(this, PetOwnerWindow::class.java)//change to pet page
                         intent.putExtra("USERNAME", username.text.toString())
                         intent.putExtra("EMAIL", email)
