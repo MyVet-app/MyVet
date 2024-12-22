@@ -1,18 +1,32 @@
 {
   "project_info": {
     "project_number": "670396823815",
+    "firebase_url": "https://myvet-d5b93-default-rtdb.firebaseio.com",
     "project_id": "myvet-d5b93",
     "storage_bucket": "myvet-d5b93.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:670396823815:android:900c305c04493a05ff6da2",
+        "mobilesdk_app_id": "1:670396823815:android:a21b93a287f93558ff6da2",
         "android_client_info": {
           "package_name": "com.myvet.myvet"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "670396823815-pgnc1iksb2f6v3e0oubuu2r2l9jaa9jq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.myvet.myvet",
+            "certificate_hash": "993c6d1d5ccd2cecfbb09e35c905ce2278b9b3bd"
+          }
+        },
+        {
+          "client_id": "670396823815-c7hh49m88nr3np23a02ri2q0utreebhg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBdPlH1NOpRaNahhuiGj7piLwv8YZmEL54"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "670396823815-c7hh49m88nr3np23a02ri2q0utreebhg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="רישום בעלים"
+            android:text="פרטי חיה"
             android:textColor="#213646"
             android:gravity="center"
             android:layout_marginTop="50dp"
@@ -25,12 +25,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="שם משתמש"
+            android:text="שם"
             android:textSize="18sp"
             android:textColor="#213646" />
 
         <EditText
-            android:id="@+id/username"
+            android:id="@+id/PetName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="שדה חובה"
@@ -42,31 +42,31 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="סיסמה"
+            android:text="גיל"
             android:textSize="18sp"
             android:textColor="#213646" />
 
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/PetAge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="שדה חובה"
             android:textSize="16sp"
             android:background="@drawable/rounded_corner"
             android:layout_marginBottom="16dp"
-            android:inputType="textPassword"
-            android:gravity="end|center_vertical"
+            android:inputType="number"
+            android:gravity="right"
             android:padding="8dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="כתובת מייל"
+            android:text="זן"
             android:textSize="18sp"
             android:textColor="#213646" />
 
         <EditText
-            android:id="@+id/email"
+            android:id="@+id/typeOfPet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="שדה חובה"
@@ -78,12 +78,44 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="כתובת מגורים"
+            android:text="משקל"
             android:textSize="18sp"
             android:textColor="#213646" />
 
         <EditText
-            android:id="@+id/homeAddress"
+            android:id="@+id/weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:background="@drawable/rounded_corner"
+            android:layout_marginBottom="16dp"
+            android:padding="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="מין"
+            android:textSize="18sp"
+            android:textColor="#213646" />
+
+        <EditText
+            android:id="@+id/gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:background="@drawable/rounded_corner"
+            android:layout_marginBottom="16dp"
+            android:padding="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="הסטוריה רפואית"
+            android:textSize="18sp"
+            android:textColor="#213646" />
+
+        <EditText
+            android:id="@+id/medicalHistory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="שדה חובה"
@@ -101,10 +133,10 @@
             android:text="לא כל השדות מלאים" />
 
         <Button
-            android:id="@+id/submitButton"
+            android:id="@+id/update"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="הרשמה"
+            android:text="עדכון פרטים"
             android:textSize="16sp"
             android:layout_marginTop="24dp" />
 
