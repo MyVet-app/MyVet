@@ -5,12 +5,11 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 
 class SecondPage : AppCompatActivity() {
-
-    private lateinit var BackBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,13 +20,13 @@ class SecondPage : AppCompatActivity() {
         val textView: TextView = findViewById(R.id.textView)
         textView.text = "Welcome $username"
 
-        BackBtn = findViewById(R.id.BackBtn)
-
-        BackBtn.setOnClickListener {
-            Log.i("Test back", "The user will go back to home page")
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val intent = Intent(this@SecondPage, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                startActivity(intent)
+                finish()
+            }
+        })
     }
 }
