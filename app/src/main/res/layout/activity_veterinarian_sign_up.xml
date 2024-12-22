@@ -25,67 +25,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="שם וטרינר"
-            android:textSize="18sp"
-            android:textColor="#213646" />
-
-        <EditText
-            android:id="@+id/vetName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="שדה חובה"
-            android:textSize="16sp"
-            android:background="@drawable/rounded_corner"
-            android:layout_marginBottom="16dp"
-            android:padding="8dp"
-            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZףךץןאבגדהוזחטיכלמנסעפצקרשת "/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="סיסמא"
-            android:textSize="18sp"
-            android:textColor="#213646" />
-
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="שדה חובה"
-            android:textSize="16sp"
-            android:inputType="textPassword"
-            android:gravity="right"
-            android:background="@drawable/rounded_corner"
-            android:layout_marginBottom="16dp"
-            android:padding="8dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="כתובת מייל"
-            android:textSize="18sp"
-            android:textColor="#213646" />
-
-        <EditText
-            android:id="@+id/emailVet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="שדה חובה"
-            android:textSize="16sp"
-            android:background="@drawable/rounded_corner"
-            android:layout_marginBottom="16dp"
-            android:gravity="right"
-            android:padding="8dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:text="שם מרפאה"
             android:textSize="18sp"
             android:textColor="#213646" />
 
         <EditText
-            android:id="@+id/ClinicName"
+            android:id="@+id/clinicName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="שדה חובה"
@@ -102,7 +47,7 @@
             android:textColor="#213646" />
 
         <EditText
-            android:id="@+id/ClinicLocation"
+            android:id="@+id/clinicLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="שדה חובה"
@@ -119,7 +64,7 @@
             android:textColor="#213646" />
 
         <EditText
-            android:id="@+id/YearsOfExperience"
+            android:id="@+id/yearsOfExperience"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="שדה חובה"
@@ -137,7 +82,7 @@
             android:textColor="#213646" />
 
         <EditText
-            android:id="@+id/typeExperience"
+            android:id="@+id/expertise"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
@@ -153,7 +98,7 @@
             android:textColor="#213646" />
 
         <EditText
-            android:id="@+id/AboutMe"
+            android:id="@+id/aboutMe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"

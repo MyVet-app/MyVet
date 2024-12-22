@@ -74,13 +74,13 @@ class MainActivity : AppCompatActivity() {
             errorMessage.visibility = TextView.GONE
             Log.i("Login", "Login successful - Username: ${user?.displayName}")
 
-            val intent = Intent(this, PetOwnerWindow::class.java)
-            intent.putExtra("USERNAME", user?.displayName)
-            startActivity(intent)
-            finish()
-
             if (result.idpResponse!!.isNewUser) {
                 val intent = Intent(this, SignUp::class.java)
+                startActivity(intent)
+                finish()
+            } else {
+                val intent = Intent(this, PetOwnerWindow::class.java)
+                intent.putExtra("USERNAME", user?.displayName)
                 startActivity(intent)
                 finish()
             }
