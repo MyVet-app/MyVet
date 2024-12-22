@@ -30,6 +30,4 @@ class PetOwnerWindow : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
-
 }

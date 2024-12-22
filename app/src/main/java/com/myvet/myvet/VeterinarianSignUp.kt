@@ -137,6 +137,6 @@ class VeterinarianSignUp : AppCompatActivity() {
                         finish()
                     }
                 }
-
-        }}
+        }
+    }
 }
