@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class VetWindow : AppCompatActivity() {
 
@@ -12,8 +13,9 @@ class VetWindow : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_vet_window)
 
-        val username = intent.getStringExtra("USERNAME")
+        val user = FirebaseAuth.getInstance().currentUser
+
         val textView: TextView = findViewById(R.id.HelloText)
-        textView.text = "Welcome $username"
+        textView.text = "Welcome ${user?.displayName}"
     }
 }

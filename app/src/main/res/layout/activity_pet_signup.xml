@@ -25,59 +25,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="שם משתמש"
-            android:textSize="18sp"
-            android:textColor="#213646" />
-
-        <EditText
-            android:id="@+id/username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="שדה חובה"
-            android:textSize="16sp"
-            android:background="@drawable/rounded_corner"
-            android:layout_marginBottom="16dp"
-            android:padding="8dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="סיסמה"
-            android:textSize="18sp"
-            android:textColor="#213646" />
-
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="שדה חובה"
-            android:textSize="16sp"
-            android:background="@drawable/rounded_corner"
-            android:layout_marginBottom="16dp"
-            android:inputType="textPassword"
-            android:gravity="end|center_vertical"
-            android:padding="8dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="כתובת מייל"
-            android:textSize="18sp"
-            android:textColor="#213646" />
-
-        <EditText
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="שדה חובה"
-            android:textSize="16sp"
-            android:background="@drawable/rounded_corner"
-            android:layout_marginBottom="16dp"
-            android:padding="8dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:text="כתובת מגורים"
             android:textSize="18sp"
             android:textColor="#213646" />
