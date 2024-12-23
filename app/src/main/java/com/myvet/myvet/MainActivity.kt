@@ -2,6 +2,8 @@ package com.myvet.myvet
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
@@ -88,10 +90,9 @@ class MainActivity : AppCompatActivity() {
             errorMessage.text = "Sign in failed"
             Log.i("Login", "Sign in failed")
             errorMessage.visibility = TextView.VISIBLE
-            val handler = android.os.Handler()
-            handler.postDelayed({
+            Handler(Looper.getMainLooper()).postDelayed({
                 errorMessage.visibility = TextView.GONE
-            }, 5000)
+            }, 3000)
         }
     }
 }
