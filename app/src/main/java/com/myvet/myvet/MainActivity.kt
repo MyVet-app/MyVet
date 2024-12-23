@@ -82,7 +82,6 @@ class MainActivity : AppCompatActivity() {
                 finish()
             } else {
                 val intent = Intent(this, PetOwnerWindow::class.java)
-                intent.putExtra("USERNAME", user?.displayName)
                 startActivity(intent)
                 finish()
             }
