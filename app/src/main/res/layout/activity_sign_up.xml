@@ -48,6 +48,7 @@
                     android:id="@+id/pet_button"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
+                    android:importantForAccessibility="no"
                     android:src="@drawable/logo_pet" />
 
                 <TextView
@@ -71,6 +72,7 @@
                     android:id="@+id/vet_button"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
+                    android:importantForAccessibility="no"
                     android:src="@drawable/logo_vet" />
 
                 <TextView
