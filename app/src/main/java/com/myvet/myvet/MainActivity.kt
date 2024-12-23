@@ -15,6 +15,7 @@ import com.firebase.ui.auth.AuthUI.IdpConfig.EmailBuilder
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Arrays
 
 
@@ -25,6 +26,33 @@ class MainActivity : AppCompatActivity() {
 
     private var signInLauncher: ActivityResultLauncher<Intent>? = null
 
+    private fun goHome(auth: FirebaseAuth) {
+        val db = FirebaseFirestore.getInstance()
+
+        val uid = auth.currentUser!!.uid
+        val userRef = db.collection("users").document(uid)
+
+        userRef.get().addOnSuccessListener { document ->
+            if (document.exists()) {
+                val type = document.getString("type")
+                Log.d("Firestore", "User found: Type = $type")
+
+                val intent = when (type) {
+                    "owner" -> Intent(this, PetOwnerWindow::class.java)
+                    "vet" -> Intent(this, VetWindow::class.java)
+                    else -> throw IllegalArgumentException("Unknown type: $type")
+                }
+
+                startActivity(intent)
+                finish()
+            } else {
+                Log.d("Firestore", "No such user with UID $uid")
+            }
+        }.addOnFailureListener { exception ->
+            Log.e("Firestore", "Error getting user document: $uid", exception)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -32,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 
         val auth = FirebaseAuth.getInstance()
         if (auth.currentUser != null) {
-            // Signed in
+            goHome(auth)
         }
 
         loginBtn = findViewById(R.id.Login_button)
@@ -71,19 +99,17 @@ class MainActivity : AppCompatActivity() {
     private fun handleSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         if (result.resultCode == RESULT_OK) {
             // Signed in successfully
-            val user = FirebaseAuth.getInstance().currentUser
+            val auth = FirebaseAuth.getInstance()
 
             errorMessage.visibility = TextView.GONE
-            Log.i("Login", "Login successful - Username: ${user?.displayName}")
+            Log.i("Login", "Login successful - Username: ${auth.currentUser?.displayName}")
 
             if (result.idpResponse!!.isNewUser) {
                 val intent = Intent(this, SignUp::class.java)
                 startActivity(intent)
                 finish()
             } else {
-                val intent = Intent(this, PetOwnerWindow::class.java)
-                startActivity(intent)
-                finish()
+                goHome(auth)
             }
         } else {
             errorMessage.text = "Sign in failed"
