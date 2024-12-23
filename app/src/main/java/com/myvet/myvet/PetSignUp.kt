@@ -53,13 +53,13 @@ class PetSignUp : AppCompatActivity() {
         address.addTextChangedListener { checkInputs() }
 
         register.setOnClickListener {
-            db.collection("users").add(
-                hashMapOf(
-                    "uid" to user?.uid,
-                    "type" to "owner",
-                    "address" to address.text.toString(),
-                )
+            val userData = hashMapOf(
+                "type" to "owner",
+                "address" to address
             )
+            db.collection("users")
+                .document(user!!.uid)  // Use the uid as the document ID
+                .set(userData)  // Set the data in the document
                 .addOnSuccessListener {
                     Log.i(
                         "Sign up pet owner",
