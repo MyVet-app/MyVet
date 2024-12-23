@@ -34,6 +34,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="שדה חובה"
+            android:inputType="textPostalAddress"
+            android:autofillHints="postalAddress"
             android:textSize="16sp"
             android:background="@drawable/rounded_corner"
             android:layout_marginBottom="16dp"
@@ -54,6 +56,5 @@
             android:text="הרשמה"
             android:textSize="16sp"
             android:layout_marginTop="24dp" />
-
     </LinearLayout>
 </ScrollView>
