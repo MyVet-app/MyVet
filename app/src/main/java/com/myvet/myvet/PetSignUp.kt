@@ -2,7 +2,6 @@ package com.myvet.myvet
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -55,7 +54,7 @@ class PetSignUp : AppCompatActivity() {
         register.setOnClickListener {
             val userData = hashMapOf(
                 "type" to "owner",
-                "address" to address
+                "address" to address.text.toString()
             )
             db.collection("users")
                 .document(user!!.uid)  // Use the uid as the document ID
