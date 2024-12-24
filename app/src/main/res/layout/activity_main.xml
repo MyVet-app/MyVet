@@ -9,6 +9,13 @@
     android:padding="16dp"
     tools:context=".MainActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MyVet"
+        android:textSize="50sp"
+        android:textColor="#161313" />
+
     <!-- Logo Image -->
     <ImageView
         android:layout_width="160dp"
@@ -35,18 +42,6 @@
         android:backgroundTint="#F3EFE4"
         android:padding="10dp"
         android:text="התחברות"
-        android:textColor="#213646"
-        android:textSize="20sp" />
-
-    <!-- Sign Up Button -->
-    <Button
-        android:id="@+id/sign_up_button"
-        android:layout_width="262dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10sp"
-        android:backgroundTint="#F3EFE4"
-        android:padding="5dp"
-        android:text="הרשמה"
         android:textColor="#213646"
         android:textSize="20sp" />
 

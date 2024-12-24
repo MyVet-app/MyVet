@@ -21,7 +21,6 @@ import java.util.Arrays
 
 class MainActivity : AppCompatActivity() {
     private lateinit var loginBtn: Button
-    private lateinit var signUpBtn: Button
     private lateinit var errorMessage: TextView
 
     private var signInLauncher: ActivityResultLauncher<Intent>? = null
@@ -64,7 +63,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         loginBtn = findViewById(R.id.Login_button)
-        signUpBtn = findViewById(R.id.sign_up_button)
         errorMessage = findViewById(R.id.error_message)
 
         signInLauncher = registerForActivityResult(
@@ -72,13 +70,6 @@ class MainActivity : AppCompatActivity() {
         ) { result: FirebaseAuthUIAuthenticationResult ->
             // Handle the FirebaseAuthUIAuthenticationResult
             handleSignInResult(result)
-        }
-
-        //when the user clicks on the sign-up button
-        signUpBtn.setOnClickListener {
-            val intent = Intent(this, SignUp::class.java)
-            startActivity(intent)
-            finish()
         }
 
         loginBtn.setOnClickListener {
