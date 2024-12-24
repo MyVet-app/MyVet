@@ -45,16 +45,4 @@
         android:textColor="#213646"
         android:textSize="20sp" />
 
-    <!-- Sign Up Button -->
-    <Button
-        android:id="@+id/sign_up_button"
-        android:layout_width="262dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10sp"
-        android:backgroundTint="#F3EFE4"
-        android:padding="5dp"
-        android:text="הרשמה"
-        android:textColor="#213646"
-        android:textSize="20sp" />
-
 </LinearLayout>
