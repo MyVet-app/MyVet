@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 
-class PetSignUp : AppCompatActivity() {
+class OwnerSignUp : AppCompatActivity() {
     private lateinit var address: EditText
     private lateinit var register: Button
     private lateinit var errorMessage: TextView
@@ -22,11 +22,11 @@ class PetSignUp : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_pet_signup)
+        setContentView(R.layout.activity_owner_signup)
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val intent = Intent(this@PetSignUp, SignUp::class.java)
+                val intent = Intent(this@OwnerSignUp, SignUp::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 startActivity(intent)
                 finish()

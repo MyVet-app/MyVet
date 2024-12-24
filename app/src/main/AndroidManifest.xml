@@ -27,7 +27,7 @@
             android:exported="false"
             android:theme="@style/Theme.LogginApp" />
         <activity
-            android:name=".PetSignUp"
+            android:name=".OwnerSignUp"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

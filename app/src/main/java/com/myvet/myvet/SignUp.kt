@@ -33,7 +33,7 @@ class SignUp : AppCompatActivity() {
 
         PetBtn.setOnClickListener {
             Log.i("Test pet", "The user will go to pet sign up page")
-            val intent = Intent(this, PetSignUp::class.java)
+            val intent = Intent(this, OwnerSignUp::class.java)
             startActivity(intent)
             finish()
         }
