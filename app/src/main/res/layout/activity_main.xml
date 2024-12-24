@@ -9,6 +9,13 @@
     android:padding="16dp"
     tools:context=".MainActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MyVet"
+        android:textSize="50sp"
+        android:textColor="#161313" />
+
     <!-- Logo Image -->
     <ImageView
         android:layout_width="160dp"
