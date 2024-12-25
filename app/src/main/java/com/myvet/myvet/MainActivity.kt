@@ -12,11 +12,12 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.AuthUI.IdpConfig.EmailBuilder
+import com.firebase.ui.auth.AuthUI.IdpConfig.FacebookBuilder
+import com.firebase.ui.auth.AuthUI.IdpConfig.GoogleBuilder
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.Arrays
 
 
 class MainActivity : AppCompatActivity() {
@@ -54,6 +55,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
@@ -75,10 +77,18 @@ class MainActivity : AppCompatActivity() {
         loginBtn.setOnClickListener {
             val signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
+                .setLogo(R.drawable.icon_logo)
+                .setTosAndPrivacyPolicyUrls(
+                    "https://www.freeprivacypolicy.com/live/67168b52-bccb-4544-b878-711f6943de60",
+                    "https://www.freeprivacypolicy.com/live/67168b52-bccb-4544-b878-711f6943de60"
+                )
                 .setAvailableProviders(
-                    Arrays.asList(
-                        EmailBuilder().build(),
-//                        GoogleBuilder().build()
+                    listOf(
+                        EmailBuilder()
+                            .setRequireName(true)
+                            .build(),
+                        GoogleBuilder().build(),
+                        FacebookBuilder().build(),
                     )
                 )
                 .setTheme(R.style.Theme_LogginApp)
