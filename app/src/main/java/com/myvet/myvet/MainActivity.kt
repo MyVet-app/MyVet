@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.AuthUI.IdpConfig.EmailBuilder
+import com.firebase.ui.auth.AuthUI.IdpConfig.GoogleBuilder
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
@@ -79,6 +80,7 @@ class MainActivity : AppCompatActivity() {
                     Arrays.asList(
                         EmailBuilder().build(),
 //                        GoogleBuilder().build()
+                        GoogleBuilder().build()
                     )
                 )
                 .setTheme(R.style.Theme_LogginApp)
