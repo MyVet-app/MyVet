@@ -1,12 +1,9 @@
 package com.myvet.myvet
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import android.widget.Button
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
@@ -21,9 +18,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var loginBtn: Button
-    private lateinit var errorMessage: TextView
-
     private var signInLauncher: ActivityResultLauncher<Intent>? = null
 
     private fun goHome(auth: FirebaseAuth) {
@@ -64,9 +58,6 @@ class MainActivity : AppCompatActivity() {
             goHome(auth)
         }
 
-        loginBtn = findViewById(R.id.Login_button)
-        errorMessage = findViewById(R.id.error_message)
-
         signInLauncher = registerForActivityResult(
             FirebaseAuthUIActivityResultContract()
         ) { result: FirebaseAuthUIAuthenticationResult ->
@@ -74,27 +65,25 @@ class MainActivity : AppCompatActivity() {
             handleSignInResult(result)
         }
 
-        loginBtn.setOnClickListener {
-            val signInIntent = AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setLogo(R.drawable.icon_logo)
-                .setTosAndPrivacyPolicyUrls(
-                    "https://www.freeprivacypolicy.com/live/67168b52-bccb-4544-b878-711f6943de60",
-                    "https://www.freeprivacypolicy.com/live/67168b52-bccb-4544-b878-711f6943de60"
+        val signInIntent = AuthUI.getInstance()
+            .createSignInIntentBuilder()
+            .setLogo(R.drawable.icon_logo)
+            .setTosAndPrivacyPolicyUrls(
+                "https://www.freeprivacypolicy.com/live/67168b52-bccb-4544-b878-711f6943de60",
+                "https://www.freeprivacypolicy.com/live/67168b52-bccb-4544-b878-711f6943de60"
+            )
+            .setAvailableProviders(
+                listOf(
+                    EmailBuilder()
+                        .setRequireName(true)
+                        .build(),
+                    GoogleBuilder().build(),
+                    FacebookBuilder().build(),
                 )
-                .setAvailableProviders(
-                    listOf(
-                        EmailBuilder()
-                            .setRequireName(true)
-                            .build(),
-                        GoogleBuilder().build(),
-                        FacebookBuilder().build(),
-                    )
-                )
-                .setTheme(R.style.Theme_LogginApp)
-                .build()
-            signInLauncher!!.launch(signInIntent)
-        }
+            )
+            .setTheme(R.style.Theme_LogginApp)
+            .build()
+        signInLauncher!!.launch(signInIntent)
     }
 
     private fun handleSignInResult(result: FirebaseAuthUIAuthenticationResult) {
@@ -102,7 +91,6 @@ class MainActivity : AppCompatActivity() {
             // Signed in successfully
             val auth = FirebaseAuth.getInstance()
 
-            errorMessage.visibility = TextView.GONE
             Log.i("Login", "Login successful - Username: ${auth.currentUser?.displayName}")
 
             if (result.idpResponse!!.isNewUser) {
@@ -113,12 +101,26 @@ class MainActivity : AppCompatActivity() {
                 goHome(auth)
             }
         } else {
-            errorMessage.text = "Sign in failed"
-            Log.i("Login", "Sign in failed")
-            errorMessage.visibility = TextView.VISIBLE
-            Handler(Looper.getMainLooper()).postDelayed({
-                errorMessage.visibility = TextView.GONE
-            }, 3000)
+            val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+
+            // set title
+            alertDialogBuilder.setTitle("Sign in failed")
+
+            // set dialog message
+            alertDialogBuilder
+                .setMessage(result.idpResponse!!.error.toString())
+                .setCancelable(false)
+                .setNegativeButton(
+                    "Ok"
+                ) { dialog, _ ->
+                    dialog.cancel()
+                }
+
+            // create alert dialog
+            val alertDialog: AlertDialog = alertDialogBuilder.create()
+
+            // show it
+            alertDialog.show()
         }
     }
 }
