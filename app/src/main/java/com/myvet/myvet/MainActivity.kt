@@ -77,6 +77,11 @@ class MainActivity : AppCompatActivity() {
         loginBtn.setOnClickListener {
             val signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
+                .setLogo(R.drawable.icon_logo)
+                .setTosAndPrivacyPolicyUrls(
+                    "https://www.freeprivacypolicy.com/live/67168b52-bccb-4544-b878-711f6943de60",
+                    "https://www.freeprivacypolicy.com/live/67168b52-bccb-4544-b878-711f6943de60"
+                )
                 .setAvailableProviders(
                     listOf(
                         EmailBuilder()
