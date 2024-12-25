@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "670396823815-a47m9gparc3ebbrnomrv1h682chbjlu5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.myvet.myvet",
+            "certificate_hash": "3b0e51e9328b245401fcbe25a70af5591a8a64cc"
+          }
+        },
+        {
           "client_id": "670396823815-pgnc1iksb2f6v3e0oubuu2r2l9jaa9jq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
