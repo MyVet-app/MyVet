@@ -1,5 +1,6 @@
 package com.myvet.myvet
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -90,12 +91,26 @@ class MainActivity : AppCompatActivity() {
                 goHome(auth)
             }
         } else {
-            errorMessage.text = "Sign in failed"
-            Log.i("Login", "Sign in failed")
-            errorMessage.visibility = TextView.VISIBLE
-            Handler(Looper.getMainLooper()).postDelayed({
-                errorMessage.visibility = TextView.GONE
-            }, 3000)
+            val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+
+            // set title
+            alertDialogBuilder.setTitle("Sign in failed")
+
+            // set dialog message
+            alertDialogBuilder
+                .setMessage(result.idpResponse!!.error.toString())
+                .setCancelable(false)
+                .setNegativeButton(
+                    "Ok"
+                ) { dialog, _ ->
+                    dialog.cancel()
+                }
+
+            // create alert dialog
+            val alertDialog: AlertDialog = alertDialogBuilder.create()
+
+            // show it
+            alertDialog.show()
         }
     }
 }
