@@ -17,7 +17,6 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.Arrays
 
 
 class MainActivity : AppCompatActivity() {
@@ -77,9 +76,10 @@ class MainActivity : AppCompatActivity() {
             val signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setAvailableProviders(
-                    Arrays.asList(
-                        EmailBuilder().build(),
-//                        GoogleBuilder().build()
+                    listOf(
+                        EmailBuilder()
+                            .setRequireName(true)
+                            .build(),
                         GoogleBuilder().build()
                     )
                 )
