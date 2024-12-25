@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.AuthUI.IdpConfig.EmailBuilder
+import com.firebase.ui.auth.AuthUI.IdpConfig.FacebookBuilder
 import com.firebase.ui.auth.AuthUI.IdpConfig.GoogleBuilder
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
@@ -54,6 +55,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
@@ -80,7 +82,8 @@ class MainActivity : AppCompatActivity() {
                         EmailBuilder()
                             .setRequireName(true)
                             .build(),
-                        GoogleBuilder().build()
+                        GoogleBuilder().build(),
+                        FacebookBuilder().build(),
                     )
                 )
                 .setTheme(R.style.Theme_LogginApp)
