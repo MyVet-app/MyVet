@@ -2,11 +2,7 @@ package com.myvet.myvet
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import android.widget.Button
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
@@ -20,9 +16,6 @@ import java.util.Arrays
 
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var loginBtn: Button
-    private lateinit var errorMessage: TextView
-
     private var signInLauncher: ActivityResultLauncher<Intent>? = null
 
     private fun goHome(auth: FirebaseAuth) {
@@ -62,9 +55,6 @@ class MainActivity : AppCompatActivity() {
             goHome(auth)
         }
 
-        loginBtn = findViewById(R.id.Login_button)
-        errorMessage = findViewById(R.id.error_message)
-
         signInLauncher = registerForActivityResult(
             FirebaseAuthUIActivityResultContract()
         ) { result: FirebaseAuthUIAuthenticationResult ->
@@ -72,19 +62,17 @@ class MainActivity : AppCompatActivity() {
             handleSignInResult(result)
         }
 
-        loginBtn.setOnClickListener {
-            val signInIntent = AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(
-                    Arrays.asList(
-                        EmailBuilder().build(),
+        val signInIntent = AuthUI.getInstance()
+            .createSignInIntentBuilder()
+            .setAvailableProviders(
+                Arrays.asList(
+                    EmailBuilder().build(),
 //                        GoogleBuilder().build()
-                    )
                 )
-                .setTheme(R.style.Theme_LogginApp)
-                .build()
-            signInLauncher!!.launch(signInIntent)
-        }
+            )
+            .setTheme(R.style.Theme_LogginApp)
+            .build()
+        signInLauncher!!.launch(signInIntent)
     }
 
     private fun handleSignInResult(result: FirebaseAuthUIAuthenticationResult) {
@@ -92,7 +80,6 @@ class MainActivity : AppCompatActivity() {
             // Signed in successfully
             val auth = FirebaseAuth.getInstance()
 
-            errorMessage.visibility = TextView.GONE
             Log.i("Login", "Login successful - Username: ${auth.currentUser?.displayName}")
 
             if (result.idpResponse!!.isNewUser) {
