@@ -14,7 +14,6 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.time.Instant
-import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId
 import java.util.Calendar
@@ -46,6 +45,9 @@ class AddAvailability : AppCompatActivity() {
             endTime?.let {
                 hour = it.hour
                 minute = it.minute
+            } ?: {
+                hour = startTime!!.hour
+                minute = startTime!!.minute
             }
         }
 
