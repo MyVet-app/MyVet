@@ -66,6 +66,7 @@ class VeterinarianSignUp : AppCompatActivity() {
         register.setOnClickListener {
             val userData = hashMapOf(
                 "type" to "vet",
+                "name" to user!!.displayName,
                 "clinicName" to clinicName.text.toString(),
                 "address" to clinicLocation.text.toString(),
                 "expertise" to expertise.text.toString(),
@@ -74,7 +75,7 @@ class VeterinarianSignUp : AppCompatActivity() {
             )
 
             db.collection("users")
-                .document(user!!.uid)
+                .document(user.uid)
                 .set(userData)
                 .addOnSuccessListener {
                     Log.i(
