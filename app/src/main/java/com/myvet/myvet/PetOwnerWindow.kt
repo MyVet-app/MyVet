@@ -18,6 +18,7 @@ class PetOwnerWindow : AppCompatActivity() {
     private lateinit var updateDetails: Button
     private lateinit var logOut: Button
     private lateinit var deleteAccount: Button
+    private lateinit var findVet: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +72,12 @@ class PetOwnerWindow : AppCompatActivity() {
                 .addOnFailureListener { e ->
                     Log.i("Delete account", e.toString())
                 }
+        }
+
+        findVet = findViewById(R.id.FindVet)
+        findVet.setOnClickListener {
+            val intent = Intent(this, FindVet::class.java)
+            startActivity(intent)
         }
     }
 }
