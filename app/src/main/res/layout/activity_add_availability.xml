@@ -34,16 +34,17 @@
                 android:layout_weight="0.5"
                 android:orientation="vertical">
 
-                <TextView
+                <Button
+                    android:id="@+id/startTimeButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Pick start time:" />
+                    android:text="Select start time" />
 
-                <TimePicker
-                    android:id="@+id/startTime"
+                <TextView
+                    android:id="@+id/startTimeText"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
+                    android:layout_height="wrap_content"
+                    android:text="Start time: " />
             </LinearLayout>
 
             <LinearLayout
@@ -52,17 +53,18 @@
                 android:layout_weight="0.5"
                 android:orientation="vertical">
 
-                <TextView
+                <Button
+                    android:id="@+id/endTimeButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Pick end time:" />
+                    android:text="End time"
+                    android:enabled="false" />
 
-                <TimePicker
-                    android:id="@+id/endTime"
+                <TextView
+                    android:id="@+id/endTimeText"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.5" />
+                    android:layout_height="wrap_content"
+                    android:text="Selected end time: " />
             </LinearLayout>
 
         </LinearLayout>
@@ -71,7 +73,8 @@
             android:id="@+id/save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save" />
+            android:text="Save"
+            android:enabled="false" />
     </LinearLayout>
 
 </ScrollView>
