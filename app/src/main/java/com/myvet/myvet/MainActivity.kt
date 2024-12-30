@@ -20,6 +20,28 @@ import com.google.firebase.firestore.FirebaseFirestore
 class MainActivity : AppCompatActivity() {
     private var signInLauncher: ActivityResultLauncher<Intent>? = null
 
+    private fun authFlow() {
+        val signInIntent = AuthUI.getInstance()
+            .createSignInIntentBuilder()
+            .setLogo(R.drawable.icon_logo)
+            .setTosAndPrivacyPolicyUrls(
+                "https://www.freeprivacypolicy.com/live/67168b52-bccb-4544-b878-711f6943de60",
+                "https://www.freeprivacypolicy.com/live/67168b52-bccb-4544-b878-711f6943de60"
+            )
+            .setAvailableProviders(
+                listOf(
+                    EmailBuilder()
+                        .setRequireName(true)
+                        .build(),
+                    GoogleBuilder().build(),
+                    FacebookBuilder().build(),
+                )
+            )
+            .setTheme(R.style.Theme_LogginApp)
+            .build()
+        signInLauncher!!.launch(signInIntent)
+    }
+
     private fun goHome(auth: FirebaseAuth) {
         val db = FirebaseFirestore.getInstance()
 
@@ -41,6 +63,9 @@ class MainActivity : AppCompatActivity() {
                 finish()
             } else {
                 Log.d("Firestore", "No such user with UID $uid")
+                val intent = Intent(this, SignUp::class.java)
+                startActivity(intent)
+                finish()
             }
         }.addOnFailureListener { exception ->
             Log.e("Firestore", "Error getting user document: $uid", exception)
@@ -53,11 +78,6 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        val auth = FirebaseAuth.getInstance()
-        if (auth.currentUser != null) {
-            goHome(auth)
-        }
-
         signInLauncher = registerForActivityResult(
             FirebaseAuthUIActivityResultContract()
         ) { result: FirebaseAuthUIAuthenticationResult ->
@@ -65,25 +85,12 @@ class MainActivity : AppCompatActivity() {
             handleSignInResult(result)
         }
 
-        val signInIntent = AuthUI.getInstance()
-            .createSignInIntentBuilder()
-            .setLogo(R.drawable.icon_logo)
-            .setTosAndPrivacyPolicyUrls(
-                "https://www.freeprivacypolicy.com/live/67168b52-bccb-4544-b878-711f6943de60",
-                "https://www.freeprivacypolicy.com/live/67168b52-bccb-4544-b878-711f6943de60"
-            )
-            .setAvailableProviders(
-                listOf(
-                    EmailBuilder()
-                        .setRequireName(true)
-                        .build(),
-                    GoogleBuilder().build(),
-                    FacebookBuilder().build(),
-                )
-            )
-            .setTheme(R.style.Theme_LogginApp)
-            .build()
-        signInLauncher!!.launch(signInIntent)
+        val auth = FirebaseAuth.getInstance()
+        if (auth.currentUser != null) {
+            goHome(auth)
+        }
+
+        authFlow();
     }
 
     private fun handleSignInResult(result: FirebaseAuthUIAuthenticationResult) {
