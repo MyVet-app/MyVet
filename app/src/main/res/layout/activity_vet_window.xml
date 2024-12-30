@@ -19,6 +19,18 @@
         android:textSize="18sp" />
 
     <Button
+        android:id="@+id/LogOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Log Out" />
+
+    <Button
+        android:id="@+id/DeleteAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete Account" />
+
+    <Button
         android:id="@+id/AddAvailability"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

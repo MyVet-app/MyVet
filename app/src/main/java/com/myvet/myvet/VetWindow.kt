@@ -10,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
@@ -18,6 +19,9 @@ import java.time.LocalTime
 import java.util.Date
 
 class VetWindow : AppCompatActivity() {
+    private lateinit var logOut: Button
+    private lateinit var deleteAccount: Button
+
     private lateinit var addAvailability: Button
     private lateinit var availabilityWindowsList: LinearLayout
 
@@ -32,6 +36,39 @@ class VetWindow : AppCompatActivity() {
         }
 
         val user = FirebaseAuth.getInstance().currentUser
+
+        logOut = findViewById(R.id.LogOut)
+        logOut.setOnClickListener {
+            AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener { // user is now signed out
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                }
+        }
+
+        deleteAccount = findViewById(R.id.DeleteAccount)
+        deleteAccount.setOnClickListener {
+            val uid = user!!.uid
+
+            AuthUI.getInstance()
+                .delete(this)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val db = FirebaseFirestore.getInstance()
+
+                        db.collection("users").document(uid).delete()
+
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
+                    } else {
+                        // Deletion failed
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Log.i("Delete account", e.toString())
+                }
+        }
 
         val textView: TextView = findViewById(R.id.HelloText)
         textView.text = "Welcome ${user?.displayName}"
