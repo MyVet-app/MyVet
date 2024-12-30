@@ -2,6 +2,7 @@ package com.myvet.myvet
 
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.CalendarView
 import android.widget.TextView
@@ -10,6 +11,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Calendar
 
 class AddAvailability : AppCompatActivity() {
@@ -103,20 +106,39 @@ class AddAvailability : AppCompatActivity() {
         }
 
         endTimeButton.setOnClickListener {
-            // Only allow selecting end time if start time is set and end time > start time
             selectTime(false)
         }
 
         save.setOnClickListener {
-            val date = calendar.date
-//            val startTime = startTimePicker
+            val db = FirebaseFirestore.getInstance()
+            val user = FirebaseAuth.getInstance().currentUser
+
+            val availabilityData = hashMapOf(
+                "date" to calendar.date,
+                "startTime" to startTime!!.time,
+                "endTime" to endTime!!.time,
+            )
+            db.collection("users")
+                .document(user!!.uid)  // Use the uid as the document ID
+                .collection("availability")
+                .add(availabilityData)
+                .addOnSuccessListener {
+                    Log.i(
+                        "Availability creation",
+                        "Availability window created successfully"
+                    )
+
+                    Toast.makeText(this, "Availability window created successfully", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+                .addOnFailureListener {
+                    Log.i(
+                        "Availability creation",
+                        "Availability window creation failed"
+                    )
+
+                    Toast.makeText(this, "Availability window creation failed", Toast.LENGTH_SHORT).show()
+                }
         }
     }
 }
-
-// Availability:
-// {
-//      "vet": vetid,
-//      "date": ...,
-//      "window": time range (start time - end time),
-// }
