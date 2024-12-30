@@ -55,7 +55,8 @@ class VeterinarianSignUp : AppCompatActivity() {
             val clinicName = clinicName.text.toString()
             val clinicLocation = clinicLocation.text.toString()
             val expertise = yearsOfExperience.text.toString()
-            register.isEnabled = clinicName.isNotEmpty() && clinicLocation.isNotEmpty() && expertise.isNotEmpty()
+            register.isEnabled =
+                clinicName.isNotEmpty() && clinicLocation.isNotEmpty() && expertise.isNotEmpty()
         }
 
         clinicName.addTextChangedListener { checkInputs() }
@@ -63,17 +64,18 @@ class VeterinarianSignUp : AppCompatActivity() {
         yearsOfExperience.addTextChangedListener { checkInputs() }
 
         register.setOnClickListener {
-            db.collection("users").add(
-                hashMapOf(
-                    "uid" to user?.uid,
-                    "type" to "vet",
-                    "clinicName" to clinicName.text.toString(),
-                    "address" to clinicLocation.text.toString(),
-                    "expertise" to expertise.text.toString(),
-                    "yearsOfExperience" to yearsOfExperience.text.toString(),
-                    "aboutMe" to aboutMe.text.toString(),
-                )
+            val userData = hashMapOf(
+                "type" to "vet",
+                "clinicName" to clinicName.text.toString(),
+                "address" to clinicLocation.text.toString(),
+                "expertise" to expertise.text.toString(),
+                "yearsOfExperience" to yearsOfExperience.text.toString(),
+                "aboutMe" to aboutMe.text.toString(),
             )
+
+            db.collection("users")
+                .document(user!!.uid)
+                .set(userData)
                 .addOnSuccessListener {
                     Log.i(
                         "Sign up vet",

@@ -88,9 +88,9 @@ class MainActivity : AppCompatActivity() {
         val auth = FirebaseAuth.getInstance()
         if (auth.currentUser != null) {
             goHome(auth)
+        } else {
+            authFlow()
         }
-
-        authFlow();
     }
 
     private fun handleSignInResult(result: FirebaseAuthUIAuthenticationResult) {
