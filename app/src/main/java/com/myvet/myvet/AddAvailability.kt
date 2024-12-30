@@ -13,6 +13,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.ZoneId
 import java.util.Calendar
 
 class AddAvailability : AppCompatActivity() {
@@ -24,14 +28,26 @@ class AddAvailability : AppCompatActivity() {
     private lateinit var endTimeText: TextView
     private lateinit var save: Button
 
-    private var startTime: Calendar? = null
-    private var endTime: Calendar? = null
+    private var startTime: LocalTime? = null
+    private var endTime: LocalTime? = null
 
     private fun selectTime(isStartTime: Boolean) {
         // Get current time
         val calendar = Calendar.getInstance()
-        val hour = calendar.get(Calendar.HOUR_OF_DAY)
-        val minute = calendar.get(Calendar.MINUTE)
+        var hour = calendar.get(Calendar.HOUR_OF_DAY)
+        var minute = calendar.get(Calendar.MINUTE)
+
+        if (isStartTime) {
+            startTime?.let {
+                hour = it.hour
+                minute = it.minute
+            }
+        } else {
+            endTime?.let {
+                hour = it.hour
+                minute = it.minute
+            }
+        }
 
         // Initialize TimePickerDialog
         val timePickerDialog = TimePickerDialog(
@@ -40,12 +56,10 @@ class AddAvailability : AppCompatActivity() {
                 // Adjust minute to nearest 15 minute interval
                 val adjustedMinute = (selectedMinute / 15) * 15
 
-                val selectedCalendar = Calendar.getInstance()
-                selectedCalendar.set(Calendar.HOUR_OF_DAY, selectedHour)
-                selectedCalendar.set(Calendar.MINUTE, adjustedMinute)
+                val selectedCalendar = LocalTime.of(selectedHour, adjustedMinute)
 
                 if (isStartTime) {
-                    if (endTime != null && endTime!!.before(selectedCalendar)) {
+                    if (endTime != null && endTime!!.isBefore(selectedCalendar)) {
                         Toast.makeText(
                             this,
                             "End time must be after start time",
@@ -60,7 +74,7 @@ class AddAvailability : AppCompatActivity() {
                     }
                 } else {
                     startTime?.let {
-                        if (selectedCalendar.before(it)) {
+                        if (selectedCalendar.isBefore(it)) {
                             Toast.makeText(
                                 this,
                                 "End time must be after start time",
@@ -114,9 +128,9 @@ class AddAvailability : AppCompatActivity() {
             val user = FirebaseAuth.getInstance().currentUser
 
             val availabilityData = hashMapOf(
-                "date" to calendar.date,
-                "startTime" to startTime!!.time,
-                "endTime" to endTime!!.time,
+                "date" to Instant.ofEpochMilli(calendar.date).atZone(ZoneId.systemDefault()).toLocalDate().toString(),
+                "startTime" to startTime.toString(),
+                "endTime" to endTime.toString(),
             )
             db.collection("users")
                 .document(user!!.uid)  // Use the uid as the document ID
