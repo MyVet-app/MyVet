@@ -28,10 +28,3 @@ class VetWindow : AppCompatActivity() {
         }
     }
 }
-
-// Availability:
-// {
-//      "vet": vetid,
-//      "date": ...,
-//      "window": time range (start time - end time),
-// }
