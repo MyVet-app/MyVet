@@ -11,6 +11,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
@@ -51,6 +53,10 @@ class MakeAppointment : AppCompatActivity() {
     private fun displayAvailabilityWindows(date: LocalDate, windows: QuerySnapshot) {
         appointmentList.removeAllViews()
 
+        val db = FirebaseFirestore.getInstance()
+
+        val appointmentTimes = mutableListOf<LocalTime>()
+
         for (window in windows) {
             val startTime = LocalTime.parse(window.getString("startTime"))
             val endTime = LocalTime.parse(window.getString("endTime"))
@@ -59,40 +65,62 @@ class MakeAppointment : AppCompatActivity() {
             while (currentTime.isBefore(endTime)) {
                 val nextTime = currentTime.plusMinutes(15)
 
-                val appointmentContainer = LinearLayout(this)
-                appointmentContainer.orientation = LinearLayout.HORIZONTAL
-
-                val appointmentText = TextView(this)
-                appointmentText.text = "$currentTime - $nextTime"
-
-                val appointmentTime = currentTime
-
-                val selectButton = Button(this)
-                selectButton.text = "Select"
-                selectButton.setOnClickListener {
-                    makeAppointment(date, appointmentTime)
-                    finish()
-                }
-
-                appointmentText.layoutParams = LinearLayout.LayoutParams(
-                    0,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    0.7f
-                ) // 70% width
-                selectButton.layoutParams = LinearLayout.LayoutParams(
-                    0,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    0.3f
-                ) // 30% width
-
-                appointmentContainer.addView(appointmentText)
-                appointmentContainer.addView(selectButton)
+                appointmentTimes.add(currentTime)
 
                 currentTime = nextTime
-
-                appointmentList.addView(appointmentContainer)
             }
         }
+
+        val existingAppointmentTasks = mutableListOf<Task<QuerySnapshot>>()
+        for (appointmentTime in appointmentTimes) {
+            existingAppointmentTasks.add(db.collection("appointments")
+                    .whereEqualTo("date", date.toString())
+                    .whereEqualTo("time", appointmentTime.toString())
+                    .get())
+        }
+
+        Tasks.whenAllSuccess<QuerySnapshot>(existingAppointmentTasks)
+            .addOnCompleteListener {
+                for (task in existingAppointmentTasks) {
+                    for (existingAppointment in task.result) {
+                        appointmentTimes.remove(LocalTime.parse(existingAppointment.getString("time")))
+                    }
+                }
+
+                for (appointmentTime in appointmentTimes) {
+                    val appointmentContainer = LinearLayout(this)
+                        appointmentContainer.orientation = LinearLayout.HORIZONTAL
+
+                        val appointmentText = TextView(this)
+                        appointmentText.text = "$appointmentTime - ${appointmentTime.plusMinutes(15)}"
+                        appointmentText.layoutParams = LinearLayout.LayoutParams(
+                            0,
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            0.7f
+                        )
+
+                        val selectButton = Button(this)
+                        selectButton.text = "Select"
+                        selectButton.layoutParams = LinearLayout.LayoutParams(
+                            0,
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            0.3f
+                        )
+                        selectButton.setOnClickListener {
+                            makeAppointment(date, appointmentTime)
+                            finish()
+                        }
+
+                        appointmentContainer.addView(appointmentText)
+                        appointmentContainer.addView(selectButton)
+
+                        appointmentList.addView(appointmentContainer)
+                }
+            }
+            .addOnFailureListener { exception ->
+                // Handle failure (e.g., logging)
+                Log.e("Firestore", "Error fetching appointments", exception)
+            }
     }
 
     private fun queryAvailabilityWindows(date: LocalDate) {
