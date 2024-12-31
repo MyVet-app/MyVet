@@ -1,6 +1,5 @@
 package com.myvet.myvet
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CalendarView
@@ -18,6 +17,7 @@ import java.time.LocalTime
 
 class MakeAppointment : AppCompatActivity() {
     private lateinit var vetId: String
+    private lateinit var vetTitle: TextView
     private lateinit var calendarView: CalendarView
     private lateinit var appointmentList: LinearLayout
 
@@ -85,6 +85,16 @@ class MakeAppointment : AppCompatActivity() {
         }
 
         vetId = intent.getStringExtra("vetId")!!
+
+        val db = FirebaseFirestore.getInstance()
+        db
+            .collection("users")
+            .document(vetId)
+            .get()
+            .addOnSuccessListener { document ->
+                vetTitle = findViewById(R.id.vetTitle)
+                vetTitle.text = document.getString("name")
+            }
 
         calendarView = findViewById(R.id.calendarView)
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
