@@ -19,6 +19,9 @@
         android:theme="@style/Theme.LogginApp"
         tools:targetApi="31">
         <activity
+            android:name=".MakeAppointment"
+            android:exported="false" />
+        <activity
             android:name=".FindVet"
             android:exported="false" />
         <activity

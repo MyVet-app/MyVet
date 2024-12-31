@@ -1,5 +1,6 @@
 package com.myvet.myvet
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -22,12 +23,12 @@ class FindVet : AppCompatActivity() {
         vetsList.removeAllViews()
 
         // Build the UI elements dynamically based on the updated data
-        for (window in snapshot) {
+        for (vet in snapshot) {
             val vetContainer = LinearLayout(this)
             vetContainer.orientation = LinearLayout.HORIZONTAL
 
-            val name = window.getString("name")
-            val address = window.getString("address")
+            val name = vet.getString("name")
+            val address = vet.getString("address")
 
             val availabilityText = TextView(this)
             availabilityText.text =
@@ -35,6 +36,12 @@ class FindVet : AppCompatActivity() {
 
             val selectButton = Button(this)
             selectButton.text = "Select"
+            selectButton.setOnClickListener {
+                val i = Intent(this, MakeAppointment::class.java)
+                i.putExtra("vetId", vet.id)
+                startActivity(i)
+                finish()
+            }
 
             availabilityText.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.7f) // 70% width
             selectButton.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f) // 30% width
