@@ -12,13 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.firebase.ui.auth.AuthUI
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QueryDocumentSnapshot
-import com.google.firebase.firestore.QuerySnapshot
 import java.time.LocalTime
 
 class PetOwnerWindow : AppCompatActivity() {
@@ -39,12 +36,12 @@ class PetOwnerWindow : AppCompatActivity() {
             appointmentContainer.orientation = LinearLayout.HORIZONTAL
 
             val date = pair.first.getString("date")
-            val time = pair.first.getString("time")
+            val time = LocalTime.ofSecondOfDay(pair.first.getLong("time")!!)
             val vet = pair.second
 
             val appointmentText = TextView(this)
             appointmentText.text =
-                "Dr. $vet\n$date $time - ${LocalTime.parse(time).plusMinutes(15)}"
+                "Dr. $vet\n$date $time - ${time.plusMinutes(15)}"
 
             val deleteButton = Button(this)
             deleteButton.text = "Delete"
@@ -136,6 +133,10 @@ class PetOwnerWindow : AppCompatActivity() {
                 val appointments = mutableListOf<Pair<DocumentSnapshot, String>>() // Pair of appointment and vet name
                 val vetIds = snapshot?.documents?.map { it.getString("vet") ?: "" }?.distinct() ?: emptyList()
 
+                if (vetIds.isEmpty()) {
+                    return@addSnapshotListener
+                }
+
                 db.collection("users")
                     .whereIn(FieldPath.documentId(), vetIds)
                     .get()
@@ -150,8 +151,6 @@ class PetOwnerWindow : AppCompatActivity() {
 
                         showAppointments(appointments)
                     }
-
-//                showAppointments(snapshot!!)
             }
     }
 }

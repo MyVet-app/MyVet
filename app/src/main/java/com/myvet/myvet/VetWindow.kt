@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -16,7 +17,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import java.time.LocalDate
 import java.time.LocalTime
-import java.util.Date
 
 class VetWindow : AppCompatActivity() {
     private lateinit var logOut: Button
@@ -103,15 +103,64 @@ class VetWindow : AppCompatActivity() {
         // Clear the existing UI
         availabilityWindowsList.removeAllViews()
 
+        val db = FirebaseFirestore.getInstance()
+        val user = FirebaseAuth.getInstance().currentUser!!
+
         // Build the UI elements dynamically based on the updated data
         for (window in snapshot) {
             val date = LocalDate.parse(window.getString("date"))
-            val startTime = LocalTime.parse(window.getString("startTime"))
-            val endTime = LocalTime.parse(window.getString("endTime"))
+            val startTime = LocalTime.ofSecondOfDay(window.getLong("startTime")!!)
+            val endTime = LocalTime.ofSecondOfDay(window.getLong("endTime")!!)
+
+            val availabilityContainer = LinearLayout(this)
+            availabilityContainer.orientation = LinearLayout.HORIZONTAL
 
             val availabilityText = TextView(this)
             availabilityText.text =
-                "Date: $date\nStart Time: $startTime\nEnd Time: $endTime"
+                "Date: $date\n$startTime - $endTime"
+
+            val deleteButton = Button(this)
+            deleteButton.text = "Delete"
+            deleteButton.setOnClickListener {
+                db.collection("users")
+                    .document(user.uid)
+                    .collection("availability")
+                    .document(window.id)
+                    .delete()
+                    .addOnSuccessListener {
+
+                        db.collection("appointments")
+                            .whereEqualTo("vet", user.uid)
+                            .whereEqualTo("date", window.getString("date"))
+                            .whereGreaterThanOrEqualTo("time", window.getLong("startTime")!!)
+                            .whereLessThan("time", window.getLong("endTime")!!)
+                            .get()
+                            .addOnCompleteListener { task ->
+                                Log.i("Availability deletion", "Task status: ${task.isSuccessful} ${task.exception}")
+                            }
+                            .addOnSuccessListener { appointments ->
+                                for (appointment in appointments) {
+                                    db.collection("appointments")
+                                        .document(appointment.id)
+                                        .delete()
+                                        .addOnCompleteListener { task ->
+                                            if (!task.isSuccessful) {
+                                                Log.e("Availability deletion", "Appointment ${appointment.id} failed to delete")
+                                            } else {
+                                                Log.i("Availability deletion", "Appointment ${appointment.id} deleted successfully")
+                                            }
+                                        }
+                                }
+                            }
+
+                        Toast.makeText(
+                            this,
+                            "Availability window deleted successfully",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+            }
 
             // Optionally, set some layout parameters
             availabilityText.layoutParams = LinearLayout.LayoutParams(
@@ -119,7 +168,13 @@ class VetWindow : AppCompatActivity() {
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
 
-            availabilityWindowsList.addView(availabilityText)
+            availabilityText.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.7f) // 70% width
+            deleteButton.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f) // 30% width
+
+            availabilityContainer.addView(availabilityText)
+            availabilityContainer.addView(deleteButton)
+
+            availabilityWindowsList.addView(availabilityContainer)
         }
     }
 }

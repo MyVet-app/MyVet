@@ -34,7 +34,7 @@ class MakeAppointment : AppCompatActivity() {
             "user" to auth.currentUser!!.uid,
             "vet" to vetId,
             "date" to date.toString(),
-            "time" to time.toString(),
+            "time" to time.toSecondOfDay(),
             "creationTime" to LocalDateTime.now().toString(),
         )
 
@@ -58,8 +58,8 @@ class MakeAppointment : AppCompatActivity() {
         val appointmentTimes = mutableListOf<LocalTime>()
 
         for (window in windows) {
-            val startTime = LocalTime.parse(window.getString("startTime"))
-            val endTime = LocalTime.parse(window.getString("endTime"))
+            val startTime = LocalTime.ofSecondOfDay(window.getLong("startTime")!!)
+            val endTime = LocalTime.ofSecondOfDay(window.getLong("endTime")!!)
 
             var currentTime = startTime
             while (currentTime.isBefore(endTime)) {
@@ -73,10 +73,12 @@ class MakeAppointment : AppCompatActivity() {
 
         val existingAppointmentTasks = mutableListOf<Task<QuerySnapshot>>()
         for (appointmentTime in appointmentTimes) {
-            existingAppointmentTasks.add(db.collection("appointments")
+            existingAppointmentTasks.add(
+                db.collection("appointments")
                     .whereEqualTo("date", date.toString())
                     .whereEqualTo("time", appointmentTime.toString())
-                    .get())
+                    .get()
+            )
         }
 
         Tasks.whenAllSuccess<QuerySnapshot>(existingAppointmentTasks)

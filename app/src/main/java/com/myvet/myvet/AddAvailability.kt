@@ -131,8 +131,8 @@ class AddAvailability : AppCompatActivity() {
 
             val availabilityData = hashMapOf(
                 "date" to Instant.ofEpochMilli(calendar.date).atZone(ZoneId.systemDefault()).toLocalDate().toString(),
-                "startTime" to startTime.toString(),
-                "endTime" to endTime.toString(),
+                "startTime" to startTime!!.toSecondOfDay(),
+                "endTime" to endTime!!.toSecondOfDay(),
             )
             db.collection("users")
                 .document(user!!.uid)  // Use the uid as the document ID

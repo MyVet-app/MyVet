@@ -2,7 +2,6 @@ package com.myvet.myvet
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -12,8 +11,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
-import java.time.LocalDate
-import java.time.LocalTime
 
 class FindVet : AppCompatActivity() {
     private lateinit var vetsList: LinearLayout
@@ -30,8 +27,8 @@ class FindVet : AppCompatActivity() {
             val name = vet.getString("name")
             val address = vet.getString("address")
 
-            val availabilityText = TextView(this)
-            availabilityText.text =
+            val vetText = TextView(this)
+            vetText.text =
                 "Name: $name\nAddress: $address"
 
             val selectButton = Button(this)
@@ -43,10 +40,10 @@ class FindVet : AppCompatActivity() {
                 finish()
             }
 
-            availabilityText.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.7f) // 70% width
+            vetText.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.7f) // 70% width
             selectButton.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f) // 30% width
 
-            vetContainer.addView(availabilityText)
+            vetContainer.addView(vetText)
             vetContainer.addView(selectButton)
 
             vetsList.addView(vetContainer)
