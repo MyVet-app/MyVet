@@ -13,6 +13,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import java.time.Instant
 import java.time.LocalTime
 import java.time.ZoneId
@@ -30,7 +31,7 @@ class AddAvailability : AppCompatActivity() {
     private var startTime: LocalTime? = null
     private var endTime: LocalTime? = null
 
-    private fun selectTime(isStartTime: Boolean) {
+    private fun selectTime(isStartTime: Boolean, existingWindows: QuerySnapshot) {
         // Get current time
         val calendar = Calendar.getInstance()
         var hour = calendar.get(Calendar.HOUR_OF_DAY)
@@ -58,17 +59,59 @@ class AddAvailability : AppCompatActivity() {
                 // Adjust minute to nearest 15 minute interval
                 val adjustedMinute = (selectedMinute / 15) * 15
 
-                val selectedCalendar = LocalTime.of(selectedHour, adjustedMinute)
+                val selectedTime = LocalTime.of(selectedHour, adjustedMinute)
+
+                for (existingWindow in existingWindows) {
+                    val existingWindowStartTime =
+                        LocalTime.ofSecondOfDay(existingWindow.getLong("startTime")!!)
+                    val existingWindowEndTime =
+                        LocalTime.ofSecondOfDay(existingWindow.getLong("endTime")!!)
+
+                    // only newstart:
+                    // newstart > existingstart && newstart < existingend
+
+                    // given both newstart and newend:
+                    // full overlap existing: newstart < existingstart && newend > existingend
+                    // newstart < existingstart && newend > existingstart && newend < existingend
+
+
+                    // fully contained in existing: newstart >= existingstart && newend <= existingend
+                    // newstart > existingstart && newstart < existingend && newend > existingend
+
+                    var conflict = false
+                    if (isStartTime && selectedTime >= existingWindowStartTime && selectedTime < existingWindowEndTime) {
+                        conflict = true
+                    }
+
+                    if (startTime != null && !isStartTime) {
+                        if (startTime!! < existingWindowStartTime && selectedTime > existingWindowEndTime) {
+                            conflict = true
+                        }
+
+                        if (startTime!! < existingWindowStartTime && selectedTime > existingWindowStartTime && selectedTime < existingWindowEndTime) {
+                            conflict = true
+                        }
+                    }
+
+                    if (conflict) {
+                        Toast.makeText(
+                            this,
+                            "Selected time conflicts with an existing availability window",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return@TimePickerDialog
+                    }
+                }
 
                 if (isStartTime) {
-                    if (endTime != null && endTime!!.isBefore(selectedCalendar)) {
+                    if (endTime != null && endTime!!.isBefore(selectedTime)) {
                         Toast.makeText(
                             this,
                             "End time must be after start time",
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
-                        startTime = selectedCalendar
+                        startTime = selectedTime
                         startTimeText.text =
                             String.format("Start time: %02d:%02d", selectedHour, adjustedMinute)
 
@@ -76,7 +119,7 @@ class AddAvailability : AppCompatActivity() {
                     }
                 } else {
                     startTime?.let {
-                        if (selectedCalendar.isBefore(it)) {
+                        if (selectedTime.isBefore(it)) {
                             Toast.makeText(
                                 this,
                                 "End time must be after start time",
@@ -84,7 +127,7 @@ class AddAvailability : AppCompatActivity() {
                             )
                                 .show()
                         } else {
-                            endTime = selectedCalendar
+                            endTime = selectedTime
                             endTimeText.text =
                                 String.format("End time: %02d:%02d", selectedHour, adjustedMinute)
 
@@ -117,25 +160,33 @@ class AddAvailability : AppCompatActivity() {
         endTimeText = findViewById(R.id.endTimeText)
         save = findViewById(R.id.save)
 
-        startTimeButton.setOnClickListener {
-            selectTime(true)
-        }
+        val db = FirebaseFirestore.getInstance()
+        val user = FirebaseAuth.getInstance().currentUser!!
 
-        endTimeButton.setOnClickListener {
-            selectTime(false)
-        }
+        db
+            .collection("users")
+            .document(user.uid)
+            .collection("availability")
+            .get()
+            .addOnSuccessListener { windows ->
+                startTimeButton.setOnClickListener {
+                    selectTime(true, windows)
+                }
+
+                endTimeButton.setOnClickListener {
+                    selectTime(false, windows)
+                }
+            }
 
         save.setOnClickListener {
-            val db = FirebaseFirestore.getInstance()
-            val user = FirebaseAuth.getInstance().currentUser
-
             val availabilityData = hashMapOf(
-                "date" to Instant.ofEpochMilli(calendar.date).atZone(ZoneId.systemDefault()).toLocalDate().toString(),
+                "date" to Instant.ofEpochMilli(calendar.date).atZone(ZoneId.systemDefault())
+                    .toLocalDate().toString(),
                 "startTime" to startTime!!.toSecondOfDay(),
                 "endTime" to endTime!!.toSecondOfDay(),
             )
             db.collection("users")
-                .document(user!!.uid)  // Use the uid as the document ID
+                .document(user.uid)  // Use the uid as the document ID
                 .collection("availability")
                 .add(availabilityData)
                 .addOnSuccessListener {
@@ -144,7 +195,11 @@ class AddAvailability : AppCompatActivity() {
                         "Availability window created successfully"
                     )
 
-                    Toast.makeText(this, "Availability window created successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Availability window created successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     finish()
                 }
                 .addOnFailureListener {
@@ -153,7 +208,8 @@ class AddAvailability : AppCompatActivity() {
                         "Availability window creation failed"
                     )
 
-                    Toast.makeText(this, "Availability window creation failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Availability window creation failed", Toast.LENGTH_SHORT)
+                        .show()
                 }
         }
     }
