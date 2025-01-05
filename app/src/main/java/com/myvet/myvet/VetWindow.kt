@@ -2,6 +2,8 @@ package com.myvet.myvet
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.CalendarContract
+import android.provider.CalendarContract.Events
 import android.util.Log
 import android.widget.Button
 import android.widget.LinearLayout
@@ -13,10 +15,13 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import java.time.LocalDate
 import java.time.LocalTime
+import java.util.Calendar
 
 class VetWindow : AppCompatActivity() {
     private lateinit var logOut: Button
@@ -24,6 +29,7 @@ class VetWindow : AppCompatActivity() {
 
     private lateinit var addAvailability: Button
     private lateinit var availabilityWindowsList: LinearLayout
+    private lateinit var appointmentsList: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +86,7 @@ class VetWindow : AppCompatActivity() {
         }
 
         availabilityWindowsList = findViewById(R.id.availabilityWindowsList)
+        appointmentsList = findViewById(R.id.appointmentsList)
 
         val db = FirebaseFirestore.getInstance()
 
@@ -94,14 +101,115 @@ class VetWindow : AppCompatActivity() {
 
                 // Process data and update the view
                 snapshot?.let {
-                    updateUIWithData(it)
+                    updateAvailabilityWindows(it)
+                }
+            }
+
+        db.collection("appointments")
+            .whereEqualTo("vet", user.uid)
+            .addSnapshotListener { snapshot, exception ->
+                if (exception != null) {
+                    Log.e("MyActivity", "Error getting data", exception)
+                    return@addSnapshotListener
+                }
+
+                snapshot?.let {
+                    val appointments = mutableListOf<Pair<DocumentSnapshot, String>>() // Pair of appointment and vet name
+                    val vetIds = snapshot.documents.map { it.getString("vet") ?: "" }.distinct() ?: emptyList()
+
+                    if (vetIds.isEmpty()) {
+                        return@addSnapshotListener
+                    }
+
+                    db.collection("users")
+                        .whereIn(FieldPath.documentId(), vetIds)
+                        .get()
+                        .addOnSuccessListener { userSnapshots ->
+                            val vetNames = userSnapshots.documents.associateBy({ it.id }, { it.getString("name") ?: "Unknown" })
+
+                            snapshot.documents.forEach { appointment ->
+                                val vetId = appointment.getString("vet")
+                                val vetName = vetNames[vetId] ?: "Unknown"
+                                appointments.add(Pair(appointment, vetName))
+                            }
+
+                            updateAppointments(appointments)
+                        }
                 }
             }
     }
 
-    private fun updateUIWithData(snapshot: QuerySnapshot) {
+    private fun updateAppointments(snapshot: MutableList<Pair<DocumentSnapshot, String>>) {
+        appointmentsList.removeAllViews()
+
+        val title = TextView(this)
+        title.text = "Appointments:"
+
+        appointmentsList.addView(title)
+
+        val db = FirebaseFirestore.getInstance()
+
+        for (pair in snapshot) {
+            val appointmentContainer = LinearLayout(this)
+            appointmentContainer.orientation = LinearLayout.HORIZONTAL
+
+            val date = LocalDate.parse(pair.first.getString("date"))
+            val time = LocalTime.ofSecondOfDay(pair.first.getLong("time")!!)
+            val vet = pair.second
+
+            val appointmentText = TextView(this)
+            appointmentText.text =
+                "Dr. $vet\n$date $time - ${time.plusMinutes(15)}"
+
+            val deleteButton = Button(this)
+            deleteButton.text = "Delete"
+            deleteButton.setOnClickListener {
+                db.collection("appointments").document(pair.first.id).delete().addOnSuccessListener {
+                    Log.i("Appointment Deletion", "Appointment deleted successfully")
+                    Toast.makeText(this, "Appointment deleted successfully", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            val calendarButton = Button(this)
+            calendarButton.text = "Add to Calendar"
+            calendarButton.setOnClickListener {
+                val beginTime: Calendar = Calendar.getInstance()
+                beginTime.set(date.year, date.monthValue, date.dayOfMonth, time.hour, time.minute)
+
+                val endTime: Calendar = Calendar.getInstance()
+                endTime.set(date.year, date.monthValue, date.dayOfMonth, time.plusMinutes(15).hour, time.plusMinutes(15).minute)
+                val intent: Intent = Intent(Intent.ACTION_INSERT)
+                    .setData(Events.CONTENT_URI)
+                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.timeInMillis)
+                    .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.timeInMillis)
+                    .putExtra(Events.TITLE, "Appointment with vet Dr. $vet")
+//                    .putExtra(Events.DESCRIPTION, "Group class")
+                    .putExtra(Events.EVENT_LOCATION, "Virtual Meeting")
+                    .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
+//                    .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com")
+                startActivity(intent)
+            }
+
+            appointmentText.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f) // 70% width
+            deleteButton.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f) // 30% width
+            calendarButton.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.4f) // 30% width
+
+            appointmentContainer.addView(appointmentText)
+            appointmentContainer.addView(deleteButton)
+            appointmentContainer.addView(calendarButton)
+
+            appointmentsList.addView(appointmentContainer)
+        }
+    }
+
+    private fun updateAvailabilityWindows(snapshot: QuerySnapshot) {
         // Clear the existing UI
         availabilityWindowsList.removeAllViews()
+
+        val title = TextView(this)
+        title.text = "Availability Windows:"
+
+        availabilityWindowsList.addView(title)
 
         val db = FirebaseFirestore.getInstance()
         val user = FirebaseAuth.getInstance().currentUser!!
@@ -136,7 +244,10 @@ class VetWindow : AppCompatActivity() {
                             .whereLessThan("time", window.getLong("endTime")!!)
                             .get()
                             .addOnCompleteListener { task ->
-                                Log.i("Availability deletion", "Task status: ${task.isSuccessful} ${task.exception}")
+                                Log.i(
+                                    "Availability deletion",
+                                    "Task status: ${task.isSuccessful} ${task.exception}"
+                                )
                             }
                             .addOnSuccessListener { appointments ->
                                 for (appointment in appointments) {
@@ -145,9 +256,15 @@ class VetWindow : AppCompatActivity() {
                                         .delete()
                                         .addOnCompleteListener { task ->
                                             if (!task.isSuccessful) {
-                                                Log.e("Availability deletion", "Appointment ${appointment.id} failed to delete")
+                                                Log.e(
+                                                    "Availability deletion",
+                                                    "Appointment ${appointment.id} failed to delete"
+                                                )
                                             } else {
-                                                Log.i("Availability deletion", "Appointment ${appointment.id} deleted successfully")
+                                                Log.i(
+                                                    "Availability deletion",
+                                                    "Appointment ${appointment.id} deleted successfully"
+                                                )
                                             }
                                         }
                                 }
@@ -168,8 +285,16 @@ class VetWindow : AppCompatActivity() {
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
 
-            availabilityText.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.7f) // 70% width
-            deleteButton.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f) // 30% width
+            availabilityText.layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.7f
+            ) // 70% width
+            deleteButton.layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.3f
+            ) // 30% width
 
             availabilityContainer.addView(availabilityText)
             availabilityContainer.addView(deleteButton)
