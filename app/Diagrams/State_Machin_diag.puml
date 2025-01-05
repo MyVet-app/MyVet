@@ -1,0 +1,22 @@
+@startuml
+
+title State Machine Diagram for User Interaction
+
+[*] --> MainActivity : App Launched
+MainActivity --> PetOwnerWindow : User Logged In as Owner
+MainActivity --> VetWindow : User Logged In as Vet
+MainActivity --> OwnerSignUp : New User Chooses "Owner"
+MainActivity --> VeterinarianSignUp : New User Chooses "Vet"
+
+PetOwnerWindow --> FindVet : User Chooses "Find Vet"
+FindVet --> MakeAppointment : User Schedules Appointment
+
+VetWindow --> AddAvailability : User Adds Availability
+
+OwnerSignUp --> MainActivity : Registration Complete
+VeterinarianSignUp --> MainActivity : Registration Complete
+
+MakeAppointment --> [*] : Appointment Confirmed
+AddAvailability --> [*] : Availability Added
+
+@enduml

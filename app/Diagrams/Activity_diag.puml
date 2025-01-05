@@ -1,0 +1,32 @@
+@startuml
+
+start
+:User opens MainActivity;
+if (User is logged in?) then (yes)
+  :Redirect to PetOwnerWindow or VetWindow;
+else (no)
+  :Display Login Options;
+  if (User chooses "Owner") then (yes)
+    :Redirect to OwnerSignUp;
+  else (no)
+    :Redirect to VeterinarianSignUp;
+  endif
+endif
+
+:User interacts with specific window;
+switch (Window Type)
+case (PetOwnerWindow)
+  :Perform PetOwner actions;
+break
+case (VetWindow)
+  :Perform Vet actions;
+break
+endswitch
+
+if (Window == VetWindow) then (yes)
+  :Open AddAvailability;
+endif
+
+stop
+
+@enduml

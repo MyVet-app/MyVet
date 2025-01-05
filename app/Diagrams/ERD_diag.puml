@@ -1,0 +1,47 @@
+@startuml
+
+title ERD (Entity-Relationship Diagram) for MyVet Application
+
+entity "Users" {
+    * user_id : String
+    --
+    name : String
+    email : String
+    type : String
+    address : String
+}
+
+entity "Appointments" {
+    * appointment_id : String
+    --
+    user_id : String
+    vet_id : String
+    date : Date
+    time : Time
+    creation_time : DateTime
+}
+
+entity "Vets" {
+    * vet_id : String
+    --
+    name : String
+    clinic_name : String
+    address : String
+    years_of_experience : Integer
+    expertise : String
+}
+
+entity "Availability" {
+    * availability_id : String
+    --
+    vet_id : String
+    date : Date
+    start_time : Time
+    end_time : Time
+}
+
+Users ||--o{ Appointments : "has"
+Vets ||--o{ Appointments : "takes part in"
+Vets ||--o{ Availability : "has"
+
+@enduml
