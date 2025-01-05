@@ -2,6 +2,8 @@ package com.myvet.myvet
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.CalendarContract
+import android.provider.CalendarContract.Events
 import android.util.Log
 import android.widget.Button
 import android.widget.LinearLayout
@@ -16,7 +18,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
+import java.time.LocalDate
 import java.time.LocalTime
+import java.util.Calendar
+
 
 class PetOwnerWindow : AppCompatActivity() {
 
@@ -35,7 +40,7 @@ class PetOwnerWindow : AppCompatActivity() {
             val appointmentContainer = LinearLayout(this)
             appointmentContainer.orientation = LinearLayout.HORIZONTAL
 
-            val date = pair.first.getString("date")
+            val date = LocalDate.parse(pair.first.getString("date"))
             val time = LocalTime.ofSecondOfDay(pair.first.getLong("time")!!)
             val vet = pair.second
 
@@ -51,11 +56,33 @@ class PetOwnerWindow : AppCompatActivity() {
                 }
             }
 
-            appointmentText.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.7f) // 70% width
+            val calendarButton = Button(this)
+            calendarButton.text = "Add to Calendar"
+            calendarButton.setOnClickListener {
+                val beginTime: Calendar = Calendar.getInstance()
+                beginTime.set(date.year, date.monthValue, date.dayOfMonth, time.hour, time.minute)
+
+                val endTime: Calendar = Calendar.getInstance()
+                endTime.set(date.year, date.monthValue, date.dayOfMonth, time.plusMinutes(15).hour, time.plusMinutes(15).minute)
+                val intent: Intent = Intent(Intent.ACTION_INSERT)
+                    .setData(Events.CONTENT_URI)
+                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.timeInMillis)
+                    .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.timeInMillis)
+                    .putExtra(Events.TITLE, "Appointment with vet Dr. $vet")
+//                    .putExtra(Events.DESCRIPTION, "Group class")
+                    .putExtra(Events.EVENT_LOCATION, "Virtual Meeting")
+                    .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
+//                    .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com")
+                startActivity(intent)
+            }
+
+            appointmentText.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f) // 70% width
             deleteButton.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f) // 30% width
+            calendarButton.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.4f) // 30% width
 
             appointmentContainer.addView(appointmentText)
             appointmentContainer.addView(deleteButton)
+            appointmentContainer.addView(calendarButton)
 
             appointmentsList.addView(appointmentContainer)
         }
