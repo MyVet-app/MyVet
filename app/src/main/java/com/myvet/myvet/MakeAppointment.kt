@@ -76,16 +76,21 @@ class MakeAppointment : AppCompatActivity() {
             existingAppointmentTasks.add(
                 db.collection("appointments")
                     .whereEqualTo("date", date.toString())
-                    .whereEqualTo("time", appointmentTime.toString())
+                    .whereEqualTo("time", appointmentTime.toSecondOfDay())
                     .get()
             )
         }
 
         Tasks.whenAllSuccess<QuerySnapshot>(existingAppointmentTasks)
-            .addOnCompleteListener {
-                for (task in existingAppointmentTasks) {
-                    for (existingAppointment in task.result) {
-                        appointmentTimes.remove(LocalTime.parse(existingAppointment.getString("time")))
+            .addOnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.e("MakeAppointment", "Error checking existing appointments", task.exception)
+                    return@addOnCompleteListener
+                }
+
+                for (snapshot in task.result) {
+                    for (existingAppointment in snapshot) {
+                        appointmentTimes.remove(LocalTime.ofSecondOfDay(existingAppointment.getLong("time")!!))
                     }
                 }
 
@@ -137,7 +142,7 @@ class MakeAppointment : AppCompatActivity() {
                 displayAvailabilityWindows(date, result)
             }
             .addOnFailureListener { exception ->
-
+                Log.e("MakeAppointment", "Error fetching vet availability windows", exception)
             }
     }
 
