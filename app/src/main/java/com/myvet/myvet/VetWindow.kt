@@ -2,6 +2,8 @@ package com.myvet.myvet
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.CalendarContract
 import android.provider.CalendarContract.Events
 import android.util.Log
@@ -170,7 +172,10 @@ class VetWindow : AppCompatActivity() {
             deleteButton.setOnClickListener {
                 db.collection("appointments").document(pair.first.id).delete().addOnSuccessListener {
                     Log.i("Appointment Deletion", "Appointment deleted successfully")
-                    Toast.makeText(this, "Appointment deleted successfully", Toast.LENGTH_SHORT).show()
+                    Handler(Looper.getMainLooper()).post {
+                        Toast.makeText(this, "Appointment deleted successfully", Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 }
             }
 
