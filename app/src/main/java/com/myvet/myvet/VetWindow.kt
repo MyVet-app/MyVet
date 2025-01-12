@@ -115,22 +115,22 @@ class VetWindow : AppCompatActivity() {
 
                 snapshot?.let {
                     val appointments = mutableListOf<Pair<DocumentSnapshot, String>>() // Pair of appointment and vet name
-                    val vetIds = snapshot.documents.map { it.getString("vet") ?: "" }.distinct() ?: emptyList()
+                    val ownerIds = snapshot.documents.map { it.getString("user") ?: "" }.distinct() ?: emptyList()
 
-                    if (vetIds.isEmpty()) {
+                    if (ownerIds.isEmpty()) {
                         return@addSnapshotListener
                     }
 
                     db.collection("users")
-                        .whereIn(FieldPath.documentId(), vetIds)
+                        .whereIn(FieldPath.documentId(), ownerIds)
                         .get()
                         .addOnSuccessListener { userSnapshots ->
-                            val vetNames = userSnapshots.documents.associateBy({ it.id }, { it.getString("name") ?: "Unknown" })
+                            val ownerNames = userSnapshots.documents.associateBy({ it.id }, { it.getString("name") ?: "Unknown" })
 
                             snapshot.documents.forEach { appointment ->
-                                val vetId = appointment.getString("vet")
-                                val vetName = vetNames[vetId] ?: "Unknown"
-                                appointments.add(Pair(appointment, vetName))
+                                val ownerId = appointment.getString("user")
+                                val ownerName = ownerNames[ownerId] ?: "Unknown"
+                                appointments.add(Pair(appointment, ownerName))
                             }
 
                             updateAppointments(appointments)
@@ -155,11 +155,11 @@ class VetWindow : AppCompatActivity() {
 
             val date = LocalDate.parse(pair.first.getString("date"))
             val time = LocalTime.ofSecondOfDay(pair.first.getLong("time")!!)
-            val vet = pair.second
+            val owner = pair.second
 
             val appointmentText = TextView(this)
             appointmentText.text =
-                "Dr. $vet\n$date $time - ${time.plusMinutes(15)}"
+                "$owner\n$date $time - ${time.plusMinutes(15)}"
 
             val deleteButton = Button(this)
             deleteButton.text = "Delete"
@@ -182,7 +182,7 @@ class VetWindow : AppCompatActivity() {
                     .setData(Events.CONTENT_URI)
                     .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.timeInMillis)
                     .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.timeInMillis)
-                    .putExtra(Events.TITLE, "Appointment with vet Dr. $vet")
+                    .putExtra(Events.TITLE, "Appointment with vet Dr. $owner")
 //                    .putExtra(Events.DESCRIPTION, "Group class")
                     .putExtra(Events.EVENT_LOCATION, "Virtual Meeting")
                     .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
