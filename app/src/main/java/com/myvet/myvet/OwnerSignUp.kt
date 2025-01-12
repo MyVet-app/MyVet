@@ -54,6 +54,7 @@ class OwnerSignUp : AppCompatActivity() {
         register.setOnClickListener {
             val userData = hashMapOf(
                 "type" to "owner",
+                "name" to user!!.displayName,
                 "address" to address.text.toString()
             )
             db.collection("users")
