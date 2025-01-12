@@ -45,8 +45,6 @@ class VeterinarianSignUp : AppCompatActivity() {
     private lateinit var register: Button
     private lateinit var errorMessage: TextView
 
-    private var clinicAddressId: Long = 0
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -136,18 +134,15 @@ class VeterinarianSignUp : AppCompatActivity() {
                                 return
                             }
 
-                            for (result in results) {
-                                val placeId = result.placeId
-                                Log.d("Place ID", placeId.toString())
-
-                                clinicAddressId = placeId
-                            }
+                            val result = results[0]
 
                             val userData = hashMapOf(
                                 "type" to "vet",
                                 "name" to user!!.displayName,
                                 "clinicName" to clinicName.text.toString(),
-                                "clinicAddressId" to clinicAddressId,
+                                "clinicAddressId" to result.placeId,
+                                "clinicLat" to result.lat,
+                                "clinicLon" to result.lon,
                                 "expertise" to expertise.text.toString(),
                                 "yearsOfExperience" to yearsOfExperience.text.toString(),
                                 "aboutMe" to aboutMe.text.toString(),
