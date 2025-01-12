@@ -168,6 +168,7 @@ class PetOwnerWindow : AppCompatActivity() {
                 val vetIds = snapshot?.documents?.map { it.getString("vet") ?: "" }?.distinct() ?: emptyList()
 
                 if (vetIds.isEmpty()) {
+                    appointmentsList.removeAllViews()
                     return@addSnapshotListener
                 }
 

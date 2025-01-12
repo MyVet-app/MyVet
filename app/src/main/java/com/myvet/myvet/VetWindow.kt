@@ -51,6 +51,9 @@ class VetWindow : AppCompatActivity() {
 
         logOut = findViewById(R.id.LogOut)
         logOut.setOnClickListener {
+            availabilityWindowsListener.remove()
+            appointmentsListener.remove()
+
             AuthUI.getInstance()
                 .signOut(this)
                 .addOnCompleteListener { // user is now signed out
@@ -124,6 +127,7 @@ class VetWindow : AppCompatActivity() {
                     val ownerIds = snapshot.documents.map { it.getString("user") ?: "" }.distinct() ?: emptyList()
 
                     if (ownerIds.isEmpty()) {
+                        appointmentsList.removeAllViews()
                         return@addSnapshotListener
                     }
 
@@ -310,11 +314,5 @@ class VetWindow : AppCompatActivity() {
 
             availabilityWindowsList.addView(availabilityContainer)
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        availabilityWindowsListener.remove()
-        appointmentsListener.remove()
     }
 }
