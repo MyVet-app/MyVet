@@ -58,7 +58,7 @@ class OwnerSignUp : AppCompatActivity() {
                 "address" to address.text.toString()
             )
             db.collection("users")
-                .document(user!!.uid)  // Use the uid as the document ID
+                .document(user.uid)  // Use the uid as the document ID
                 .set(userData)  // Set the data in the document
                 .addOnSuccessListener {
                     Log.i(

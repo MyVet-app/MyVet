@@ -18,6 +18,20 @@
         android:text="Hello"
         android:textSize="18sp" />
 
+    <TextView
+        android:id="@+id/clinicNameTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/clinicAddressTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="TextView" />
+
     <Button
         android:id="@+id/LogOut"
         android:layout_width="match_parent"

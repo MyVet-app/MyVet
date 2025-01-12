@@ -107,7 +107,7 @@ class PetOwnerWindow : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
 
         val textView: TextView = findViewById(R.id.HelloText)
-        textView.text = "Welcome ${user?.displayName}"
+        textView.text = "Welcome ${user.displayName}"
 
         updateDetails = findViewById(R.id.UpdateDetails)
         updateDetails.setOnClickListener {
