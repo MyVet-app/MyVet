@@ -73,6 +73,8 @@ dependencies {
     implementation(libs.firebase.analytics)
 
     implementation (libs.firebase.firestore)
+    implementation (libs.geofire.android.common)
+
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)

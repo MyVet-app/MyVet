@@ -61,7 +61,7 @@ class VetWindow : AppCompatActivity() {
             .get()
             .addOnSuccessListener { result ->
                 clinicNameTitle.text = result.getString("clinicName")
-                clinicAddressTitle.text = result.getString("address")
+                clinicAddressTitle.text = result.getString("clinicAddress")
             }
 
         logOut = findViewById(R.id.LogOut)
@@ -79,6 +79,9 @@ class VetWindow : AppCompatActivity() {
 
         deleteAccount = findViewById(R.id.DeleteAccount)
         deleteAccount.setOnClickListener {
+            availabilityWindowsListener.remove()
+            appointmentsListener.remove()
+
             val uid = user.uid
 
             AuthUI.getInstance()

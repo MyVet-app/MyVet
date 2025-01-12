@@ -13,6 +13,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import com.firebase.geofire.GeoFireUtils
+import com.firebase.geofire.GeoLocation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.moshi.Json
@@ -140,9 +142,11 @@ class VeterinarianSignUp : AppCompatActivity() {
                                 "type" to "vet",
                                 "name" to user!!.displayName,
                                 "clinicName" to clinicName.text.toString(),
+                                "clinicAddress" to result.displayName,
                                 "clinicAddressId" to result.placeId,
                                 "clinicLat" to result.lat,
                                 "clinicLon" to result.lon,
+                                "clinicGeohash" to GeoFireUtils.getGeoHashForLocation(GeoLocation(result.lat.toDouble(), result.lon.toDouble())),
                                 "expertise" to expertise.text.toString(),
                                 "yearsOfExperience" to yearsOfExperience.text.toString(),
                                 "aboutMe" to aboutMe.text.toString(),
