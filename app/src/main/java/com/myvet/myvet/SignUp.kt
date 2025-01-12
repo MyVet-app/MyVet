@@ -12,8 +12,8 @@ import com.firebase.ui.auth.AuthUI
 
 class SignUp : AppCompatActivity() {
 
-    private lateinit var PetBtn: ImageView
-    private lateinit var VetBtn: ImageView
+    private lateinit var petBtn: ImageView
+    private lateinit var vetBtn: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,17 +41,17 @@ class SignUp : AppCompatActivity() {
             }
         })
 
-        PetBtn = findViewById(R.id.pet_button)
-        VetBtn = findViewById(R.id.vet_button)
+        petBtn = findViewById(R.id.pet_button)
+        vetBtn = findViewById(R.id.vet_button)
 
-        PetBtn.setOnClickListener {
+        petBtn.setOnClickListener {
             Log.i("Test pet", "The user will go to pet sign up page")
             val intent = Intent(this, OwnerSignUp::class.java)
             startActivity(intent)
             finish()
         }
 
-        VetBtn.setOnClickListener {
+        vetBtn.setOnClickListener {
             Log.i("Test pet", "The user will go to vet sign up page")
             val intent = Intent(this, VeterinarianSignUp::class.java)
             startActivity(intent)
