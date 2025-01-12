@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.Calendar
@@ -25,11 +26,15 @@ import java.util.Calendar
 
 class PetOwnerWindow : AppCompatActivity() {
 
+    private lateinit var appointmentsListener: ListenerRegistration
+
     private lateinit var updateDetails: Button
     private lateinit var logOut: Button
     private lateinit var deleteAccount: Button
     private lateinit var findVet: Button
     private lateinit var appointmentsList: LinearLayout
+
+
 
     private fun showAppointments(appointments: MutableList<Pair<DocumentSnapshot, String>>) {
         appointmentsList.removeAllViews()
@@ -112,6 +117,8 @@ class PetOwnerWindow : AppCompatActivity() {
 
         logOut = findViewById(R.id.LogOut)
         logOut.setOnClickListener {
+            appointmentsListener.remove()
+
             AuthUI.getInstance()
                 .signOut(this)
                 .addOnCompleteListener { // user is now signed out
@@ -148,12 +155,12 @@ class PetOwnerWindow : AppCompatActivity() {
         }
 
         appointmentsList = findViewById(R.id.appointments)
-        db
+        appointmentsListener = db
             .collection("appointments")
             .whereEqualTo("user", user.uid)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
-                    Log.e("Firestore", "Error fetching appointments", error)
+                    Log.e("PetOwnerActivity", "Error fetching appointments", error)
                     return@addSnapshotListener
                 }
 

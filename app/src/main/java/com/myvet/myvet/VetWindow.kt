@@ -18,12 +18,16 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.QuerySnapshot
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.Calendar
 
 class VetWindow : AppCompatActivity() {
+    private lateinit var appointmentsListener: ListenerRegistration
+    private lateinit var availabilityWindowsListener: ListenerRegistration
+
     private lateinit var logOut: Button
     private lateinit var deleteAccount: Button
 
@@ -90,12 +94,12 @@ class VetWindow : AppCompatActivity() {
 
         val db = FirebaseFirestore.getInstance()
 
-        db.collection("users")
+        availabilityWindowsListener = db.collection("users")
             .document(user!!.uid)
             .collection("availability")
             .addSnapshotListener { snapshot, exception ->
                 if (exception != null) {
-                    Log.e("MyActivity", "Error getting data", exception)
+                    Log.e("VetWindow", "Error getting availability windows", exception)
                     return@addSnapshotListener
                 }
 
@@ -105,7 +109,7 @@ class VetWindow : AppCompatActivity() {
                 }
             }
 
-        db.collection("appointments")
+        appointmentsListener = db.collection("appointments")
             .whereEqualTo("vet", user.uid)
             .addSnapshotListener { snapshot, exception ->
                 if (exception != null) {
@@ -301,5 +305,11 @@ class VetWindow : AppCompatActivity() {
 
             availabilityWindowsList.addView(availabilityContainer)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        availabilityWindowsListener.remove()
+        appointmentsListener.remove()
     }
 }
