@@ -30,6 +30,9 @@ class VetWindow : AppCompatActivity() {
     private lateinit var appointmentsListener: ListenerRegistration
     private lateinit var availabilityWindowsListener: ListenerRegistration
 
+    private lateinit var clinicNameTitle: TextView
+    private lateinit var clinicAddressTitle: TextView
+
     private lateinit var logOut: Button
     private lateinit var deleteAccount: Button
 
@@ -47,7 +50,19 @@ class VetWindow : AppCompatActivity() {
             insets
         }
 
-        val user = FirebaseAuth.getInstance().currentUser
+        val db = FirebaseFirestore.getInstance()
+        val user = FirebaseAuth.getInstance().currentUser!!
+
+        clinicNameTitle = findViewById(R.id.clinicNameTitle)
+        clinicAddressTitle = findViewById(R.id.clinicAddressTitle)
+
+        db.collection("users")
+            .document(user.uid)
+            .get()
+            .addOnSuccessListener { result ->
+                clinicNameTitle.text = result.getString("clinicName")
+                clinicAddressTitle.text = result.getString("clinicAddress")
+            }
 
         logOut = findViewById(R.id.LogOut)
         logOut.setOnClickListener {
@@ -64,14 +79,15 @@ class VetWindow : AppCompatActivity() {
 
         deleteAccount = findViewById(R.id.DeleteAccount)
         deleteAccount.setOnClickListener {
-            val uid = user!!.uid
+            availabilityWindowsListener.remove()
+            appointmentsListener.remove()
+
+            val uid = user.uid
 
             AuthUI.getInstance()
                 .delete(this)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        val db = FirebaseFirestore.getInstance()
-
                         db.collection("users").document(uid).delete()
 
                         startActivity(Intent(this, MainActivity::class.java))
@@ -86,7 +102,7 @@ class VetWindow : AppCompatActivity() {
         }
 
         val textView: TextView = findViewById(R.id.HelloText)
-        textView.text = "Welcome ${user?.displayName}"
+        textView.text = "Welcome ${user.displayName}"
 
         addAvailability = findViewById(R.id.AddAvailability)
         addAvailability.setOnClickListener {
@@ -97,10 +113,8 @@ class VetWindow : AppCompatActivity() {
         availabilityWindowsList = findViewById(R.id.availabilityWindowsList)
         appointmentsList = findViewById(R.id.appointmentsList)
 
-        val db = FirebaseFirestore.getInstance()
-
         availabilityWindowsListener = db.collection("users")
-            .document(user!!.uid)
+            .document(user.uid)
             .collection("availability")
             .addSnapshotListener { snapshot, exception ->
                 if (exception != null) {
