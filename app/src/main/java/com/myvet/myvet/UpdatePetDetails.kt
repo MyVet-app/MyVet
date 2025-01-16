@@ -2,15 +2,12 @@ package com.myvet.myvet
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.MainThread
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -26,7 +23,6 @@ class UpdatePetDetails : AppCompatActivity() {
     private lateinit var petAge: EditText
     private lateinit var petGender: EditText
     private lateinit var medicalHistory: EditText
-    private lateinit var erorrMessage: TextView
     private lateinit var updateDetails: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +49,6 @@ class UpdatePetDetails : AppCompatActivity() {
         petAge = findViewById(R.id.PetAge)
         petGender = findViewById(R.id.gender)
         medicalHistory = findViewById(R.id.medicalHistory)
-        erorrMessage = findViewById(R.id.errorMessage)
         updateDetails = findViewById(R.id.update)
 
         //Set the register button to be disabled
