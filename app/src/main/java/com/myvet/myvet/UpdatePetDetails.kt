@@ -7,102 +7,116 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.MainThread
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class UpdatePetDetails : AppCompatActivity() {
 
-    private lateinit var PetName: EditText
-    private lateinit var PetType: EditText
-    private lateinit var PetWeight: EditText
-    private lateinit var PetAge: EditText
-    private lateinit var PetGender: EditText
-    private lateinit var MedicalHistory: EditText
-    private lateinit var ErorrMessage: TextView
-    private lateinit var UpdateDetails: Button
+    private lateinit var petName: EditText
+    private lateinit var petType: EditText
+    private lateinit var petWeight: EditText
+    private lateinit var petAge: EditText
+    private lateinit var petGender: EditText
+    private lateinit var medicalHistory: EditText
+    private lateinit var erorrMessage: TextView
+    private lateinit var updateDetails: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_update_pet_details)
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val intent = Intent(this@UpdatePetDetails, PetOwnerWindow::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 startActivity(intent)
-                finish()
             }
         })
 
-        PetName = findViewById(R.id.PetName)
-        PetType = findViewById(R.id.typeOfPet)
-        PetWeight = findViewById(R.id.weight)
-        PetAge = findViewById(R.id.PetAge)
-        PetGender = findViewById(R.id.gender)
-        MedicalHistory = findViewById(R.id.medicalHistory)
-        ErorrMessage = findViewById(R.id.errorMessage)
-        UpdateDetails = findViewById(R.id.update)
-
-        val db = FirebaseFirestore.getInstance()
+        petName = findViewById(R.id.PetName)
+        petType = findViewById(R.id.typeOfPet)
+        petWeight = findViewById(R.id.weight)
+        petAge = findViewById(R.id.PetAge)
+        petGender = findViewById(R.id.gender)
+        medicalHistory = findViewById(R.id.medicalHistory)
+        erorrMessage = findViewById(R.id.errorMessage)
+        updateDetails = findViewById(R.id.update)
 
         //Set the register button to be disabled
-        UpdateDetails.isEnabled = false
+        updateDetails.isEnabled = false
 
         //Function to check if the user has typed in all the information needed for the registration
         fun checkInputs() {
-            val petName = PetName.text.toString()
-            val petType = PetType.text.toString()
-            val petAge = PetAge.text.toString()
-            val medicalHistory = MedicalHistory.text.toString()
-            UpdateDetails.isEnabled = petName.isNotEmpty() && petType.isNotEmpty() &&
+            val petName = petName.text.toString()
+            val petType = petType.text.toString()
+            val petAge = petAge.text.toString()
+            val medicalHistory = medicalHistory.text.toString()
+            updateDetails.isEnabled = petName.isNotEmpty() && petType.isNotEmpty() &&
                     petAge.isNotEmpty() && medicalHistory.isNotEmpty()
         }
 
-        PetName.addTextChangedListener { checkInputs() }
-        PetType.addTextChangedListener { checkInputs() }
-        PetAge.addTextChangedListener { checkInputs() }
-        MedicalHistory.addTextChangedListener { checkInputs() }
+        petName.addTextChangedListener { checkInputs() }
+        petType.addTextChangedListener { checkInputs() }
+        petAge.addTextChangedListener { checkInputs() }
+        medicalHistory.addTextChangedListener { checkInputs() }
 
-        UpdateDetails.setOnClickListener {
-            val email = intent.getStringExtra("EMAIL") ?: return@setOnClickListener
-            val documentRef = db.collection("pet owner").document(email)
-            documentRef.get()
-                .addOnSuccessListener { document ->
-                    if (document.exists()) {
-                        val petDetails = hashMapOf(
-                            "pet name" to PetName.text.toString(),
-                            "type" to PetType.text.toString(),
-                            "age" to PetAge.text.toString(),
-                            "weight" to PetWeight.text.toString(),
-                            "gender" to PetGender.text.toString(),
-                            "medical history" to MedicalHistory.text.toString()
-                        )
-                        db.collection("pet owner").document(email).collection("pet details").add(petDetails)
-                            .addOnSuccessListener {
-                                Log.i(
-                                    "Registration pet",
-                                    "The pet details have been added to the database"
-                                )
-                            }
-                            .addOnFailureListener {
-                                Log.i(
-                                    "Registration pet owner",
-                                    "The pet details have not been added to the database"
-                                )
-                            }
-                        ErorrMessage.text = "הפרטים עודכנו בהצלחה"
-                        ErorrMessage.visibility = TextView.VISIBLE
-                        val handler = android.os.Handler(Looper.getMainLooper())
-                        handler.postDelayed({
-                            ErorrMessage.visibility = TextView.GONE
-                        }, 5000)
-                        val intent = Intent(this, PetOwnerWindow::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
+        val db = FirebaseFirestore.getInstance()
+        val user = FirebaseAuth.getInstance().currentUser
+
+        updateDetails.setOnClickListener {
+            val userData = hashMapOf(
+                "petName" to petName.text.toString(),
+                "petType" to petType.text.toString(),
+                "petWeight" to petWeight.text.toString(),
+                "petAge" to petAge.text.toString(),
+                "petGender" to petGender.text.toString(),
+                "medicalHistory" to medicalHistory.text.toString()
+            )
+            db.collection("users")
+                .document(user!!.uid)
+                .collection("petDetails")
+                // The use of the same user ID is intended to prevent multiple animals from being entered by the same user.
+                .document(user.uid)
+                .set(userData)
+                .addOnSuccessListener {
+                    Log.i(
+                        "Update pet details",
+                        "Pet details updated successfully"
+                    )
+                    Toast.makeText(
+                        this,
+                        "Pet details updated successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    // comeback to the pet owner window
+                    intent = Intent(this, PetOwnerWindow::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                .addOnFailureListener {
+                    Log.i(
+                        "Update pet details",
+                        "Pet details update failed"
+                    )
+                    Toast.makeText(
+                        this,
+                        "Pet details updated failed",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
         }
     }
