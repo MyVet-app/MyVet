@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.os.Looper
 import android.provider.Settings
 import android.util.Log
 import android.widget.Button
@@ -22,16 +21,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.firebase.geofire.GeoFireUtils
 import com.firebase.geofire.GeoLocation
-import com.google.android.gms.common.api.GoogleApi
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 
@@ -39,22 +34,6 @@ class FindVet : AppCompatActivity() {
     private lateinit var vetsList: LinearLayout
 
     private lateinit var fusedLocationProvider: FusedLocationProviderClient
-
-    private var locationCallback: LocationCallback = object : LocationCallback() {
-        override fun onLocationResult(locationResult: LocationResult) {
-            val locationList = locationResult.locations
-            if (locationList.isNotEmpty()) {
-                //The last location in the list is the newest
-                val location = locationList.last()
-                Toast.makeText(
-                    this@FindVet,
-                    "Got Location: " + location.toString(),
-                    Toast.LENGTH_LONG
-                )
-                    .show()
-            }
-        }
-    }
 
     @SuppressLint("MissingPermission")
     private fun getVets() {
