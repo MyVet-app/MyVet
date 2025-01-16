@@ -4,13 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.FragmentContainerView
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
@@ -18,8 +17,6 @@ import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.QuerySnapshot
-import java.time.LocalDate
-import java.time.LocalTime
 
 class VetWindow : AppCompatActivity() {
     private lateinit var appointmentsListener: ListenerRegistration
@@ -32,8 +29,40 @@ class VetWindow : AppCompatActivity() {
     private lateinit var deleteAccount: Button
 
     private lateinit var addAvailability: Button
-    private lateinit var availabilityWindowsList: LinearLayout
-    private lateinit var appointmentsList: LinearLayout
+    private lateinit var availabilityWindowsList: FragmentContainerView
+    private lateinit var appointmentsList: FragmentContainerView
+
+    private fun showAppointments(appointments: MutableList<Pair<DocumentSnapshot, String>>) {
+        val transaction = supportFragmentManager.beginTransaction()
+
+        for (pair in appointments) {
+            val appointmentFragment = Appointment.newInstance(
+                pair.first.id,
+                pair.first.getString("date")!!,
+                pair.first.getLong("time")!!,
+                pair.second
+            )
+            transaction.add(appointmentsList.id, appointmentFragment)
+        }
+
+        transaction.commit()
+    }
+
+    private fun showAvailabilityWindows(snapshot: QuerySnapshot) {
+        val transaction = supportFragmentManager.beginTransaction()
+
+        for (window in snapshot) {
+            val windowFragment = AvailabilityWindow.newInstance(
+                window.id,
+                window.getString("date")!!,
+                window.getLong("startTime")!!,
+                window.getLong("endTime")!!,
+            )
+            transaction.add(availabilityWindowsList.id, windowFragment)
+        }
+
+        transaction.commit()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -119,7 +148,7 @@ class VetWindow : AppCompatActivity() {
 
                 // Process data and update the view
                 snapshot?.let {
-                    updateAvailabilityWindows(it)
+                    showAvailabilityWindows(it)
                 }
             }
 
@@ -156,122 +185,5 @@ class VetWindow : AppCompatActivity() {
                         }
                 }
             }
-    }
-
-    private fun showAppointments(appointments: MutableList<Pair<DocumentSnapshot, String>>) {
-        val transaction = supportFragmentManager.beginTransaction()
-
-        for (pair in appointments) {
-            val appointmentFragment = Appointment.newInstance(
-                pair.first.id,
-                pair.first.getString("date")!!,
-                pair.first.getLong("time")!!,
-                pair.second
-            )
-            transaction.add(appointmentsList.id, appointmentFragment)
-        }
-
-        transaction.commit()
-    }
-
-    private fun updateAvailabilityWindows(snapshot: QuerySnapshot) {
-        // Clear the existing UI
-        availabilityWindowsList.removeAllViews()
-
-        val title = TextView(this)
-        title.text = "Availability Windows:"
-
-        availabilityWindowsList.addView(title)
-
-        val db = FirebaseFirestore.getInstance()
-        val user = FirebaseAuth.getInstance().currentUser!!
-
-        // Build the UI elements dynamically based on the updated data
-        for (window in snapshot) {
-            val date = LocalDate.parse(window.getString("date"))
-            val startTime = LocalTime.ofSecondOfDay(window.getLong("startTime")!!)
-            val endTime = LocalTime.ofSecondOfDay(window.getLong("endTime")!!)
-
-            val availabilityContainer = LinearLayout(this)
-            availabilityContainer.orientation = LinearLayout.HORIZONTAL
-
-            val availabilityText = TextView(this)
-            availabilityText.text =
-                "Date: $date\n$startTime - $endTime"
-
-            val deleteButton = Button(this)
-            deleteButton.text = "Delete"
-            deleteButton.setOnClickListener {
-                db.collection("users")
-                    .document(user.uid)
-                    .collection("availability")
-                    .document(window.id)
-                    .delete()
-                    .addOnSuccessListener {
-
-                        db.collection("appointments")
-                            .whereEqualTo("vet", user.uid)
-                            .whereEqualTo("date", window.getString("date"))
-                            .whereGreaterThanOrEqualTo("time", window.getLong("startTime")!!)
-                            .whereLessThan("time", window.getLong("endTime")!!)
-                            .get()
-                            .addOnCompleteListener { task ->
-                                Log.i(
-                                    "Availability deletion",
-                                    "Task status: ${task.isSuccessful} ${task.exception}"
-                                )
-                            }
-                            .addOnSuccessListener { appointments ->
-                                for (appointment in appointments) {
-                                    db.collection("appointments")
-                                        .document(appointment.id)
-                                        .delete()
-                                        .addOnCompleteListener { task ->
-                                            if (!task.isSuccessful) {
-                                                Log.e(
-                                                    "Availability deletion",
-                                                    "Appointment ${appointment.id} failed to delete"
-                                                )
-                                            } else {
-                                                Log.i(
-                                                    "Availability deletion",
-                                                    "Appointment ${appointment.id} deleted successfully"
-                                                )
-                                            }
-                                        }
-                                }
-                            }
-
-                        Toast.makeText(
-                            this,
-                            "Availability window deleted successfully",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
-                    }
-            }
-
-            // Optionally, set some layout parameters
-            availabilityText.layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-
-            availabilityText.layoutParams = LinearLayout.LayoutParams(
-                0,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                0.7f
-            ) // 70% width
-            deleteButton.layoutParams = LinearLayout.LayoutParams(
-                0,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                0.3f
-            ) // 30% width
-
-            availabilityContainer.addView(availabilityText)
-            availabilityContainer.addView(deleteButton)
-
-            availabilityWindowsList.addView(availabilityContainer)
-        }
     }
 }

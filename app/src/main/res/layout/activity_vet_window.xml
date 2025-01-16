@@ -66,13 +66,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/availabilityWindowsList"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:text="Availability windows:" />
 
-            </LinearLayout>
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/availabilityWindowsList"
+                android:name="com.myvet.myvet.AvailabilityWindow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <View
                 android:id="@+id/divider2"
@@ -80,11 +83,17 @@
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider" />
 
-            <LinearLayout
-                android:id="@+id/appointmentsList"
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"></LinearLayout>
+                android:layout_height="wrap_content"
+                android:text="Appointments:" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/appointmentsList"
+                android:name="com.myvet.myvet.Appointment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
         </LinearLayout>
     </ScrollView>
 

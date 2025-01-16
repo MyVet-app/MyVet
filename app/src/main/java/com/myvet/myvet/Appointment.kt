@@ -52,7 +52,7 @@ class Appointment : Fragment() {
         val db = FirebaseFirestore.getInstance()
 
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_owner_appointment, container, false)
+        val view = inflater.inflate(R.layout.fragment_appointment, container, false)
 
         appointmentText = view.findViewById(R.id.appointmentText)
         appointmentText.text = "$memberName\n$date\n$time - ${time.plusMinutes(15)}"
