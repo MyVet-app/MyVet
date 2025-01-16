@@ -13,6 +13,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.FragmentContainer
+import androidx.fragment.app.FragmentContainerView
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
@@ -32,65 +34,22 @@ class PetOwnerWindow : AppCompatActivity() {
     private lateinit var logOut: Button
     private lateinit var deleteAccount: Button
     private lateinit var findVet: Button
-    private lateinit var appointmentsList: LinearLayout
-
-
+    private lateinit var appointmentsList: FragmentContainerView
 
     private fun showAppointments(appointments: MutableList<Pair<DocumentSnapshot, String>>) {
-        appointmentsList.removeAllViews()
-
-        val db = FirebaseFirestore.getInstance()
+        val transaction = supportFragmentManager.beginTransaction()
 
         for (pair in appointments) {
-            val appointmentContainer = LinearLayout(this)
-            appointmentContainer.orientation = LinearLayout.HORIZONTAL
-
-            val date = LocalDate.parse(pair.first.getString("date"))
-            val time = LocalTime.ofSecondOfDay(pair.first.getLong("time")!!)
-            val vet = pair.second
-
-            val appointmentText = TextView(this)
-            appointmentText.text =
-                "Dr. $vet\n$date $time - ${time.plusMinutes(15)}"
-
-            val deleteButton = Button(this)
-            deleteButton.text = "Delete"
-            deleteButton.setOnClickListener {
-                db.collection("appointments").document(pair.first.id).delete().addOnSuccessListener {
-                    Toast.makeText(this, "Appointment deleted successfully", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            val calendarButton = Button(this)
-            calendarButton.text = "Add to Calendar"
-            calendarButton.setOnClickListener {
-                val beginTime: Calendar = Calendar.getInstance()
-                beginTime.set(date.year, date.monthValue, date.dayOfMonth, time.hour, time.minute)
-
-                val endTime: Calendar = Calendar.getInstance()
-                endTime.set(date.year, date.monthValue, date.dayOfMonth, time.plusMinutes(15).hour, time.plusMinutes(15).minute)
-                val intent: Intent = Intent(Intent.ACTION_INSERT)
-                    .setData(Events.CONTENT_URI)
-                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.timeInMillis)
-                    .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.timeInMillis)
-                    .putExtra(Events.TITLE, "Appointment with vet Dr. $vet")
-//                    .putExtra(Events.DESCRIPTION, "Group class")
-                    .putExtra(Events.EVENT_LOCATION, "Virtual Meeting")
-                    .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
-//                    .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com")
-                startActivity(intent)
-            }
-
-            appointmentText.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f) // 70% width
-            deleteButton.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f) // 30% width
-            calendarButton.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.4f) // 30% width
-
-            appointmentContainer.addView(appointmentText)
-            appointmentContainer.addView(deleteButton)
-            appointmentContainer.addView(calendarButton)
-
-            appointmentsList.addView(appointmentContainer)
+            val appointmentFragment = OwnerAppointment.newInstance(
+                pair.first.id,
+                pair.first.getString("date")!!,
+                pair.first.getLong("time")!!,
+                pair.second
+            )
+            transaction.add(appointmentsList.id, appointmentFragment)
         }
+
+        transaction.commit()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -61,11 +61,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/appointments"
+                android:name="com.myvet.myvet.OwnerAppointment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                android:layout_height="wrap_content" />
         </ScrollView>
 
     </LinearLayout>
