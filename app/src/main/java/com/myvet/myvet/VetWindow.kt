@@ -2,10 +2,6 @@ package com.myvet.myvet
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.provider.CalendarContract
-import android.provider.CalendarContract.Events
 import android.util.Log
 import android.widget.Button
 import android.widget.LinearLayout
@@ -24,7 +20,6 @@ import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.QuerySnapshot
 import java.time.LocalDate
 import java.time.LocalTime
-import java.util.Calendar
 
 class VetWindow : AppCompatActivity() {
     private lateinit var appointmentsListener: ListenerRegistration
@@ -157,76 +152,26 @@ class VetWindow : AppCompatActivity() {
                                 appointments.add(Pair(appointment, ownerName))
                             }
 
-                            updateAppointments(appointments)
+                            showAppointments(appointments)
                         }
                 }
             }
     }
 
-    private fun updateAppointments(snapshot: MutableList<Pair<DocumentSnapshot, String>>) {
-        appointmentsList.removeAllViews()
+    private fun showAppointments(appointments: MutableList<Pair<DocumentSnapshot, String>>) {
+        val transaction = supportFragmentManager.beginTransaction()
 
-        val title = TextView(this)
-        title.text = "Appointments:"
-
-        appointmentsList.addView(title)
-
-        val db = FirebaseFirestore.getInstance()
-
-        for (pair in snapshot) {
-            val appointmentContainer = LinearLayout(this)
-            appointmentContainer.orientation = LinearLayout.HORIZONTAL
-
-            val date = LocalDate.parse(pair.first.getString("date"))
-            val time = LocalTime.ofSecondOfDay(pair.first.getLong("time")!!)
-            val owner = pair.second
-
-            val appointmentText = TextView(this)
-            appointmentText.text =
-                "$owner\n$date $time - ${time.plusMinutes(15)}"
-
-            val deleteButton = Button(this)
-            deleteButton.text = "Delete"
-            deleteButton.setOnClickListener {
-                db.collection("appointments").document(pair.first.id).delete().addOnSuccessListener {
-                    Log.i("Appointment Deletion", "Appointment deleted successfully")
-                    Handler(Looper.getMainLooper()).post {
-                        Toast.makeText(this, "Appointment deleted successfully", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                }
-            }
-
-            val calendarButton = Button(this)
-            calendarButton.text = "Add to Calendar"
-            calendarButton.setOnClickListener {
-                val beginTime: Calendar = Calendar.getInstance()
-                beginTime.set(date.year, date.monthValue, date.dayOfMonth, time.hour, time.minute)
-
-                val endTime: Calendar = Calendar.getInstance()
-                endTime.set(date.year, date.monthValue, date.dayOfMonth, time.plusMinutes(15).hour, time.plusMinutes(15).minute)
-                val intent: Intent = Intent(Intent.ACTION_INSERT)
-                    .setData(Events.CONTENT_URI)
-                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.timeInMillis)
-                    .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.timeInMillis)
-                    .putExtra(Events.TITLE, "Appointment with vet Dr. $owner")
-//                    .putExtra(Events.DESCRIPTION, "Group class")
-                    .putExtra(Events.EVENT_LOCATION, "Virtual Meeting")
-                    .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
-//                    .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com")
-                startActivity(intent)
-            }
-
-            appointmentText.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f) // 70% width
-            deleteButton.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f) // 30% width
-            calendarButton.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.4f) // 30% width
-
-            appointmentContainer.addView(appointmentText)
-            appointmentContainer.addView(deleteButton)
-            appointmentContainer.addView(calendarButton)
-
-            appointmentsList.addView(appointmentContainer)
+        for (pair in appointments) {
+            val appointmentFragment = Appointment.newInstance(
+                pair.first.id,
+                pair.first.getString("date")!!,
+                pair.first.getLong("time")!!,
+                pair.second
+            )
+            transaction.add(appointmentsList.id, appointmentFragment)
         }
+
+        transaction.commit()
     }
 
     private fun updateAvailabilityWindows(snapshot: QuerySnapshot) {

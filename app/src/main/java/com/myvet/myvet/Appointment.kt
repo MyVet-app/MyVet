@@ -16,23 +16,16 @@ import java.time.LocalDate
 import java.time.LocalTime
 import java.util.Calendar
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_APPOINTMENT_ID = "appointmentId"
 private const val ARG_DATE = "date"
 private const val ARG_TIME = "time"
 private const val ARG_VET_NAME = "vetName"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [OwnerAppointment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class OwnerAppointment : Fragment() {
+class Appointment : Fragment() {
     private lateinit var appointmentId: String
     private lateinit var date: LocalDate
     private lateinit var time: LocalTime
-    private lateinit var vetName: String
+    private lateinit var memberName: String
 
     private lateinit var appointmentText: TextView
     private lateinit var deleteButton: Button
@@ -44,7 +37,7 @@ class OwnerAppointment : Fragment() {
             appointmentId = it.getString(ARG_APPOINTMENT_ID)!!
             date = LocalDate.parse(it.getString(ARG_DATE))
             time = LocalTime.ofSecondOfDay(it.getLong(ARG_TIME))
-            vetName = it.getString(ARG_VET_NAME)!!
+            memberName = it.getString(ARG_VET_NAME)!!
         }
     }
 
@@ -62,7 +55,7 @@ class OwnerAppointment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_owner_appointment, container, false)
 
         appointmentText = view.findViewById(R.id.appointmentText)
-        appointmentText.text = "Dr. $vetName\n$date $time - ${time.plusMinutes(15)}"
+        appointmentText.text = "$memberName\n$date\n$time - ${time.plusMinutes(15)}"
 
         deleteButton = view.findViewById(R.id.deleteButton)
         deleteButton.setOnClickListener {
@@ -82,7 +75,7 @@ class OwnerAppointment : Fragment() {
                 .setData(Events.CONTENT_URI)
                 .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.timeInMillis)
                 .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.timeInMillis)
-                .putExtra(Events.TITLE, "Appointment with vet Dr. $vetName")
+                .putExtra(Events.TITLE, "Appointment with vet Dr. $memberName")
 //                    .putExtra(Events.DESCRIPTION, "Group class")
                 .putExtra(Events.EVENT_LOCATION, "Virtual Meeting")
                 .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
@@ -94,18 +87,9 @@ class OwnerAppointment : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param appointmentSnapshot Parameter 1.
-         * @param vetName Parameter 2.
-         * @return A new instance of fragment OwnerAppointment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(appointmentId: String, date: String, time: Long, vetName: String) =
-            OwnerAppointment().apply {
+            Appointment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_APPOINTMENT_ID, appointmentId)
                     putString(ARG_DATE, date)

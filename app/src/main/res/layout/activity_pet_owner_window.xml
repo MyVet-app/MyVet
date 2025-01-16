@@ -63,7 +63,7 @@
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/appointments"
-                android:name="com.myvet.myvet.OwnerAppointment"
+                android:name="com.myvet.myvet.Appointment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </ScrollView>

@@ -2,18 +2,13 @@ package com.myvet.myvet
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.CalendarContract
-import android.provider.CalendarContract.Events
 import android.util.Log
 import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.FragmentContainer
 import androidx.fragment.app.FragmentContainerView
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
@@ -21,9 +16,6 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
-import java.time.LocalDate
-import java.time.LocalTime
-import java.util.Calendar
 
 
 class PetOwnerWindow : AppCompatActivity() {
@@ -40,11 +32,11 @@ class PetOwnerWindow : AppCompatActivity() {
         val transaction = supportFragmentManager.beginTransaction()
 
         for (pair in appointments) {
-            val appointmentFragment = OwnerAppointment.newInstance(
+            val appointmentFragment = Appointment.newInstance(
                 pair.first.id,
                 pair.first.getString("date")!!,
                 pair.first.getLong("time")!!,
-                pair.second
+                "Dr. " + pair.second
             )
             transaction.add(appointmentsList.id, appointmentFragment)
         }
