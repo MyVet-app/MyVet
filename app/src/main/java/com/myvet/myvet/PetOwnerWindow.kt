@@ -200,7 +200,7 @@ class PetOwnerWindow : AppCompatActivity() {
                     petDetails.removeAllViews()
 
                     val name = document.getString("petName") ?: "N/A"
-                    petName.text = "My Pet: $name"
+                    petName.text = "$name's Details"
                     val type = document.getString("petType") ?: "N/A"
                     val age = document.getString("petAge") ?: "N/A"
                     val weight = document.getString("petWeight") ?: "N/A"

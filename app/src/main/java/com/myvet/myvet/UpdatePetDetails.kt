@@ -85,10 +85,15 @@ class UpdatePetDetails : AppCompatActivity() {
 
                     if (existingPetName == enteredPetName) {
                         // The user did not try to enter a new pet (the pet name is the same)
+
+                        val currentMedicalHistory = document.getString("medicalHistory") ?: ""
+                        val updatedMedicalHistory = "$currentMedicalHistory\n${medicalHistory.text}"
+
+                        // Prepare updated data (without overwriting the medical history)
                         val updatedData = hashMapOf(
                             "petWeight" to petWeight.text.toString(),
                             "petAge" to petAge.text.toString(),
-                            "medicalHistory" to medicalHistory.text.toString()
+                            "medicalHistory" to updatedMedicalHistory
                         )
 
                         petDocRef.update(updatedData as Map<String, Any>)
