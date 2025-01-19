@@ -24,6 +24,7 @@ class UpdatePetDetails : AppCompatActivity() {
     private lateinit var petGender: EditText
     private lateinit var medicalHistory: EditText
     private lateinit var updateDetails: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -73,46 +74,67 @@ class UpdatePetDetails : AppCompatActivity() {
         val user = FirebaseAuth.getInstance().currentUser
 
         updateDetails.setOnClickListener {
-            val userData = hashMapOf(
-                "petName" to petName.text.toString(),
-                "petType" to petType.text.toString(),
-                "petWeight" to petWeight.text.toString(),
-                "petAge" to petAge.text.toString(),
-                "petGender" to petGender.text.toString(),
-                "medicalHistory" to medicalHistory.text.toString()
-            )
-            db.collection("users")
-                .document(user!!.uid)
-                .collection("petDetails")
-                // The use of the same user ID is intended to prevent multiple animals from being entered by the same user.
-                .document(user.uid)
-                .set(userData)
-                .addOnSuccessListener {
-                    Log.i(
-                        "Update pet details",
-                        "Pet details updated successfully"
+            val petCollection = db.collection("users").document(user!!.uid).collection("petDetails")
+            val petDocRef = petCollection.document("Pet")
+
+            petDocRef.get().addOnSuccessListener { document ->
+                val enteredPetName = petName.text.toString()
+
+                if (document.exists()) {
+                    val existingPetName = document.getString("petName")
+
+                    if (existingPetName == enteredPetName) {
+                        // The user did not try to enter a new pet (the pet name is the same)
+                        val updatedData = hashMapOf(
+                            "petWeight" to petWeight.text.toString(),
+                            "petAge" to petAge.text.toString(),
+                            "medicalHistory" to medicalHistory.text.toString()
+                        )
+
+                        petDocRef.update(updatedData as Map<String, Any>)
+                            .addOnSuccessListener {
+                                Log.i("Update pet details", "Pet details updated successfully")
+                                Toast.makeText(this, "Pet details updated successfully", Toast.LENGTH_SHORT).show()
+
+                                startActivity(Intent(this, PetOwnerWindow::class.java))
+                                finish()
+                            }
+                            .addOnFailureListener {
+                                Log.e("Update pet details", "Pet details update failed")
+                                Toast.makeText(this, "Pet details update failed", Toast.LENGTH_SHORT).show()
+                            }
+                    } else {
+                        // The user tried to change the pet's name
+                        Toast.makeText(this, "You cannot add a new pet!", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    // There is no pet details document for the user - create a new one
+                    val newPetData = hashMapOf(
+                        "petName" to enteredPetName,
+                        "petType" to petType.text.toString(),
+                        "petWeight" to petWeight.text.toString(),
+                        "petAge" to petAge.text.toString(),
+                        "petGender" to petGender.text.toString(),
+                        "medicalHistory" to medicalHistory.text.toString()
                     )
-                    Toast.makeText(
-                        this,
-                        "Pet details updated successfully",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    // comeback to the pet owner window
-                    intent = Intent(this, PetOwnerWindow::class.java)
-                    startActivity(intent)
-                    finish()
+
+                    petDocRef.set(newPetData)
+                        .addOnSuccessListener {
+                            Log.i("Update pet details", "Pet details saved successfully")
+                            Toast.makeText(this, "Pet details saved successfully", Toast.LENGTH_SHORT).show()
+
+                            startActivity(Intent(this, PetOwnerWindow::class.java))
+                            finish()
+                        }
+                        .addOnFailureListener {
+                            Log.e("Update pet details", "Failed to save pet details")
+                            Toast.makeText(this, "Failed to save pet details", Toast.LENGTH_SHORT).show()
+                        }
                 }
-                .addOnFailureListener {
-                    Log.i(
-                        "Update pet details",
-                        "Pet details update failed"
-                    )
-                    Toast.makeText(
-                        this,
-                        "Pet details updated failed",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+            }.addOnFailureListener {
+                Log.e("Update pet details", "Failed to check pet existence")
+                Toast.makeText(this, "Error checking pet details", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }
