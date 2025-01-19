@@ -68,6 +68,18 @@
                 android:orientation="vertical" />
         </ScrollView>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/petName"/>
+
+        <LinearLayout
+            android:id="@+id/petDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
     </LinearLayout>
 
 </LinearLayout>
