@@ -33,8 +33,8 @@ class PetOwnerWindow : AppCompatActivity() {
     private lateinit var deleteAccount: Button
     private lateinit var findVet: Button
     private lateinit var appointmentsList: LinearLayout
-
-
+    private lateinit var petDetails: LinearLayout
+    private lateinit var petName: TextView
 
     private fun showAppointments(appointments: MutableList<Pair<DocumentSnapshot, String>>) {
         appointmentsList.removeAllViews()
@@ -186,6 +186,46 @@ class PetOwnerWindow : AppCompatActivity() {
 
                         showAppointments(appointments)
                     }
+            }
+        petDetails = findViewById(R.id.petDetails)
+        petName = findViewById(R.id.petName)
+
+        db.collection("users").document(user.uid).collection("petDetails").document("Pet")
+            .addSnapshotListener { document, error ->
+                if (error != null) {
+                    petName.text = "Error loading pet details"
+                    return@addSnapshotListener
+                }
+                if (document != null && document.exists()) {
+                    petDetails.removeAllViews()
+
+                    val name = document.getString("petName") ?: "N/A"
+                    petName.text = "My Pet: $name"
+                    val type = document.getString("petType") ?: "N/A"
+                    val age = document.getString("petAge") ?: "N/A"
+                    val weight = document.getString("petWeight") ?: "N/A"
+                    val gender = document.getString("petGender") ?: "N/A"
+                    val medicalHistory = document.getString("medicalHistory") ?: "N/A"
+
+                    // Function to add a TextView to the LinearLayout
+                    fun addTextView(label: String, value: String) {
+                        val textView = TextView(this)
+                        textView.text = "$label: $value"
+                        textView.textSize = 16f
+                        textView.setPadding(10, 10, 10, 10)
+                        petDetails.addView(textView)
+                    }
+
+                    // Adding the pet details to the LinearLayout
+                    addTextView("Pet Name", name)
+                    addTextView("Pet Type", type)
+                    addTextView("Pet Age", age)
+                    addTextView("Pet Weight", weight)
+                    addTextView("Pet Gender", gender)
+                    addTextView("Medical History","\n$medicalHistory")
+                } else {
+                    petName.text = "No pet details found"
+                }
             }
     }
 }
