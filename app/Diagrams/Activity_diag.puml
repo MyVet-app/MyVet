@@ -1,32 +1,87 @@
-@startuml
+'
+''start
+''
+'':חיפוש וטרינר במיקום שלך?;
+''if (האם נמצא וטרינר) then (לא)
+''  :חיפוש ברדיוס גדול יותר;
+''  --> האם נמצא וטרינר;
+''else (כן)
+''  :בחירת הווטרינר;
+''  if (בחירת תאריך מתאים) then (כן)
+''    if (התאריך שנבחר פנוי) then (כן)
+''      :בחירת שעה;
+''      if (השעה שנבחרה פנויה) then (כן)
+''        :תור נקבע בהצלחה;
+''      else (לא)
+''        :השעה שנבחרה תפוסה;
+''        --> בחירת שעה;
+''      endif
+''    else (לא)
+''      :התאריך שנבחר תפוס;
+''      --> בחירת תאריך מתאים;
+''    endif
+''  else (לא)
+''    :ביטול;
+''  endif
+''endif
+''
+''stop
+'
 
+
+'start
+'
+':חיפוש וטרינר במיקום שלך;
+'if (האם נמצא וטרינר) then (לא)
+'  :חיפוש ברדיוס גדול יותר;
+'else (כן)
+'  :בחירת הווטרינר;
+'  if (בחירת תאריך מתאים) then (כן)
+'    if (התאריך שנבחר פנוי) then (כן)
+'      :בחירת שעה;
+'      if (השעה שנבחרה פנויה) then (כן)
+'        :תור נקבע בהצלחה;
+'      else (לא)
+'        :השעה שנבחרה תפוסה;
+'      endif
+'    else (לא)
+'      :התאריך שנבחר תפוס;
+'    endif
+'  else (לא)
+'    :ביטול;
+'  endif
+'endif
+'
+'stop
+'@enduml
+'
+'
+@startuml
 start
-:User opens MainActivity;
-if (User is logged in?) then (yes)
-  :Redirect to PetOwnerWindow or VetWindow;
-else (no)
-  :Display Login Options;
-  if (User chooses "Owner") then (yes)
-    :Redirect to OwnerSignUp;
-  else (no)
-    :Redirect to VeterinarianSignUp;
+
+:חיפוש וטרינר במיקום שלך;
+if (האם נמצא וטרינר) then (לא)
+  :חיפוש ברדיוס גדול יותר ;
+  --> האם נמצא וטרינר;
+else (כן)
+  :בחירת הווטרינר;
+  if (בחירת תאריך מתאים) then (כן)
+    if (התאריך שנבחר פנוי) then (כן)
+      :בחירת שעה;
+      if (השעה שנבחרה פנויה) then (כן)
+        :תור נקבע בהצלחה;
+      else (לא)
+        :השעה שנבחרה תפוסה;
+        --> בחירת שעה;
+      endif
+    else (לא)
+      :התאריך שנבחר תפוס;
+      --> בחירת תאריך מתאים;
+    endif
+  else (לא)
+    :ביטול;
   endif
 endif
 
-:User interacts with specific window;
-switch (Window Type)
-case (PetOwnerWindow)
-  :Perform PetOwner actions;
-break
-case (VetWindow)
-  :Perform Vet actions;
-break
-endswitch
-
-if (Window == VetWindow) then (yes)
-  :Open AddAvailability;
-endif
-
 stop
-
 @enduml

@@ -2,21 +2,12 @@
 
 title State Machine Diagram for User Interaction
 
-[*] --> MainActivity : App Launched
-MainActivity --> PetOwnerWindow : User Logged In as Owner
-MainActivity --> VetWindow : User Logged In as Vet
-MainActivity --> OwnerSignUp : New User Chooses "Owner"
-MainActivity --> VeterinarianSignUp : New User Chooses "Vet"
+[*] --> בקשת_מרשם : חיפוש וטרינר לפי מיקום
+בקשת_מרשם --> מחכה_לאישור_מהוטרינר : הבקשה נשלחה
 
-PetOwnerWindow --> FindVet : User Chooses "Find Vet"
-FindVet --> MakeAppointment : User Schedules Appointment
+'מחכה_לאישור_מהוטרינר --> מחכה_לאישור_מהוטרינר
 
-VetWindow --> AddAvailability : User Adds Availability
+מחכה_לאישור_מהוטרינר --> אישור_וטרינר : הוטרינר ראה את ההודעה
 
-OwnerSignUp --> MainActivity : Registration Complete
-VeterinarianSignUp --> MainActivity : Registration Complete
-
-MakeAppointment --> [*] : Appointment Confirmed
-AddAvailability --> [*] : Availability Added
-
+אישור_וטרינר --> [*] : בקשת המרשם התקבלה בהצלחה
 @enduml
