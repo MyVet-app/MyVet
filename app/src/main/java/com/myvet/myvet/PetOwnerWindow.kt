@@ -1,11 +1,13 @@
 package com.myvet.myvet
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.provider.CalendarContract
 import android.provider.CalendarContract.Events
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -35,6 +37,8 @@ class PetOwnerWindow : AppCompatActivity() {
     private lateinit var appointmentsList: LinearLayout
     private lateinit var petDetails: LinearLayout
     private lateinit var petName: TextView
+    private lateinit var petImage: ImageView
+    private val PICK_IMAGE_REQUEST = 1
 
     private fun showAppointments(appointments: MutableList<Pair<DocumentSnapshot, String>>) {
         appointmentsList.removeAllViews()
@@ -227,5 +231,23 @@ class PetOwnerWindow : AppCompatActivity() {
                     petName.text = "No pet details found"
                 }
             }
+
+        petImage = findViewById(R.id.petImage)
+        petImage.setOnClickListener {
+            openGallery()
+        }
+    }
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+    }
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
+            val imageUri: Uri? = data.data
+            petImage.setImageURI(imageUri) // Showing the image in the ImageView
+        }
     }
 }
