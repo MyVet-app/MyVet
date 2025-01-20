@@ -1,6 +1,8 @@
 package com.myvet.myvet
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,6 +15,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.firebase.ui.auth.AuthUI
@@ -136,9 +141,42 @@ class VetWindow : AppCompatActivity() {
                     return@addSnapshotListener
                 }
 
+                for (change in snapshot!!.documentChanges.filter { it.type.name == "REMOVED" }) {
+                    val builder = NotificationCompat.Builder(this, "MYVET_CHANNEL_ID")
+                        .setSmallIcon(R.drawable.icon_logo)
+                        .setContentTitle("Appointment Cancelled")
+                        .setContentText("Client ... cancelled an appointment at " +
+                                "${LocalTime.ofSecondOfDay(change.document.getLong("time")!!)} on " +
+                                "${LocalDate.parse(change.document.getString("date"))}")
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+                    with(NotificationManagerCompat.from(this)) {
+                        if (ActivityCompat.checkSelfPermission(
+                                this@VetWindow,
+                                Manifest.permission.POST_NOTIFICATIONS
+                            ) != PackageManager.PERMISSION_GRANTED
+                        ) {
+                            // TODO: Consider calling
+                            // ActivityCompat#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            // public fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
+                            //                                        grantResults: IntArray)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for ActivityCompat#requestPermissions for more details.
+
+                            return@with
+                        }
+                        // notificationId is a unique int for each notification that you must define.
+                        notify(1, builder.build())
+                    }
+
+                }
+
                 snapshot?.let {
-                    val appointments = mutableListOf<Pair<DocumentSnapshot, String>>() // Pair of appointment and vet name
-                    val ownerIds = snapshot.documents.map { it.getString("user") ?: "" }.distinct() ?: emptyList()
+                    val appointments =
+                        mutableListOf<Pair<DocumentSnapshot, String>>() // Pair of appointment and vet name
+                    val ownerIds = snapshot.documents.map { it.getString("user") ?: "" }.distinct()
+                        ?: emptyList()
 
                     if (ownerIds.isEmpty()) {
                         appointmentsList.removeAllViews()
@@ -149,7 +187,8 @@ class VetWindow : AppCompatActivity() {
                         .whereIn(FieldPath.documentId(), ownerIds)
                         .get()
                         .addOnSuccessListener { userSnapshots ->
-                            val ownerNames = userSnapshots.documents.associateBy({ it.id }, { it.getString("name") ?: "Unknown" })
+                            val ownerNames = userSnapshots.documents.associateBy({ it.id },
+                                { it.getString("name") ?: "Unknown" })
 
                             snapshot.documents.forEach { appointment ->
                                 val ownerId = appointment.getString("user")
@@ -188,13 +227,18 @@ class VetWindow : AppCompatActivity() {
             val deleteButton = Button(this)
             deleteButton.text = "Delete"
             deleteButton.setOnClickListener {
-                db.collection("appointments").document(pair.first.id).delete().addOnSuccessListener {
-                    Log.i("Appointment Deletion", "Appointment deleted successfully")
-                    Handler(Looper.getMainLooper()).post {
-                        Toast.makeText(this, "Appointment deleted successfully", Toast.LENGTH_SHORT)
-                            .show()
+                db.collection("appointments").document(pair.first.id).delete()
+                    .addOnSuccessListener {
+                        Log.i("Appointment Deletion", "Appointment deleted successfully")
+                        Handler(Looper.getMainLooper()).post {
+                            Toast.makeText(
+                                this,
+                                "Appointment deleted successfully",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
                     }
-                }
             }
 
             val calendarButton = Button(this)
@@ -204,7 +248,13 @@ class VetWindow : AppCompatActivity() {
                 beginTime.set(date.year, date.monthValue, date.dayOfMonth, time.hour, time.minute)
 
                 val endTime: Calendar = Calendar.getInstance()
-                endTime.set(date.year, date.monthValue, date.dayOfMonth, time.plusMinutes(15).hour, time.plusMinutes(15).minute)
+                endTime.set(
+                    date.year,
+                    date.monthValue,
+                    date.dayOfMonth,
+                    time.plusMinutes(15).hour,
+                    time.plusMinutes(15).minute
+                )
                 val intent: Intent = Intent(Intent.ACTION_INSERT)
                     .setData(Events.CONTENT_URI)
                     .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.timeInMillis)
@@ -217,9 +267,21 @@ class VetWindow : AppCompatActivity() {
                 startActivity(intent)
             }
 
-            appointmentText.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f) // 70% width
-            deleteButton.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f) // 30% width
-            calendarButton.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.4f) // 30% width
+            appointmentText.layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.3f
+            ) // 70% width
+            deleteButton.layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.3f
+            ) // 30% width
+            calendarButton.layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.4f
+            ) // 30% width
 
             appointmentContainer.addView(appointmentText)
             appointmentContainer.addView(deleteButton)

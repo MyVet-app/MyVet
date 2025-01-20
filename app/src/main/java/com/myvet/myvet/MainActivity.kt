@@ -1,7 +1,10 @@
 package com.myvet.myvet
 
 import android.app.AlertDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
@@ -75,6 +78,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        createNotificationChannel()
+
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
@@ -128,6 +133,25 @@ class MainActivity : AppCompatActivity() {
 
             // show it
             alertDialog.show()
+        }
+    }
+
+    private fun createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is not in the Support Library.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            val name = getString(R.string.channel_name)
+            val name = "MyVet"
+//            val descriptionText = getString(R.string.channel_description)
+            val descriptionText = "MyVet notifications"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel("MYVET_CHANNEL_ID", name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system.
+            val notificationManager: NotificationManager =
+                getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
         }
     }
 }
