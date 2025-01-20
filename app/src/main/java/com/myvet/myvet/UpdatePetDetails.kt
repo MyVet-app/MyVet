@@ -2,108 +2,144 @@ package com.myvet.myvet
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class UpdatePetDetails : AppCompatActivity() {
 
-    private lateinit var PetName: EditText
-    private lateinit var PetType: EditText
-    private lateinit var PetWeight: EditText
-    private lateinit var PetAge: EditText
-    private lateinit var PetGender: EditText
-    private lateinit var MedicalHistory: EditText
-    private lateinit var ErorrMessage: TextView
-    private lateinit var UpdateDetails: Button
+    private lateinit var petName: EditText
+    private lateinit var petType: EditText
+    private lateinit var petWeight: EditText
+    private lateinit var petAge: EditText
+    private lateinit var petGender: EditText
+    private lateinit var medicalHistory: EditText
+    private lateinit var updateDetails: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_update_pet_details)
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val intent = Intent(this@UpdatePetDetails, PetOwnerWindow::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 startActivity(intent)
-                finish()
             }
         })
 
-        PetName = findViewById(R.id.PetName)
-        PetType = findViewById(R.id.typeOfPet)
-        PetWeight = findViewById(R.id.weight)
-        PetAge = findViewById(R.id.PetAge)
-        PetGender = findViewById(R.id.gender)
-        MedicalHistory = findViewById(R.id.medicalHistory)
-        ErorrMessage = findViewById(R.id.errorMessage)
-        UpdateDetails = findViewById(R.id.update)
-
-        val db = FirebaseFirestore.getInstance()
+        petName = findViewById(R.id.PetName)
+        petType = findViewById(R.id.typeOfPet)
+        petWeight = findViewById(R.id.weight)
+        petAge = findViewById(R.id.PetAge)
+        petGender = findViewById(R.id.gender)
+        medicalHistory = findViewById(R.id.medicalHistory)
+        updateDetails = findViewById(R.id.update)
 
         //Set the register button to be disabled
-        UpdateDetails.isEnabled = false
+        updateDetails.isEnabled = false
 
         //Function to check if the user has typed in all the information needed for the registration
         fun checkInputs() {
-            val petName = PetName.text.toString()
-            val petType = PetType.text.toString()
-            val petAge = PetAge.text.toString()
-            val medicalHistory = MedicalHistory.text.toString()
-            UpdateDetails.isEnabled = petName.isNotEmpty() && petType.isNotEmpty() &&
+            val petName = petName.text.toString()
+            val petType = petType.text.toString()
+            val petAge = petAge.text.toString()
+            val medicalHistory = medicalHistory.text.toString()
+            updateDetails.isEnabled = petName.isNotEmpty() && petType.isNotEmpty() &&
                     petAge.isNotEmpty() && medicalHistory.isNotEmpty()
         }
 
-        PetName.addTextChangedListener { checkInputs() }
-        PetType.addTextChangedListener { checkInputs() }
-        PetAge.addTextChangedListener { checkInputs() }
-        MedicalHistory.addTextChangedListener { checkInputs() }
+        petName.addTextChangedListener { checkInputs() }
+        petType.addTextChangedListener { checkInputs() }
+        petAge.addTextChangedListener { checkInputs() }
+        medicalHistory.addTextChangedListener { checkInputs() }
 
-        UpdateDetails.setOnClickListener {
-            val email = intent.getStringExtra("EMAIL") ?: return@setOnClickListener
-            val documentRef = db.collection("pet owner").document(email)
-            documentRef.get()
-                .addOnSuccessListener { document ->
-                    if (document.exists()) {
-                        val petDetails = hashMapOf(
-                            "pet name" to PetName.text.toString(),
-                            "type" to PetType.text.toString(),
-                            "age" to PetAge.text.toString(),
-                            "weight" to PetWeight.text.toString(),
-                            "gender" to PetGender.text.toString(),
-                            "medical history" to MedicalHistory.text.toString()
+        val db = FirebaseFirestore.getInstance()
+        val user = FirebaseAuth.getInstance().currentUser
+
+        updateDetails.setOnClickListener {
+            val petCollection = db.collection("users").document(user!!.uid).collection("petDetails")
+            val petDocRef = petCollection.document("Pet")
+
+            petDocRef.get().addOnSuccessListener { document ->
+                val enteredPetName = petName.text.toString()
+
+                if (document.exists()) {
+                    val existingPetName = document.getString("petName")
+
+                    if (existingPetName == enteredPetName) {
+                        // The user did not try to enter a new pet (the pet name is the same)
+
+                        val currentMedicalHistory = document.getString("medicalHistory") ?: ""
+                        val updatedMedicalHistory = "$currentMedicalHistory\n${medicalHistory.text}"
+
+                        // Prepare updated data (without overwriting the medical history)
+                        val updatedData = hashMapOf(
+                            "petWeight" to petWeight.text.toString(),
+                            "petAge" to petAge.text.toString(),
+                            "medicalHistory" to updatedMedicalHistory
                         )
-                        db.collection("pet owner").document(email).collection("pet details").add(petDetails)
+
+                        petDocRef.update(updatedData as Map<String, Any>)
                             .addOnSuccessListener {
-                                Log.i(
-                                    "Registration pet",
-                                    "The pet details have been added to the database"
-                                )
+                                Log.i("Update pet details", "Pet details updated successfully")
+                                Toast.makeText(this, "Pet details updated successfully", Toast.LENGTH_SHORT).show()
+
+                                startActivity(Intent(this, PetOwnerWindow::class.java))
+                                finish()
                             }
                             .addOnFailureListener {
-                                Log.i(
-                                    "Registration pet owner",
-                                    "The pet details have not been added to the database"
-                                )
+                                Log.e("Update pet details", "Pet details update failed")
+                                Toast.makeText(this, "Pet details update failed", Toast.LENGTH_SHORT).show()
                             }
-                        ErorrMessage.text = "הפרטים עודכנו בהצלחה"
-                        ErorrMessage.visibility = TextView.VISIBLE
-                        val handler = android.os.Handler(Looper.getMainLooper())
-                        handler.postDelayed({
-                            ErorrMessage.visibility = TextView.GONE
-                        }, 5000)
-                        val intent = Intent(this, PetOwnerWindow::class.java)
-                        startActivity(intent)
-                        finish()
+                    } else {
+                        // The user tried to change the pet's name
+                        Toast.makeText(this, "You cannot add a new pet!", Toast.LENGTH_SHORT).show()
                     }
+                } else {
+                    // There is no pet details document for the user - create a new one
+                    val newPetData = hashMapOf(
+                        "petName" to enteredPetName,
+                        "petType" to petType.text.toString(),
+                        "petWeight" to petWeight.text.toString(),
+                        "petAge" to petAge.text.toString(),
+                        "petGender" to petGender.text.toString(),
+                        "medicalHistory" to medicalHistory.text.toString()
+                    )
+
+                    petDocRef.set(newPetData)
+                        .addOnSuccessListener {
+                            Log.i("Update pet details", "Pet details saved successfully")
+                            Toast.makeText(this, "Pet details saved successfully", Toast.LENGTH_SHORT).show()
+
+                            startActivity(Intent(this, PetOwnerWindow::class.java))
+                            finish()
+                        }
+                        .addOnFailureListener {
+                            Log.e("Update pet details", "Failed to save pet details")
+                            Toast.makeText(this, "Failed to save pet details", Toast.LENGTH_SHORT).show()
+                        }
                 }
+            }.addOnFailureListener {
+                Log.e("Update pet details", "Failed to check pet existence")
+                Toast.makeText(this, "Error checking pet details", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }
