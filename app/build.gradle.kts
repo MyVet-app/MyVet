@@ -95,6 +95,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation("androidx.test.espresso:espresso-intents:3.4.0")
+    androidTestImplementation("androidx.test.espresso:espresso-idling-resource:3.4.0")
+
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)

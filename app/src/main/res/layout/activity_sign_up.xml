@@ -21,7 +21,7 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="40dp"
             android:gravity="center"
             android:text="I am a:"
             android:textColor="#213646"
@@ -46,8 +46,8 @@
 
                 <ImageView
                     android:id="@+id/pet_button"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:importantForAccessibility="no"
                     android:src="@drawable/logo_pet" />
 
@@ -70,8 +70,8 @@
 
                 <ImageView
                     android:id="@+id/vet_button"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:importantForAccessibility="no"
                     android:src="@drawable/logo_vet" />
 
