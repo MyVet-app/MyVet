@@ -33,6 +33,12 @@
         android:text="TextView" />
 
     <Button
+        android:id="@+id/UpdateAboutMe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="עדכון פרטי קצת עלי" />
+
+    <Button
         android:id="@+id/LogOut"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

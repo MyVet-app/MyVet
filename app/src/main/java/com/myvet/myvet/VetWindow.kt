@@ -36,6 +36,8 @@ class VetWindow : AppCompatActivity() {
     private lateinit var logOut: Button
     private lateinit var deleteAccount: Button
 
+    private lateinit var updateAboutMe: Button
+
     private lateinit var addAvailability: Button
     private lateinit var availabilityWindowsList: LinearLayout
     private lateinit var appointmentsList: LinearLayout
@@ -63,6 +65,12 @@ class VetWindow : AppCompatActivity() {
                 clinicNameTitle.text = result.getString("clinicName")
                 clinicAddressTitle.text = result.getString("clinicAddress")
             }
+
+        updateAboutMe = findViewById(R.id.UpdateAboutMe)
+        updateAboutMe.setOnClickListener {
+            val intent = Intent(this, UpdateAboutMeVet::class.java)
+            startActivity(intent)
+        }
 
         logOut = findViewById(R.id.LogOut)
         logOut.setOnClickListener {
