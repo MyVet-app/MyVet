@@ -11,46 +11,6 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="16dp"
-            android:gravity="center"
-            android:text="שם קליניקה"
-            android:textColor="#213646"
-            android:textSize="25sp" />
-
-        <EditText
-            android:id="@+id/ClinicName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/rounded_corner"
-            android:hint="שדה חובה"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:padding="8dp"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="מיקום"
-            android:textColor="#213646"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/ClinicLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/rounded_corner"
-            android:hint="שדה חובה"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:padding="8dp"
-            android:textSize="16sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -75,25 +35,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="מומחיות"
-            android:textColor="#213646"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/Expertise"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/rounded_corner"
-            android:hint="שדה חובה"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:padding="8dp"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:text="קצת עלי"
             android:textColor="#213646"
             android:textSize="18sp" />
@@ -104,8 +45,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:background="@drawable/rounded_corner"
+            android:hint="שדה חובה"
             android:importantForAutofill="no"
-            android:inputType="number"
+            android:inputType="text"
             android:padding="8dp"
             android:textSize="16sp" />
 

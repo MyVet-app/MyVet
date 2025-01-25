@@ -14,12 +14,9 @@ import androidx.core.widget.addTextChangedListener
 import com.google.firebase.firestore.FirebaseFirestore
 
 class UpdateAboutMeVet : AppCompatActivity() {
-    private lateinit var ClinicName: EditText
-    private lateinit var ClinicLocation: EditText
     private lateinit var YearsOfExperience: EditText
-    private lateinit var Expertise: EditText
     private lateinit var AboutMe: EditText
-    private lateinit var ErorrMessage: TextView
+    private lateinit var ErrorMessage: TextView
     private lateinit var UpdateDetails: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,71 +33,90 @@ class UpdateAboutMeVet : AppCompatActivity() {
             }
         })
 
-        ClinicName = findViewById(R.id.ClinicName)
-        ClinicLocation = findViewById(R.id.ClinicLocation)
         YearsOfExperience = findViewById(R.id.YearsOfExperience)
-        Expertise = findViewById(R.id.Expertise)
         AboutMe = findViewById(R.id.AboutMe)
-        ErorrMessage = findViewById(R.id.ErrorMessage)
+        ErrorMessage = findViewById(R.id.ErrorMessage)
         UpdateDetails = findViewById(R.id.Update)
 
         val db = FirebaseFirestore.getInstance()
 
-        //Set the register button to be disabled
+        // Set the update button to be disabled initially
         UpdateDetails.isEnabled = false
 
-        //Function to check if the user has typed in all the information needed for the registration
+        // Function to check if the required inputs are provided
         fun checkInputs() {
-            val ClinicName = ClinicName.text.toString()
-            val ClinicLocation = ClinicLocation.text.toString()
-            val Expertise = YearsOfExperience.text.toString()
-            UpdateDetails.isEnabled =
-                ClinicName.isNotEmpty() && ClinicLocation.isNotEmpty() && Expertise.isNotEmpty()
+            val yearsOfExperience = YearsOfExperience.text.toString()
+            val aboutMeText = AboutMe.text.toString()
+            UpdateDetails.isEnabled = aboutMeText.isNotEmpty() && yearsOfExperience.isNotEmpty()
         }
 
-        ClinicName.addTextChangedListener { checkInputs() }
-        ClinicLocation.addTextChangedListener { checkInputs() }
         YearsOfExperience.addTextChangedListener { checkInputs() }
+        AboutMe.addTextChangedListener { checkInputs() }
 
         UpdateDetails.setOnClickListener {
             val email = intent.getStringExtra("EMAIL") ?: return@setOnClickListener
             val documentRef = db.collection("veterinarian").document(email)
+
             documentRef.get()
                 .addOnSuccessListener { document ->
                     if (document.exists()) {
-                        val aboutMeVet = hashMapOf(
-                            "clinicName" to ClinicName.text.toString(),
-                            "clinicLocation" to ClinicLocation.text.toString(),
-                            "yearsOfExperience" to YearsOfExperience.text.toString(),
-                            "expertise" to Expertise.text.toString(),
+                        val aboutMeUpdate = mapOf(
                             "aboutMe" to AboutMe.text.toString()
                         )
-                        db.collection("veterinarian").document(email).collection("aboutMe").add(aboutMeVet)
-                            .addOnSuccessListener {
-                            Log.i(
-                                "UpdateAboutMeVet",
-                                "The about me details have been updated successfully"
-                            )
-                        }
-                            .addOnFailureListener {
-                                Log.i(
-                                    "UpdateAboutMeVet",
-                                    "The about me details have not been updated successfully"
-                                )
+
+                        documentRef.collection("aboutMe").get()
+                            .addOnSuccessListener { subCollection ->
+                                if (!subCollection.isEmpty) {
+                                    // Update the first document in the sub-collection
+                                    val subDocRef = subCollection.documents[0].reference
+                                    subDocRef.update(aboutMeUpdate)
+                                        .addOnSuccessListener {
+                                            Log.i(
+                                                "UpdateAboutMeVet",
+                                                "The 'about me' details have been updated successfully"
+                                            )
+                                            ErrorMessage.text = "הפרטים עודכנו בהצלחה"
+                                            ErrorMessage.visibility = TextView.VISIBLE
+
+                                            val handler = android.os.Handler(Looper.getMainLooper())
+                                            handler.postDelayed({
+                                                ErrorMessage.visibility = TextView.GONE
+                                            }, 5000)
+
+                                            val intent = Intent(this, VetWindow::class.java)
+                                            startActivity(intent)
+                                            finish()
+                                        }
+                                        .addOnFailureListener {
+                                            Log.e(
+                                                "UpdateAboutMeVet",
+                                                "Failed to update 'about me' details"
+                                            )
+                                            ErrorMessage.text = "עדכון הפרטים נכשל"
+                                            ErrorMessage.visibility = TextView.VISIBLE
+                                        }
+                                } else {
+                                    // No document found in the sub-collection
+                                    ErrorMessage.text = "לא נמצאו פרטים לעדכון"
+                                    ErrorMessage.visibility = TextView.VISIBLE
+                                }
                             }
-                        ErorrMessage.text = "הפרטים עודכנו בהצלחה"
-                        ErorrMessage.visibility = TextView.VISIBLE
-                        val handler = android.os.Handler(Looper.getMainLooper())
-                        handler.postDelayed({
-                            ErorrMessage.visibility = TextView.GONE
-                        },5000)
-                        val intent = Intent(this, VetWindow::class.java)
-                        startActivity(intent)
-                        finish()
+                            .addOnFailureListener {
+                                Log.e("UpdateAboutMeVet", "Failed to fetch 'about me' sub-collection")
+                                ErrorMessage.text = "שגיאה בגישה לפרטים"
+                                ErrorMessage.visibility = TextView.VISIBLE
+                            }
+                    } else {
+                        // Main document not found
+                        ErrorMessage.text = "המשתמש לא נמצא במערכת"
+                        ErrorMessage.visibility = TextView.VISIBLE
                     }
                 }
-
+                .addOnFailureListener {
+                    Log.e("UpdateAboutMeVet", "Failed to fetch veterinarian document")
+                    ErrorMessage.text = "שגיאה בגישה לפרטי המשתמש"
+                    ErrorMessage.visibility = TextView.VISIBLE
+                }
         }
     }
-
 }
