@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="100dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -20,26 +20,29 @@
             android:textColor="#213646"
             android:gravity="center"
             android:layout_marginTop="50dp"
-            android:textSize="25sp" />
+            android:textSize="25sp"
+            style="@style/titles"/>
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="כתובת מגורים"
-            android:textSize="18sp"
-            android:textColor="#213646" />
+            android:textColor="#213646"
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/homeAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_vertical|start"
+            android:autofillHints="postalAddress"
+            android:background="@drawable/rounded_corner"
             android:hint="שדה חובה"
             android:inputType="textPostalAddress"
-            android:autofillHints="postalAddress"
-            android:textSize="16sp"
-            android:background="@drawable/rounded_corner"
-            android:layout_marginBottom="16dp"
-            android:padding="8dp" />
+            android:padding="8dp"
+            android:layout_gravity="center_horizontal"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/errorMessage"
@@ -53,8 +56,8 @@
             android:id="@+id/submitButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="הרשמה"
-            android:textSize="16sp"
-            android:layout_marginTop="24dp" />
+            android:textSize="16sp" />
     </LinearLayout>
 </ScrollView>
