@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backround"
-    android:gravity="center"
+
     tools:context=".SignUp">
 
     <!-- Vertical LinearLayout to stack title and buttons -->
@@ -17,11 +17,22 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="40dp">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/titles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="120dp"
+            android:gravity="center"
+            android:text="Who are you?"
+            android:textColor="#213646"
+            android:textSize="34sp" />
 
         <!-- Title TextView -->
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/title2"
             style="@style/titles"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
