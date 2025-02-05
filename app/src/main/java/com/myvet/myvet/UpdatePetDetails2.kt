@@ -13,11 +13,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import com.google.firebase.firestore.FirebaseFirestore
 
-class UpdatePetDetails : AppCompatActivity() {
+class UpdatePetDetails2 : AppCompatActivity() {
 
-    private lateinit var PetName: EditText
-    private lateinit var PetAge: EditText
-    private lateinit var PetType: EditText
+    private lateinit var PetWeight: EditText
+    private lateinit var PetGender: EditText
+    private lateinit var MedicalHistory: EditText
     private lateinit var ErorrMessage: TextView
     private lateinit var UpdateDetails: Button
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,16 +27,16 @@ class UpdatePetDetails : AppCompatActivity() {
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val intent = Intent(this@UpdatePetDetails, PetOwnerWindow::class.java)
+                val intent = Intent(this@UpdatePetDetails2, UpdatePetDetails::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 startActivity(intent)
                 finish()
             }
         })
 
-        PetName = findViewById(R.id.PetName)
-        PetType = findViewById(R.id.typeOfPet)
-        PetAge = findViewById(R.id.PetAge)
+        PetWeight = findViewById(R.id.weight)
+        PetGender = findViewById(R.id.gender)
+        MedicalHistory = findViewById(R.id.medicalHistory)
         ErorrMessage = findViewById(R.id.errorMessage)
         UpdateDetails = findViewById(R.id.update)
 
@@ -47,17 +47,11 @@ class UpdatePetDetails : AppCompatActivity() {
 
         //Function to check if the user has typed in all the information needed for the registration
         fun checkInputs() {
-            val petName = PetName.text.toString()
-            val petType = PetType.text.toString()
-            val petAge = PetAge.text.toString()
-            UpdateDetails.isEnabled = petName.isNotEmpty() && petType.isNotEmpty() &&
-                    petAge.isNotEmpty()
+            val medicalHistory = MedicalHistory.text.toString()
+            UpdateDetails.isEnabled = medicalHistory.isNotEmpty()
         }
 
-        PetName.addTextChangedListener { checkInputs() }
-        PetType.addTextChangedListener { checkInputs() }
-        PetAge.addTextChangedListener { checkInputs() }
-
+        MedicalHistory.addTextChangedListener { checkInputs() }
 
         UpdateDetails.setOnClickListener {
             val email = intent.getStringExtra("EMAIL") ?: return@setOnClickListener
@@ -66,9 +60,9 @@ class UpdatePetDetails : AppCompatActivity() {
                 .addOnSuccessListener { document ->
                     if (document.exists()) {
                         val petDetails = hashMapOf(
-                            "pet name" to PetName.text.toString(),
-                            "type" to PetType.text.toString(),
-                            "age" to PetAge.text.toString(),
+                            "weight" to PetWeight.text.toString(),
+                            "gender" to PetGender.text.toString(),
+                            "medical history" to MedicalHistory.text.toString()
                         )
                         db.collection("pet owner").document(email).collection("pet details").add(petDetails)
                             .addOnSuccessListener {
@@ -89,7 +83,7 @@ class UpdatePetDetails : AppCompatActivity() {
                         handler.postDelayed({
                             ErorrMessage.visibility = TextView.GONE
                         }, 5000)
-                        val intent = Intent(this, UpdatePetDetails2::class.java)
+                        val intent = Intent(this, PetOwnerWindow::class.java)
                         startActivity(intent)
                         finish()
                     }

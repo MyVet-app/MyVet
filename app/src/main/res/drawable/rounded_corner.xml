@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<shape xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    android:shape="rectangle"-->
-<!--    >-->
-<!--    <corners android:radius="340dp"/>-->
-<!--    <stroke android:width="1dip" android:color="#203545"/>-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"
+    >
+    <corners android:radius="340dp"/>
+    <stroke android:width="1dip" android:color="#203545"/>
 
-<!--</shape>-->
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <stroke
-        android:width="2dp"
-        android:color="#000000" /> <!-- קו המתאר -->
-    <corners android:radius="8dp" /> <!-- עיגול הפינות -->
-    <padding
-        android:left="8dp"
-        android:top="8dp"
-        android:right="8dp"
-        android:bottom="8dp" /> <!-- ריווח פנימי -->
 </shape>
+<!--<shape xmlns:android="http://schemas.android.com/apk/res/android">-->
+
+<!--    <stroke-->
+<!--        android:width="2dp"-->
+<!--        android:color="#000000" /> &lt;!&ndash; קו המתאר &ndash;&gt;-->
+<!--    <corners android:radius="8dp" /> &lt;!&ndash; עיגול הפינות &ndash;&gt;-->
+<!--    <padding-->
+<!--        android:left="8dp"-->
+<!--        android:top="8dp"-->
+<!--        android:right="8dp"-->
+<!--        android:bottom="8dp" /> &lt;!&ndash; ריווח פנימי &ndash;&gt;-->
+<!--</shape>-->
+
+

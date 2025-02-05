@@ -1,0 +1,34 @@
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">-->
+<!--    &lt;!&ndash; צבע רקע של הכפתור (ירוק) &ndash;&gt;-->
+<!--    <solid android:color="#4CAF50" />-->
+
+<!--    &lt;!&ndash; קביעת פינות מעוגלות &ndash;&gt;-->
+<!--    <corners android:radius="24dp" />-->
+
+<!--    &lt;!&ndash; הצללה קלה לכפתור &ndash;&gt;-->
+<!--    <padding android:left="16dp" android:right="16dp" android:top="8dp" android:bottom="8dp"/>-->
+<!--</shape>-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- צבע רקע של הכפתור -->
+    <solid android:color="#BFFF80" />
+
+    <stroke android:width="1px" android:color="#000000" />
+
+    <!-- מעגל פינות הכפתור -->
+    <corners android:radius="25dp" />
+
+    <!-- שוליים פנימיים -->
+    <padding android:left="12dp" android:right="12dp"
+        android:top="8dp" android:bottom="8dp"/>
+
+    <!-- אפקט לחיצה כהה יותר -->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#388E3C"/> <!-- צבע כהה יותר בלחיצה -->
+            <corners android:radius="25dp"/>
+        </shape>
+    </item>
+</shape>
