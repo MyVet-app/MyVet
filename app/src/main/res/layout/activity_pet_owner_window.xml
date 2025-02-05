@@ -14,9 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Hello"
+        android:textSize="30dp"
         android:padding="50dp"
-        style="@style/titles"/>
+        style="@style/titles"
+        tools:text="שלום ליאת!"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,36 +26,14 @@
 
         <Button
             android:id="@+id/UpdateDetails"
-            style="@style/buttonStyle"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="עדכון פרטי חיה"
-            android:background="@drawable/rounded_bottom"/>
+            android:background="@drawable/rounded_bottom"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="עדכון פרטי חיה" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp"/>
-
-        <Button
-            android:id="@+id/LogOut"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Log Out"
-            style="@style/buttonStyle"
-            android:background="@drawable/rounded_bottom"/>
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp"/>
-
-        <Button
-            android:id="@+id/DeleteAccount"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Delete Account"
-            style="@style/buttonStyle"/>
         <Space
             android:layout_width="match_parent"
             android:layout_height="10dp"/>
@@ -64,8 +43,10 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Find Vet"
-            style="@style/buttonStyle"/>
+            android:text="חיפוש וטרינר"
+            android:background="@drawable/rounded_bottom"
+            android:gravity="center"
+            android:textSize="20sp"/>
         <Space
             android:layout_width="match_parent"
             android:layout_height="10dp"/>
@@ -79,9 +60,34 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:text="התורים שלי"
+            android:background="@drawable/rounded_bottom"
             android:gravity="center"
-            android:text="Appointments:"
-            style="@style/buttonStyle"/>
+            android:textSize="20sp"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+        <Button
+            android:id="@+id/LogOut"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="התנתקות"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:background="@drawable/rounded_bottom"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+        <Button
+            android:id="@+id/DeleteAccount"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="מחיקת משתמש"
+            android:background="@drawable/rounded_bottom"
+            android:gravity="center"
+            android:textSize="20sp"/>
         <Space
             android:layout_width="match_parent"
             android:layout_height="10dp"/>

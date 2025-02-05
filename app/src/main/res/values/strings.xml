@@ -1,11 +1,12 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">MyVet</string>
+    <string name="hello_pet">שלום %s</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
+    <string name="welcome">"שלום !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="title_activity_pet_sign_up">pet_signUp</string>
     <string name="fui_sign_in_default">התחברות</string>
