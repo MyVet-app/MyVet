@@ -43,6 +43,8 @@
         <activity
             android:name=".VeterinarianSignUp"
             android:exported="false" />
+        <activity android:name=".VeterinarianSignUp2"
+            android:exported="false" />
         <activity
             android:name=".PetOwnerWindow"
             android:exported="false"
