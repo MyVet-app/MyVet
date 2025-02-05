@@ -24,69 +24,49 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="שם מרפאה"
+            android:text="שנות וותק"
             android:textColor="#213646"
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/clinicName"
+            android:id="@+id/yearsOfExperience"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:background="@drawable/rounded_corner"
             android:hint="שדה חובה"
             android:importantForAutofill="no"
-            android:inputType="text"
+            android:inputType="number"
             android:padding="8dp"
             android:textSize="16sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="מיקום המרפאה"
+            android:text="תחום התמחות"
             android:textColor="#213646"
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/clinicLocation"
+            android:id="@+id/expertise"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:autofillHints="postalAddress"
             android:background="@drawable/rounded_corner"
-            android:hint="שדה חובה"
-            android:inputType="textPostalAddress"
+            android:importantForAutofill="no"
+            android:inputType="text"
             android:padding="8dp"
             android:textSize="16sp" />
 
 <!--        <TextView-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="wrap_content"-->
-<!--            android:text="שנות וותק"-->
+<!--            android:text="קצת עליי"-->
 <!--            android:textColor="#213646"-->
 <!--            android:textSize="18sp" />-->
 
 <!--        <EditText-->
-<!--            android:id="@+id/yearsOfExperience"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginBottom="16dp"-->
-<!--            android:background="@drawable/rounded_corner"-->
-<!--            android:hint="שדה חובה"-->
-<!--            android:importantForAutofill="no"-->
-<!--            android:inputType="number"-->
-<!--            android:padding="8dp"-->
-<!--            android:textSize="16sp" />-->
-
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="תחום התמחות"-->
-<!--            android:textColor="#213646"-->
-<!--            android:textSize="18sp" />-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/expertise"-->
+<!--            android:id="@+id/aboutMe"-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="wrap_content"-->
 <!--            android:layout_marginBottom="16dp"-->
@@ -95,24 +75,6 @@
 <!--            android:inputType="text"-->
 <!--            android:padding="8dp"-->
 <!--            android:textSize="16sp" />-->
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="קצת עליי"
-            android:textColor="#213646"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/aboutMe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/rounded_corner"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:padding="8dp"
-            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/errorMessage"
@@ -129,9 +91,6 @@
             android:layout_marginTop="24dp"
             android:text="הרשמה"
             android:textSize="16sp" />
-
-
-<!--        מעבר לעמוד הבא ?? -->
 
     </LinearLayout>
 </ScrollView>
