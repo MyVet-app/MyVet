@@ -86,24 +86,71 @@ class ExampleUnitTest {
         assertTrue(mockCollectionRef.add(petDetails).isComplete) // Ensure the task is completed
     }
 
+//    @Test
+//    fun delete_appointment() {
+//        val mockDb: FirebaseFirestore = mock(FirebaseFirestore::class.java)
+//        val mockCollectionRef: CollectionReference = mock(CollectionReference::class.java)
+//        val mockDocumentRef: DocumentReference = mock(DocumentReference::class.java)
+//
+//        // Set up mock behavior
+//        `when`(mockDb.collection("appointments")).thenReturn(mockCollectionRef) // Mock CollectionReference
+//        `when`(mockCollectionRef.document(anyString())).thenReturn(mockDocumentRef) // Mock DocumentReference
+//        `when`(mockDocumentRef.delete()).thenReturn(Tasks.forResult(null)) // Mock Task for delete()
+//
+//        // Call the function under test
+//        val appointmentId = "appointment123" // Example appointment ID to delete
+//        mockDb.collection("appointments").document(appointmentId).delete()
+//
+//        // Assertions
+//        verify(mockDocumentRef).delete() // Verify that delete() was called on the correct document
+//        assertTrue(mockDocumentRef.delete().isComplete) // Ensure the delete task is completed
+//    }
+
     @Test
-    fun delete_appointment() {
+    fun delete_appointment_success() {
         val mockDb: FirebaseFirestore = mock(FirebaseFirestore::class.java)
+        val mockUser: FirebaseAuth = mock(FirebaseAuth::class.java)
         val mockCollectionRef: CollectionReference = mock(CollectionReference::class.java)
         val mockDocumentRef: DocumentReference = mock(DocumentReference::class.java)
+        val mockFirebaseUser: FirebaseUser = mock(FirebaseUser::class.java)
 
-        // Set up mock behavior
-        `when`(mockDb.collection("appointments")).thenReturn(mockCollectionRef) // Mock CollectionReference
-        `when`(mockCollectionRef.document(anyString())).thenReturn(mockDocumentRef) // Mock DocumentReference
-        `when`(mockDocumentRef.delete()).thenReturn(Tasks.forResult(null)) // Mock Task for delete()
+        // Set up mock behavior for a valid user deleting their appointment
+        `when`(mockUser.currentUser).thenReturn(mockFirebaseUser)
+        `when`(mockFirebaseUser.uid).thenReturn("user123") // Mock user ID
+        `when`(mockDb.collection("appointments")).thenReturn(mockCollectionRef)
+        `when`(mockCollectionRef.document("appointment123")).thenReturn(mockDocumentRef)
+        `when`(mockDocumentRef.delete()).thenReturn(Tasks.forResult(null))
 
         // Call the function under test
-        val appointmentId = "appointment123" // Example appointment ID to delete
-        mockDb.collection("appointments").document(appointmentId).delete()
+        val deleteTask = mockDocumentRef.delete()
 
         // Assertions
-        verify(mockDocumentRef).delete() // Verify that delete() was called on the correct document
-        assertTrue(mockDocumentRef.delete().isComplete) // Ensure the delete task is completed
+        verify(mockDocumentRef).delete() // Verify delete was called
+        assertTrue(deleteTask.isComplete) // Ensure task was completed successfully
+    }
+    @Test
+    fun delete_appointment_failure_due_to_network_disconnect() {
+        val mockDb: FirebaseFirestore = mock(FirebaseFirestore::class.java)
+        val mockUser: FirebaseAuth = mock(FirebaseAuth::class.java)
+        val mockCollectionRef: CollectionReference = mock(CollectionReference::class.java)
+        val mockDocumentRef: DocumentReference = mock(DocumentReference::class.java)
+        val mockFirebaseUser: FirebaseUser = mock(FirebaseUser::class.java)
+
+        // Set up mock behavior for a user attempting to delete an appointment but losing internet connection
+        `when`(mockUser.currentUser).thenReturn(mockFirebaseUser)
+        `when`(mockFirebaseUser.uid).thenReturn("user123") // Mock user ID
+        `when`(mockDb.collection("appointments")).thenReturn(mockCollectionRef)
+        `when`(mockCollectionRef.document("appointment123")).thenReturn(mockDocumentRef)
+
+        // Simulate a network failure during deletion
+        `when`(mockDocumentRef.delete()).thenReturn(Tasks.forException(Exception("Network Error")))
+
+        // Call the function under test
+        val deleteTask = mockDocumentRef.delete()
+
+        // Assertions
+        verify(mockDocumentRef).delete()
+        assertFalse(deleteTask.isSuccessful) // Ensure the deletion was unsuccessful due to network failure
     }
 
 
