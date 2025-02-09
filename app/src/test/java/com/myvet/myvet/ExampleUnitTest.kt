@@ -86,5 +86,26 @@ class ExampleUnitTest {
         assertTrue(mockCollectionRef.add(petDetails).isComplete) // Ensure the task is completed
     }
 
+    @Test
+    fun delete_appointment() {
+        val mockDb: FirebaseFirestore = mock(FirebaseFirestore::class.java)
+        val mockCollectionRef: CollectionReference = mock(CollectionReference::class.java)
+        val mockDocumentRef: DocumentReference = mock(DocumentReference::class.java)
+
+        // Set up mock behavior
+        `when`(mockDb.collection("appointments")).thenReturn(mockCollectionRef) // Mock CollectionReference
+        `when`(mockCollectionRef.document(anyString())).thenReturn(mockDocumentRef) // Mock DocumentReference
+        `when`(mockDocumentRef.delete()).thenReturn(Tasks.forResult(null)) // Mock Task for delete()
+
+        // Call the function under test
+        val appointmentId = "appointment123" // Example appointment ID to delete
+        mockDb.collection("appointments").document(appointmentId).delete()
+
+        // Assertions
+        verify(mockDocumentRef).delete() // Verify that delete() was called on the correct document
+        assertTrue(mockDocumentRef.delete().isComplete) // Ensure the delete task is completed
+    }
+
+
 
 }
