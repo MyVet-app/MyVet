@@ -37,6 +37,9 @@
         <activity
             android:name=".UpdatePetDetails"
             android:exported="false" />
+        <activity android:name=".UpdatePetDetails2"
+            android:exported="false" />
+
         <activity
             android:name=".VetWindow"
             android:exported="false" />
