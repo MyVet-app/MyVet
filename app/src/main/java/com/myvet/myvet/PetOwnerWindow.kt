@@ -103,7 +103,14 @@ class PetOwnerWindow : AppCompatActivity() {
             insets
         }
 
-        val user = FirebaseAuth.getInstance().currentUser!!
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user == null) {
+            Log.e("PetOwnerWindow", "Error: User is null")
+            // אם המשתמש לא מחובר, ניתן לעבור למסך התחברות
+            startActivity(Intent(this, MainActivity::class.java))
+            finish() // סוגר את ה-Activity הנוכחי
+            return
+        }
         val db = FirebaseFirestore.getInstance()
 
 

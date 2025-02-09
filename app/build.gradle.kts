@@ -8,25 +8,44 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
 
     // Mockito למוקים
-    testImplementation("org.mockito:mockito-core:4.2.0")
+    testImplementation("org.mockito:mockito-core:4.8.0")
 
-    // Mockito-Kotlin (אם את משתמשת בקוטלין)
-    testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
+    // Mockito-Kotlin (עבור קוטלין)
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
 
-    // Espresso לטסטים כלליים
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    // Mockito ל-Android Instrumented Tests
+    androidTestImplementation("org.mockito:mockito-android:4.8.0")
 
-    //UI Tests
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    // Espresso לטסטים של UI
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    // Espresso IdlingResource (אם יש לך בדיקות אסינכרוניות)
+    androidTestImplementation("androidx.test.espresso:espresso-idling-resource:3.5.1")
+
+    // AndroidX Test - JUnit Extension
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+
+    // AndroidX Test - Runner (דרוש להרצת UI Tests)
+    androidTestImplementation("androidx.test:runner:1.5.2")
 
     // Firebase
     implementation("com.google.firebase:firebase-analytics-ktx:20.0.2")
 
     // Firestore
     implementation("com.google.firebase:firebase-firestore-ktx:24.0.0")
-
-
 }
+
+
+//
+//    // Runner של AndroidTest
+//    androidTestImplementation 'androidx.test:runner:1.5.2'
+//
+//    // תמיכה ב-JUnit ב-AndroidTest
+//    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+//
+//    // בדיקות יחידה רגילות
+//    testImplementation 'junit:junit:4.13.2'
+
 
 
 
