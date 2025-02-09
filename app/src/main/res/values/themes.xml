@@ -6,7 +6,6 @@
 <!--    </style>-->
 
 <!--    <style name="Theme.LogginApp" parent="Base.Theme.LogginApp" />-->
-
     <style name="titles">
         <!-- צבע הטקסט -->
         <item name="android:textColor">#FF000000</item>
