@@ -1,5 +1,6 @@
 package com.myvet.myvet
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Looper
@@ -20,6 +21,7 @@ class UpdatePetDetails2 : AppCompatActivity() {
     private lateinit var MedicalHistory: EditText
     private lateinit var ErorrMessage: TextView
     private lateinit var UpdateDetails: Button
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
