@@ -108,7 +108,7 @@ class PetOwnerWindow : AppCompatActivity() {
 
 
         val textView: TextView = findViewById(R.id.HelloText)
-        textView.text = " ${user.displayName}שלום "
+        textView.text = "שלום"+" ${user.displayName} "
 
         updateDetails = findViewById(R.id.UpdateDetails)
         updateDetails.setOnClickListener {
