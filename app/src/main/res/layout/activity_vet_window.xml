@@ -11,26 +11,31 @@
 
     <TextView
         android:id="@+id/HelloText"
+        style="@style/titles"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        tools:text="Hello!"
-        android:textSize="30dp"
-        style="@style/titles"
-        android:padding="50dp"/>
+        android:paddingTop="40dp"
+        android:textSize="40dp"
+        tools:text="Hello!" />
 
     <TextView
         android:id="@+id/clinicNameTitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:gravity="center_horizontal"
         android:textSize="20sp"
         android:text="TextView" />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+
+
     <TextView
         android:id="@+id/clinicAddressTitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:gravity="center_horizontal"
         android:textSize="20sp"
         android:text="TextView" />
@@ -40,6 +45,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <Button
+            android:id="@+id/UpdateVetDetails"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/rounded_bottom"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="Update Details" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+
+        <Button
+            android:id="@+id/AddAvailability"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/rounded_bottom"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="Add availability" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
 
         <Button
             android:id="@+id/LogOut"
@@ -65,37 +97,6 @@
             android:textSize="20sp"
             android:text="Delete Account" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp"/>
-
-        <Button
-            android:id="@+id/AddAvailability"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/rounded_bottom"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:text="Add availability" />
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp"/>
-
-        <Button
-            android:id="@+id/UpdateVetDetails"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/rounded_bottom"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:text="Update Details" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp"/>
-
         <View
             android:id="@+id/divider"
             android:layout_width="match_parent"
@@ -104,7 +105,7 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="202dp">
 
             <LinearLayout
                 android:id="@+id/scrollContent"
@@ -116,21 +117,21 @@
                     android:id="@+id/availabilityWindowsList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                 </LinearLayout>
 
                 <View
-                android:id="@+id/divider2"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" />
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" />
 
-            <LinearLayout
-                android:id="@+id/appointmentsList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"></LinearLayout>
+                <LinearLayout
+                    android:id="@+id/appointmentsList"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"></LinearLayout>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
