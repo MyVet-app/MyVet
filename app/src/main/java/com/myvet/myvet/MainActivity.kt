@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
                 val intent = when (type) {
                     "owner" -> Intent(this, PetOwnerWindow::class.java)
                     "vet" -> Intent(this, VetWindow::class.java)
-                    else -> throw IllegalArgumentException("Unknown type: $type")
+                    else -> Intent(this, SignUp::class.java)
                 }
 
                 startActivity(intent)
