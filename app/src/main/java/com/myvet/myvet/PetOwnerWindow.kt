@@ -113,8 +113,10 @@ class PetOwnerWindow : AppCompatActivity() {
         updateDetails = findViewById(R.id.UpdateDetails)
         updateDetails.setOnClickListener {
             val intent = Intent(this, UpdatePetDetails::class.java)
+            intent.putExtra("EMAIL", user.email)
             startActivity(intent)
         }
+
 
         logOut = findViewById(R.id.LogOut)
         logOut.setOnClickListener {
