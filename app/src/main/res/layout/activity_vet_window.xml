@@ -50,6 +50,12 @@
         android:layout_height="wrap_content"
         android:text="Add availability" />
 
+    <Button
+        android:id="@+id/UpdateVetDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update Details" />
+
 
     <View
         android:id="@+id/divider"

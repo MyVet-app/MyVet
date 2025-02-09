@@ -41,6 +41,7 @@
             android:name=".UpdatePetDetails"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light" />
+
         <activity android:name=".UpdatePetDetails2"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light" />
@@ -49,21 +50,31 @@
             android:name=".VetWindow"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light" />
+
         <activity
             android:name=".VeterinarianSignUp"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light" />
+
         <activity android:name=".VeterinarianSignUp2"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light" />
+
         <activity
             android:name=".PetOwnerWindow"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light" />
+
+        <activity android:name=".UpdateVetDetails"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light" />
+
+
         <activity
             android:name=".OwnerSignUp"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

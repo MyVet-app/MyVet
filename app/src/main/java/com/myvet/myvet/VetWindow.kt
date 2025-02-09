@@ -40,6 +40,8 @@ class VetWindow : AppCompatActivity() {
     private lateinit var availabilityWindowsList: LinearLayout
     private lateinit var appointmentsList: LinearLayout
 
+    private lateinit var updateVetDetails: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -107,6 +109,13 @@ class VetWindow : AppCompatActivity() {
         addAvailability = findViewById(R.id.AddAvailability)
         addAvailability.setOnClickListener {
             val intent = Intent(this, AddAvailability::class.java)
+            startActivity(intent)
+        }
+
+        updateVetDetails = findViewById(R.id.UpdateVetDetails)
+        updateVetDetails.setOnClickListener {
+            val intent = Intent(this, UpdateVetDetails::class.java)
+//            intent.putExtra("EMAIL", user.email)
             startActivity(intent)
         }
 

@@ -59,9 +59,6 @@ class VeterinarianSignUp2 : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
         val user = FirebaseAuth.getInstance().currentUser
 
-        //Set the register button to be disabled
-//        register.isEnabled = false
-
 
         register.setOnClickListener {
             val moshi = Moshi.Builder()
