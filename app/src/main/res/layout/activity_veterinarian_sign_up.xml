@@ -65,62 +65,6 @@
             android:padding="15dp"
             android:textSize="16sp" />
 
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="שנות וותק"-->
-<!--            android:textColor="#213646"-->
-<!--            android:textSize="18sp" />-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/yearsOfExperience"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginBottom="16dp"-->
-<!--            android:background="@drawable/rounded_corner"-->
-<!--            android:hint="שדה חובה"-->
-<!--            android:importantForAutofill="no"-->
-<!--            android:inputType="number"-->
-<!--            android:padding="8dp"-->
-<!--            android:textSize="16sp" />-->
-
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="תחום התמחות"-->
-<!--            android:textColor="#213646"-->
-<!--            android:textSize="18sp" />-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/expertise"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginBottom="16dp"-->
-<!--            android:background="@drawable/rounded_corner"-->
-<!--            android:importantForAutofill="no"-->
-<!--            android:inputType="text"-->
-<!--            android:padding="8dp"-->
-<!--            android:textSize="16sp" />-->
-
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="קצת עליי"-->
-<!--            android:textColor="#213646"-->
-<!--            android:textSize="18sp"-->
-<!--            android:fontFamily="@font/roberto"/>-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/aboutMe"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginBottom="16dp"-->
-<!--            android:gravity="center_vertical|start"-->
-<!--            android:background="@drawable/rounded_corner"-->
-<!--            android:importantForAutofill="no"-->
-<!--            android:inputType="text"-->
-<!--            android:padding="15dp"-->
-<!--            android:textSize="16sp" />-->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -138,7 +82,7 @@
             android:background="@drawable/rounded_corner"
             android:hint="שדה חובה"
             android:importantForAutofill="no"
-            android:inputType="text"
+            android:inputType="number"
             android:padding="15dp"
             android:textSize="16sp" />
         <TextView
@@ -149,13 +93,7 @@
             android:textColor="#161313"
             android:visibility="gone" />
 
-<!--        <Button-->
-<!--            android:id="@+id/submitButton"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="24dp"-->
-<!--            android:text="הרשמה"-->
-<!--            android:textSize="16sp" />-->
+
         <Button
             android:id="@+id/submitButton"
             android:layout_width="match_parent"
