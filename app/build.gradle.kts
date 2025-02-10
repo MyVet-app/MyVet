@@ -3,33 +3,6 @@ plugins {
     id("com.google.gms.google-services")
     alias(libs.plugins.kotlin.android)
 }
-dependencies {
-    // JUnit לטסטים יחידתיים
-    testImplementation("junit:junit:4.13.2")
-
-    // Mockito למוקים
-    testImplementation("org.mockito:mockito-core:4.2.0")
-
-    // Mockito-Kotlin (אם את משתמשת בקוטלין)
-    testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
-
-    // Espresso לטסטים כלליים
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-
-    //UI Tests
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-
-    // Firebase
-    implementation("com.google.firebase:firebase-analytics-ktx:20.0.2")
-
-    // Firestore
-    implementation("com.google.firebase:firebase-firestore-ktx:24.0.0")
-
-
-}
-
-
-
 
 android {
     namespace = "com.myvet.myvet"
