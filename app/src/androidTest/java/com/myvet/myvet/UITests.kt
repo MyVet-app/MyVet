@@ -25,7 +25,7 @@ import org.junit.runner.RunWith
 
 
 @RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
+class UITests {
     @get:Rule
     val activityRule = ActivityScenarioRule(PetOwnerWindow::class.java)
 
