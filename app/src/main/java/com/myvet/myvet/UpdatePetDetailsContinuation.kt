@@ -3,7 +3,6 @@ package com.myvet.myvet
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -17,7 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 import android.widget.Toast
 
 
-class UpdatePetDetails2 : AppCompatActivity() {
+class UpdatePetDetailsContinuation : AppCompatActivity() {
 
     private lateinit var PetWeight: EditText
     private lateinit var PetGender: EditText
@@ -28,11 +27,11 @@ class UpdatePetDetails2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_update_pet_details2)
+        setContentView(R.layout.activity_update_pet_details_continuation)
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val intent = Intent(this@UpdatePetDetails2, UpdatePetDetails::class.java)
+                val intent = Intent(this@UpdatePetDetailsContinuation, UpdatePetDetails::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 startActivity(intent)
                 finish()

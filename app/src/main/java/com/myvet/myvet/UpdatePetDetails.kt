@@ -81,7 +81,7 @@ class UpdatePetDetails : AppCompatActivity() {
                             .addOnSuccessListener {
                                 Log.i("Update pet details", "Pet details updated successfully")
                                 Toast.makeText(this, "Pet details updated successfully", Toast.LENGTH_SHORT).show()
-                                val intent = Intent(this, UpdatePetDetails2::class.java)
+                                val intent = Intent(this, UpdatePetDetailsContinuation::class.java)
                                 Log.d("Navigation", "Attempting to open UpdatePetDetails2") // for check
                                 startActivity(intent)
 
@@ -106,7 +106,7 @@ class UpdatePetDetails : AppCompatActivity() {
                         .addOnSuccessListener {
                             Log.i("Update pet details", "Pet details saved successfully")
                             Toast.makeText(this, "Pet details saved successfully", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this, UpdatePetDetails2::class.java))
+                            startActivity(Intent(this, UpdatePetDetailsContinuation::class.java))
                             finish()
                         }
                         .addOnFailureListener {

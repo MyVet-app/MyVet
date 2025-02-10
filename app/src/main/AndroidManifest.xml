@@ -38,7 +38,7 @@
             android:name=".UpdatePetDetails"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light"/>
-        <activity android:name=".UpdatePetDetails2"
+        <activity android:name=".UpdatePetDetailsContinuation"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light"/>
         <activity
