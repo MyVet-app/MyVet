@@ -8,9 +8,9 @@
         <item name="android:fontFamily">@font/roberto</item>
         <!-- Gravitazion text -->
         <item name="android:gravity">center</item>
-        <!-- ריווח בין האותיות (אופציונלי) -->
+        <!--Spacious in text -->
         <item name="android:letterSpacing">0.02</item>
-        <!-- שולי טקסט -->
+        <!-- Margin text -->
         <item name="android:layout_marginBottom">16dp</item>
     </style>
 
