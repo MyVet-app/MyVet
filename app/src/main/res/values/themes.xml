@@ -40,7 +40,6 @@
         <!--Font text -->
         <item name="android:fontFamily">@font/roberto</item>
 
-
     </style>
     <style name="Theme.LogginApp" parent="Base.Theme.LogginApp" />
 
