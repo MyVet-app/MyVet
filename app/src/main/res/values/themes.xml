@@ -27,7 +27,7 @@
         <!--Gravitazion text  -->
         <item name="android:gravity">center</item>
 
-        <!-- גובה ורוחב כפתור -->
+        <!-- Button height and width -->
         <item name="android:minWidth">200dp</item>
         <item name="android:minHeight">48dp</item>
 
