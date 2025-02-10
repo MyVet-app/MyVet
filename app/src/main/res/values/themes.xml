@@ -21,7 +21,7 @@
         <!-- White text -->
         <item name="android:textColor">#FF000000</item>
 
-        <!-- גודל גופן -->
+        <!-- Size text -->
         <item name="android:textSize">18sp</item>
 
         <!-- יישור טקסט במרכז -->
