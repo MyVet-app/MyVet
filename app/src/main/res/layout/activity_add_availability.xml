@@ -17,12 +17,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Pick date:" />
+            android:text="Pick date:"
+            style="@style/titles"/>
 
         <CalendarView
             android:id="@+id/calendar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="300dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,33 +40,38 @@
                     android:id="@+id/startTimeButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Select start time" />
+                    android:text="Select start time"
+                    android:textSize="20dp" />
 
                 <TextView
                     android:id="@+id/startTimeText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Start time: " />
+                    android:text="Start time: "
+                    android:textSize="20dp"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:textSize="15dp">
 
                 <Button
                     android:id="@+id/endTimeButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="End time"
-                    android:enabled="false" />
+                    android:enabled="false"
+                    android:textSize="20dp"/>
 
                 <TextView
                     android:id="@+id/endTimeText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Selected end time: " />
+                    android:text="Selected end time: "
+                    android:textSize="20dp"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -75,7 +81,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Save"
-            android:enabled="false" />
+            android:enabled="false"
+            android:textSize="20dp"/>
     </LinearLayout>
 
 </ScrollView>

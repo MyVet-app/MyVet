@@ -1,56 +1,46 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-<!--    <style name="Base.Theme.LogginApp" parent="Theme.Material3.DayNight.NoActionBar">-->
-<!--        &lt;!&ndash; Customize your light theme here. &ndash;&gt;-->
-<!--        &lt;!&ndash; <item name="colorPrimary">@color/my_light_primary</item> &ndash;&gt;-->
-<!--    </style>-->
-
-<!--    <style name="Theme.LogginApp" parent="Base.Theme.LogginApp" />-->
     <style name="titles">
-        <!-- צבע הטקסט -->
+        <!-- Color text -->
         <item name="android:textColor">#FF000000</item>
-        <!-- גודל גופן -->
+        <!-- Size text -->
         <item name="android:textSize">24sp</item>
-        <!-- סגנון גופן -->
+        <!--  Design text -->
         <item name="android:fontFamily">@font/roberto</item>
-        <!-- יישור טקסט -->
+        <!-- Gravitazion text -->
         <item name="android:gravity">center</item>
-        <!-- ריווח בין האותיות (אופציונלי) -->
+        <!--Spacious in text -->
         <item name="android:letterSpacing">0.02</item>
-        <!-- שולי טקסט -->
+        <!-- Margin text -->
         <item name="android:layout_marginBottom">16dp</item>
     </style>
 
     <style name="buttonStyle">
-<!--        <item name="android:background">@drawable/rounded_botton</item>-->
-        <!-- רקע הכפתור - ירוק -->
+        <!-- Background buttom -->
         <item name="android:backgroundTint">#BFFF80</item>
 
-        <!-- צבע הטקסט בלחצן - לבן -->
+        <!-- White text -->
         <item name="android:textColor">#FF000000</item>
 
-        <!-- גודל גופן -->
+        <!-- Size text -->
         <item name="android:textSize">18sp</item>
 
-        <!-- יישור טקסט במרכז -->
+        <!--Gravitazion text  -->
         <item name="android:gravity">center</item>
 
-        <!-- גובה ורוחב כפתור -->
+        <!-- Button height and width -->
         <item name="android:minWidth">200dp</item>
         <item name="android:minHeight">48dp</item>
 
-        <!-- רדיוס פינות (כפתור עם קצוות מעוגלים) -->
-        <item name="android:background">@drawable/rounded_bottom</item>
+        <!-- Rounded corner -->
+        <item name="android:background">@drawable/rounded_corner</item>
 
-        <!-- הצללה קלה לכפתור (משפר את הנראות והמודרניות) -->
+        <!-- Design modern bottom -->
         <item name="android:elevation">4dp</item>
 
-        <!-- שינוי גופן הכפתור (לפי הפונט המוגדר שלך) -->
+        <!--Font text -->
         <item name="android:fontFamily">@font/roberto</item>
 
-
-
-
     </style>
+    <style name="Theme.LogginApp" parent="Base.Theme.LogginApp" />
 
 </resources>

@@ -70,24 +70,15 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation("androidx.test.espresso:espresso-intents:3.4.0")
     androidTestImplementation("androidx.test.espresso:espresso-idling-resource:3.4.0")
-
-
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
-
     implementation (libs.firebase.firestore)
     implementation (libs.geofire.android.common)
-
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
     implementation (libs.okhttp)
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
-
 }
-
-
-

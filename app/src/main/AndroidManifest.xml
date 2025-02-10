@@ -22,16 +22,13 @@
         tools:targetApi="31">
         <activity
             android:name=".MakeAppointment"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light"/>
+            android:exported="false" />
         <activity
             android:name=".FindVet"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light"/>
+            android:exported="false" />
         <activity
             android:name=".AddAvailability"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light"/>
+            android:exported="false" />
 
         <meta-data
             android:name="com.facebook.sdk.ClientToken"
@@ -41,44 +38,28 @@
             android:name=".UpdatePetDetails"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light"/>
-
-        <activity android:name=".UpdatePetDetails2"
+        <activity android:name=".UpdatePetDetailsContinuation"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light"/>
-
         <activity
             android:name=".VetWindow"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light"/>
-
         <activity
             android:name=".VeterinarianSignUp"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light"/>
-
-        <activity android:name=".VeterinarianSignUp2"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light"/>
-
         <activity
             android:name=".PetOwnerWindow"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light"/>
-
-        <activity android:name=".UpdateVetDetails"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light"/>
-
-
         <activity
             android:name=".OwnerSignUp"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light"/>
-
         <activity
             android:name=".MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -87,9 +68,7 @@
         </activity>
         <activity
             android:name=".SignUp"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light"/>
+            android:exported="false" />
     </application>
 
 </manifest>
-
