@@ -24,7 +24,7 @@
         <!-- Size text -->
         <item name="android:textSize">18sp</item>
 
-        <!-- יישור טקסט במרכז -->
+        <!--Gravitazion text  -->
         <item name="android:gravity">center</item>
 
         <!-- גובה ורוחב כפתור -->
