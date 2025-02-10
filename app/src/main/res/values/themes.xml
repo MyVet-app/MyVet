@@ -15,7 +15,7 @@
     </style>
 
     <style name="buttonStyle">
-        <!-- רקע הכפתור - ירוק -->
+        <!-- Background buttom -->
         <item name="android:backgroundTint">#BFFF80</item>
 
         <!-- צבע הטקסט בלחצן - לבן -->
