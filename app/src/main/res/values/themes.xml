@@ -4,7 +4,7 @@
         <item name="android:textColor">#FF000000</item>
         <!-- Size text -->
         <item name="android:textSize">24sp</item>
-        <!-- סגנון גופן -->
+        <!--  Design text -->
         <item name="android:fontFamily">@font/roberto</item>
         <!-- יישור טקסט -->
         <item name="android:gravity">center</item>
