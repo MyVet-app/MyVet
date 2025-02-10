@@ -4,28 +4,28 @@ plugins {
     alias(libs.plugins.kotlin.android)
 }
 dependencies {
-    // JUnit לטסטים יחידתיים
+    // JUnit for unit tests
     testImplementation("junit:junit:4.13.2")
 
-    // Mockito למוקים
+    // Mockito
     testImplementation("org.mockito:mockito-core:4.8.0")
 
-    // Mockito-Kotlin (עבור קוטלין)
+    // Mockito-Kotlin
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
 
-    // Mockito ל-Android Instrumented Tests
+    // Mockito for Android
     androidTestImplementation("org.mockito:mockito-android:4.8.0")
 
-    // Espresso לטסטים של UI
+    // Espresso for UI tests
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    // Espresso IdlingResource (אם יש לך בדיקות אסינכרוניות)
+    // Espresso IdlingResource for synchronization
     androidTestImplementation("androidx.test.espresso:espresso-idling-resource:3.5.1")
 
     // AndroidX Test - JUnit Extension
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
 
-    // AndroidX Test - Runner (דרוש להרצת UI Tests)
+    // AndroidX Test - Runner (Needed to run UI Tests)
     androidTestImplementation("androidx.test:runner:1.5.2")
 
     // Firebase
@@ -34,21 +34,6 @@ dependencies {
     // Firestore
     implementation("com.google.firebase:firebase-firestore-ktx:24.0.0")
 }
-
-
-//
-//    // Runner של AndroidTest
-//    androidTestImplementation 'androidx.test:runner:1.5.2'
-//
-//    // תמיכה ב-JUnit ב-AndroidTest
-//    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-//
-//    // בדיקות יחידה רגילות
-//    testImplementation 'junit:junit:4.13.2'
-
-
-
-
 
 android {
     namespace = "com.myvet.myvet"
@@ -116,24 +101,15 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation("androidx.test.espresso:espresso-intents:3.4.0")
     androidTestImplementation("androidx.test.espresso:espresso-idling-resource:3.4.0")
-
-
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
-
     implementation (libs.firebase.firestore)
     implementation (libs.geofire.android.common)
-
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
     implementation (libs.okhttp)
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
-
 }
-
-
-
