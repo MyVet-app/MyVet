@@ -18,7 +18,7 @@
         <!-- Background buttom -->
         <item name="android:backgroundTint">#BFFF80</item>
 
-        <!-- צבע הטקסט בלחצן - לבן -->
+        <!-- White text -->
         <item name="android:textColor">#FF000000</item>
 
         <!-- גודל גופן -->
