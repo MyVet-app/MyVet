@@ -47,7 +47,8 @@
             android:theme="@style/Theme.AppCompat.Light"/>
         <activity
             android:name=".VeterinarianSignUp"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light"/>
         <activity
             android:name=".PetOwnerWindow"
             android:exported="false"
@@ -59,7 +60,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
-<!--            android:theme="@style/Theme.AppCompat.Light">-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -68,8 +68,7 @@
         </activity>
         <activity
             android:name=".SignUp"
-            android:exported="false"/>
-<!--            android:theme="@style/Theme.AppCompat.Light"/>-->
+            android:exported="false" />
     </application>
 
 </manifest>

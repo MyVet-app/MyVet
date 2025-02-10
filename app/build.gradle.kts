@@ -3,37 +3,6 @@ plugins {
     id("com.google.gms.google-services")
     alias(libs.plugins.kotlin.android)
 }
-dependencies {
-    // JUnit for unit tests
-    testImplementation("junit:junit:4.13.2")
-
-    // Mockito
-    testImplementation("org.mockito:mockito-core:4.8.0")
-
-    // Mockito-Kotlin
-    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
-
-    // Mockito for Android
-    androidTestImplementation("org.mockito:mockito-android:4.8.0")
-
-    // Espresso for UI tests
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-
-    // Espresso IdlingResource for synchronization
-    androidTestImplementation("androidx.test.espresso:espresso-idling-resource:3.5.1")
-
-    // AndroidX Test - JUnit Extension
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-
-    // AndroidX Test - Runner (Needed to run UI Tests)
-    androidTestImplementation("androidx.test:runner:1.5.2")
-
-    // Firebase
-    implementation("com.google.firebase:firebase-analytics-ktx:20.0.2")
-
-    // Firestore
-    implementation("com.google.firebase:firebase-firestore-ktx:24.0.0")
-}
 
 android {
     namespace = "com.myvet.myvet"
