@@ -1,16 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-<!--    <style name="Base.Theme.LogginApp" parent="Theme.Material3.DayNight.NoActionBar">-->
-<!--        &lt;!&ndash; Customize your light theme here. &ndash;&gt;-->
-<!--        &lt;!&ndash; <item name="colorPrimary">@color/my_light_primary</item> &ndash;&gt;-->
-<!--    </style>-->
-
-<!--    <style name="Theme.LogginApp" parent="Base.Theme.LogginApp" />-->
-
     <style name="titles">
-        <!-- צבע הטקסט -->
+        <!-- Color text -->
         <item name="android:textColor">#FF000000</item>
-        <!-- גודל גופן -->
+        <!-- Size text -->
         <item name="android:textSize">24sp</item>
         <!-- סגנון גופן -->
         <item name="android:fontFamily">@font/roberto</item>
