@@ -9,8 +9,6 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,7 +19,6 @@ class UpdatePetDetails : AppCompatActivity() {
     private lateinit var PetName: EditText
     private lateinit var PetAge: EditText
     private lateinit var PetType: EditText
-//    private lateinit var ErorrMessage: TextView
     private lateinit var Next: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,13 +34,10 @@ class UpdatePetDetails : AppCompatActivity() {
             }
         })
 
-
         PetName = findViewById(R.id.name)
         PetType = findViewById(R.id.typeOfPet)
         PetAge = findViewById(R.id.age)
-//        ErorrMessage = findViewById(R.id.errorMessage)
         Next = findViewById(R.id.next)
-
 
         //Set the register button to be disabled
         Next.isEnabled = false
@@ -77,14 +71,10 @@ class UpdatePetDetails : AppCompatActivity() {
                     if (existingPetName == enteredPetName) {
                         // The user did not try to enter a new pet (the pet name is the same)
 
-                        val currentMedicalHistory = document.getString("medicalHistory") ?: ""
-//                        val updatedMedicalHistory = "$currentMedicalHistory\n${medicalHistory.text}"
-
                         // Prepare updated data (without overwriting the medical history)
                         val updatedData = hashMapOf(
                             "age" to PetAge.text.toString(),
                             "typeOfPet" to PetType.text.toString()
-//                            "medicalHistory" to updatedMedicalHistory
                         )
 
                         petDocRef.update(updatedData as Map<String, Any>)
@@ -92,7 +82,7 @@ class UpdatePetDetails : AppCompatActivity() {
                                 Log.i("Update pet details", "Pet details updated successfully")
                                 Toast.makeText(this, "Pet details updated successfully", Toast.LENGTH_SHORT).show()
                                 val intent = Intent(this, UpdatePetDetails2::class.java)
-                                Log.d("Navigation", "Attempting to open UpdatePetDetails2") // בדיקה
+                                Log.d("Navigation", "Attempting to open UpdatePetDetails2") // for check
                                 startActivity(intent)
 
                             }
@@ -109,10 +99,7 @@ class UpdatePetDetails : AppCompatActivity() {
                     val newPetData = hashMapOf(
                         "petName" to enteredPetName,
                         "petType" to PetType.text.toString(),
-//                        "petWeight" to PetWeight.text.toString(),
-                        "petAge" to PetAge.text.toString(),
-//                        "petGender" to PetGender.text.toString(),
-//                        "medicalHistory" to medicalHistory.text.toString()
+                        "petAge" to PetAge.text.toString()
                     )
 
                     petDocRef.set(newPetData)
