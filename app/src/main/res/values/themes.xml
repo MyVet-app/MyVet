@@ -6,7 +6,7 @@
         <item name="android:textSize">24sp</item>
         <!--  Design text -->
         <item name="android:fontFamily">@font/roberto</item>
-        <!-- יישור טקסט -->
+        <!-- Gravitazion text -->
         <item name="android:gravity">center</item>
         <!-- ריווח בין האותיות (אופציונלי) -->
         <item name="android:letterSpacing">0.02</item>
