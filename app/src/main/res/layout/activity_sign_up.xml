@@ -1,31 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_backround"
-    android:gravity="center"
+    android:background="@drawable/backround"
+
     tools:context=".SignUp">
 
     <!-- Vertical LinearLayout to stack title and buttons -->
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="50dp">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/titles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="70dp"
+            android:gravity="center"
+            android:text="Who are you?"
+            android:textColor="#213646"
+            android:textSize="50sp" />
 
         <!-- Title TextView -->
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/title2"
+            style="@style/titles"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="40dp"
             android:gravity="center"
             android:text="I am a:"
             android:textColor="#213646"
-            android:textSize="24sp" />
+            android:textSize="30sp" />
+        <!--            android:fontFamily="@font/Lato-Thinltalic"-->
+
 
         <!-- Horizontal LinearLayout for the buttons -->
         <LinearLayout
@@ -34,7 +51,7 @@
             android:layout_height="match_parent"
             android:baselineAligned="false"
             android:gravity="center"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <!-- Pet button section -->
             <LinearLayout
@@ -46,19 +63,21 @@
 
                 <ImageView
                     android:id="@+id/pet_button"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:importantForAccessibility="no"
                     android:src="@drawable/logo_pet" />
+
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:fontFamily="@font/roberto"
                     android:gravity="center"
                     android:text="Pet owner"
                     android:textColor="#213646"
-                    android:textSize="18sp" />
+                    android:textSize="19sp" />
             </LinearLayout>
 
             <!-- Vet button section -->
@@ -70,8 +89,8 @@
 
                 <ImageView
                     android:id="@+id/vet_button"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:importantForAccessibility="no"
                     android:src="@drawable/logo_vet" />
 
@@ -81,8 +100,9 @@
                     android:layout_marginTop="8dp"
                     android:gravity="center"
                     android:text="Veterinarian"
+                    android:fontFamily="@font/roberto"
                     android:textColor="#213646"
-                    android:textSize="18sp" />
+                    android:textSize="19sp" />
             </LinearLayout>
 
         </LinearLayout>

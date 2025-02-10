@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_backround"
+    android:background="@drawable/backround"
     android:orientation="vertical"
     tools:context=".PetOwnerWindow">
 
@@ -14,8 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Hello"
-        android:textSize="18sp" />
+        android:textSize="30dp"
+        android:padding="50dp"
+        style="@style/titles"
+        tools:text="שלום ליאת!"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,38 +26,71 @@
 
         <Button
             android:id="@+id/UpdateDetails"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/rounded_bottom"
+            android:gravity="center"
+            android:textSize="20sp"
             android:text="עדכון פרטי חיה" />
 
-        <Button
-            android:id="@+id/LogOut"
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Log Out" />
-
-        <Button
-            android:id="@+id/DeleteAccount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Delete Account" />
+            android:layout_height="10dp"/>
 
         <Button
             android:id="@+id/FindVet"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="Find Vet" />
+            android:layout_gravity="center_horizontal"
+            android:text="חיפוש וטרינר"
+            android:background="@drawable/rounded_bottom"
+            android:gravity="center"
+            android:textSize="20sp"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="?android:attr/listDivider" />
 
-        <TextView
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/LogOut"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="התנתקות"
             android:gravity="center"
-            android:text="Appointments:" />
+            android:textSize="20sp"
+            android:background="@drawable/rounded_bottom"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+
+        <Button
+            android:id="@+id/DeleteAccount"
+            android:layout_width="300dp"
+            android:layout_height="38dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/rounded_bottom"
+            android:gravity="center"
+            android:text="מחיקת משתמש"
+            android:textSize="20sp" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="התורים שלי:"
+            android:gravity="right"
+            android:textSize="20sp"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
 
         <ScrollView
             android:layout_width="match_parent"

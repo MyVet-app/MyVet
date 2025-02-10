@@ -5,25 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MakeAppointment">
+    tools:context=".MakeAppointment"
+    android:padding="16dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/backround">
 
     <TextView
         android:id="@+id/vetTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Vet Name" />
+        android:text="Vet Name"
+        style="@style/titles"/>
 
     <CalendarView
         android:id="@+id/calendarView"
+        style="@style/titles"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:textSize="30dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Available appointments:" />
+        android:text="Available appointments:"
+        android:textSize="15dp"/>
 
     <ScrollView
         android:layout_width="match_parent"

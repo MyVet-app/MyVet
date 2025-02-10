@@ -4,42 +4,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="@drawable/login_backround">
+    android:background="@drawable/backround">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="80dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="רישום בעלים"
+            android:layout_marginBottom="20dp"
+            android:text="רישום בעלים:"
             android:textColor="#213646"
             android:gravity="center"
             android:layout_marginTop="50dp"
-            android:textSize="25sp" />
+            android:textSize="28sp"
+            style="@style/titles"/>
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="כתובת מגורים"
-            android:textSize="18sp"
-            android:textColor="#213646" />
+            android:textColor="#213646"
+            android:layout_marginTop="30dp"
+            android:textSize="20sp"
+            android:fontFamily="@font/roberto"/>
 
         <EditText
             android:id="@+id/homeAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_vertical|start"
+            android:autofillHints="postalAddress"
+            android:background="@drawable/rounded_corner"
             android:hint="שדה חובה"
             android:inputType="textPostalAddress"
-            android:autofillHints="postalAddress"
-            android:textSize="16sp"
-            android:background="@drawable/rounded_corner"
-            android:layout_marginBottom="16dp"
-            android:padding="8dp" />
+            android:padding="14dp"
+            android:layout_gravity="center_horizontal"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/errorMessage"
@@ -53,8 +58,10 @@
             android:id="@+id/submitButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="הרשמה"
             android:textSize="16sp"
-            android:layout_marginTop="24dp" />
+            android:gravity="center"
+            android:background="@drawable/rounded_bottom"/>
     </LinearLayout>
 </ScrollView>
