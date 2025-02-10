@@ -1,8 +1,5 @@
 package com.myvet.myvet
 
-import android.content.Context
-import android.content.Intent
-import android.widget.Toast
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -15,7 +12,7 @@ import org.mockito.ArgumentMatchers.anyString
 import org.mockito.ArgumentMatchers.anyMap
 import org.junit.Assert.*
 
-class ExampleUnitTest {
+class UnitTest {
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)

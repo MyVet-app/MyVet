@@ -12,12 +12,10 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
 import com.firebase.geofire.GeoFireUtils
 import com.firebase.geofire.GeoLocation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.squareup.moshi.Json
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -30,7 +28,7 @@ import java.io.IOException
 import java.net.URLEncoder
 
 
-class VeterinarianSignUp2 : AppCompatActivity() {
+class VeterinarianSignUpContinuation : AppCompatActivity() {
     private lateinit var expertise: EditText
     private lateinit var aboutMe: EditText
 
@@ -40,11 +38,11 @@ class VeterinarianSignUp2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_veterinarian_sign_up2)
+        setContentView(R.layout.activity_veterinarian_sign_up_continuation)
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val intent = Intent(this@VeterinarianSignUp2, SignUp::class.java)
+                val intent = Intent(this@VeterinarianSignUpContinuation, SignUp::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 startActivity(intent)
                 finish()
@@ -100,7 +98,7 @@ class VeterinarianSignUp2 : AppCompatActivity() {
                             if (results.isEmpty()) {
                                 Handler(Looper.getMainLooper()).post {
                                     Toast.makeText(
-                                        this@VeterinarianSignUp2,
+                                        this@VeterinarianSignUpContinuation,
                                         "Address not found",
                                         Toast.LENGTH_SHORT
                                     ).show()
@@ -132,7 +130,7 @@ class VeterinarianSignUp2 : AppCompatActivity() {
                                         "Vet registered successfully"
                                     )
 
-                                    val intent = Intent(this@VeterinarianSignUp2, VetWindow::class.java)
+                                    val intent = Intent(this@VeterinarianSignUpContinuation, VetWindow::class.java)
                                     startActivity(intent)
                                     finish()
                                 }

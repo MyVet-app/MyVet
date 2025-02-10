@@ -115,7 +115,6 @@ class VetWindow : AppCompatActivity() {
         updateVetDetails = findViewById(R.id.UpdateVetDetails)
         updateVetDetails.setOnClickListener {
             val intent = Intent(this, UpdateVetDetails::class.java)
-//            intent.putExtra("EMAIL", user.email)
             startActivity(intent)
         }
 

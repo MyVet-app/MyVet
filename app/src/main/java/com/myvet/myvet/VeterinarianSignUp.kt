@@ -159,7 +159,7 @@ class VeterinarianSignUp : AppCompatActivity() {
                                         "Vet registered successfully"
                                     )
 
-                                    val intent = Intent(this@VeterinarianSignUp, VeterinarianSignUp2::class.java)
+                                    val intent = Intent(this@VeterinarianSignUp, VeterinarianSignUpContinuation::class.java)
                                     startActivity(intent)
                                     finish()
                                 }
