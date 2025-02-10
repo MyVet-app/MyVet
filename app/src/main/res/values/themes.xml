@@ -37,7 +37,7 @@
         <!-- Design modern bottom -->
         <item name="android:elevation">4dp</item>
 
-        <!--F -->
+        <!--Font text -->
         <item name="android:fontFamily">@font/roberto</item>
 
 
