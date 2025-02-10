@@ -31,13 +31,13 @@
         <item name="android:minWidth">200dp</item>
         <item name="android:minHeight">48dp</item>
 
-        <!-- רדיוס פינות (כפתור עם קצוות מעוגלים) -->
+        <!-- Rounded corner -->
         <item name="android:background">@drawable/rounded_corner</item>
 
-        <!-- הצללה קלה לכפתור (משפר את הנראות והמודרניות) -->
+        <!-- Design modern bottom -->
         <item name="android:elevation">4dp</item>
 
-        <!-- שינוי גופן הכפתור (לפי הפונט המוגדר שלך) -->
+        <!--F -->
         <item name="android:fontFamily">@font/roberto</item>
 
 
