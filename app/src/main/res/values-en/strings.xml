@@ -5,29 +5,29 @@
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">התחברות</string>
-    <string name="welcome">"שלום !"</string>
-    <string name="invalid_username">שם משתמש לא חוקי</string>
-    <string name="title_activity_pet_sign_up">הרשמת בעל חיית מחמד</string>
-    <string name="fui_sign_in_default">התחברות</string>
-    <string name="fui_email_hint">כתובת מייל</string>
-    <string name="fui_next_default">הבא</string>
-    <string name="fui_name_hint">שם מלא</string>
-    <string name="fui_new_password_hint">סיסמה חדשה</string>
-    <string name="fui_password_hint">סיסמה</string>
-    <string name="fui_missing_first_and_last_name">נא להזין שם מלא</string>
-    <string name="fui_button_text_save">שמור</string>
-    <string name="fui_welcome_back_email_header">ברוכים השבים!</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Hello!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="title_activity_pet_sign_up">Pet Sign Up</string>
+    <string name="fui_sign_in_default">Sign in</string>
+    <string name="fui_email_hint">Email Address</string>
+    <string name="fui_next_default">Next</string>
+    <string name="fui_name_hint">Full Name</string>
+    <string name="fui_new_password_hint">New Password</string>
+    <string name="fui_password_hint">Password</string>
+    <string name="fui_missing_first_and_last_name">Please enter your full name</string>
+    <string name="fui_button_text_save">Save</string>
+    <string name="fui_welcome_back_email_header">Welcome Back!</string>
     <string name="fui_welcome_back_password_prompt_body">
-        כבר התחברת בעבר עם הכתובת  <xliff:g example="jane.doe@example.com" id="email_addr" translation_description="">%1$s</xliff:g>.
-        נא להזין סיסמה.
+              <xliff:g example="jane.doe@example.com" id="email_addr" translation_description="">%1$s</xliff:g>.
+        You have already logged in with the address, please enter a password.
     </string>
-    <string name="fui_trouble_signing_in">בעיות התחברות?</string>
-    <string name="fui_password_recovery_body">נא להזין כתובת מייל אליו יישלחו הוראות לאיפוס סיסמה</string>
-    <string name="fui_button_text_send">שליחה</string>
+    <string name="fui_trouble_signing_in">Trouble signing in?</string>
+    <string name="fui_password_recovery_body">Enter the email address to receive reset instructions.</string>
+    <string name="fui_button_text_send">Send</string>
     <plurals name="fui_error_weak_password">
-        <item quantity="one">סיסמה לא מספיק חזקה. יש להשתמש בלפחות תו אחד וערבוב של אותיות ומספרים</item>
-        <item quantity="other">סיסמה לא מספיק חזקה. יש להשתמש בלפחות %1$d תוים אחד וערבוב של אותיות ומספרים.</item>
+        <item quantity="one">Password not strong enough. Use at least one character and a mix of letters and numbers</item>
+        <item quantity="other">Password not strong enough. Use at least one %1$d characters and a mix of letters and numbers.</item>
     </plurals>
 
     <string name="facebook_application_id" translatable="false">3889928198001609</string>
