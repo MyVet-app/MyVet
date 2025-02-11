@@ -8,7 +8,7 @@
     <string name="action_sign_in_short">הרשמה</string>
     <string name="action_sign_in_short_connection">התחברות</string>
     <string name="not_all_fields_filled">לא כל השדות מלאים</string>
-    <string name="welcome">"שלום !"</string>
+    <string name="welcome">"שלום!"</string>
     <string name="invalid_username">שם משתמש לא חוקי</string>
     <string name="title_activity_pet_sign_up">רישום בעלים:</string>
     <string name="fui_sign_in_default">התחברות</string>

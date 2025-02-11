@@ -25,7 +25,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="jj"
+            android:text="@string/fui_address_hint"
             android:textColor="#213646"
             android:layout_marginTop="30dp"
             android:textSize="20sp"
@@ -39,7 +39,7 @@
             android:gravity="center_vertical|start"
             android:autofillHints="postalAddress"
             android:background="@drawable/rounded_corner"
-            android:hint="kk"
+            android:hint="@string/mandatory_filed"
             android:inputType="textPostalAddress"
             android:padding="14dp"
             android:layout_gravity="center_horizontal"
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:textColor="#161313"
             android:visibility="gone"
-            android:text="kk" />
+            android:text="@string/not_all_fields_filled" />
 
         <Button
             android:id="@+id/submitButton"
