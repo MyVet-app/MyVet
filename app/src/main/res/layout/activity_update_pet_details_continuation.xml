@@ -2,22 +2,22 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="@drawable/backround">
+    android:background="@drawable/backround"
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="25dp">
+        android:padding="16dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="130dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="16dp"
             android:gravity="center"
-            android:text="רישום וטרינר:"
+            android:text="פרטי חיה"
             android:textColor="#213646"
             android:textSize="25sp"
             style="@style/titles"/>
@@ -25,65 +25,58 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="שם מרפאה"
-            android:textColor="#213646"
-            android:layout_marginTop="15dp"
-            android:textSize="20sp"
-            />
-
-        <EditText
-            android:id="@+id/clinicName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:gravity="center_vertical|start"
-            android:background="@drawable/rounded_corner"
-            android:hint="שדה חובה"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:padding="15dp"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="מיקום המרפאה"
+            android:text="משקל"
             android:textColor="#213646"
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/clinicLocation"
+            android:id="@+id/weight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:gravity="center_vertical|start"
             android:background="@drawable/rounded_corner"
-            android:hint="שדה חובה"
             android:importantForAutofill="no"
-            android:inputType="text"
-            android:padding="15dp"
+            android:inputType="number"
+            android:padding="8dp"
             android:textSize="16sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="שנות וותק"
+            android:text="מין"
             android:textColor="#213646"
-            android:textSize="18sp"
-             />
+            android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/yearsOfExperience"
+            android:id="@+id/gender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:gravity="center_vertical|start"
+            android:background="@drawable/rounded_corner"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:padding="8dp"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="הסטוריה רפואית"
+            android:textColor="#213646"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/medicalHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/rounded_corner"
             android:hint="שדה חובה"
             android:importantForAutofill="no"
-            android:inputType="number"
-            android:padding="15dp"
+            android:inputType="text"
+            android:padding="8dp"
             android:textSize="16sp" />
+
         <TextView
             android:id="@+id/errorMessage"
             android:layout_width="wrap_content"
@@ -92,18 +85,15 @@
             android:textColor="#161313"
             android:visibility="gone" />
 
-
         <Button
-            android:id="@+id/submitButton"
+            android:id="@+id/update"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="הבא"
-            android:textSize="18sp"
+            android:layout_marginTop="24dp"
+            android:text="עדכון פרטים"
+            android:textSize="16sp"
             android:gravity="center"
-            android:background="@drawable/rounded_bottom"
-            android:onClick="goToNextPage" />
-
+            android:background="@drawable/rounded_bottom"/>
 
     </LinearLayout>
 </ScrollView>

@@ -3,20 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_backround"
+    android:background="@drawable/backround"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".MainActivity">
 
+    <!-- Logo Image -->
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="MyVet"
-        android:textSize="50sp"
-        android:textColor="#161313" />
+        android:textColor="#161313"
+        android:textSize="50sp" />
 
-    <!-- Logo Image -->
     <ImageView
         android:layout_width="160dp"
         android:layout_height="160dp"

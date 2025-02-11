@@ -29,7 +29,6 @@ import java.util.Calendar
 class PetOwnerWindow : AppCompatActivity() {
 
     private lateinit var appointmentsListener: ListenerRegistration
-
     private lateinit var updateDetails: Button
     private lateinit var logOut: Button
     private lateinit var deleteAccount: Button
@@ -78,17 +77,14 @@ class PetOwnerWindow : AppCompatActivity() {
                     .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.timeInMillis)
                     .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.timeInMillis)
                     .putExtra(Events.TITLE, "Appointment with vet Dr. $vet")
-//                    .putExtra(Events.DESCRIPTION, "Group class")
                     .putExtra(Events.EVENT_LOCATION, "Virtual Meeting")
                     .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
-//                    .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com")
                 startActivity(intent)
             }
 
             appointmentText.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f) // 70% width
             deleteButton.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f) // 30% width
             calendarButton.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.4f) // 30% width
-
             appointmentContainer.addView(appointmentText)
             appointmentContainer.addView(deleteButton)
             appointmentContainer.addView(calendarButton)
@@ -107,18 +103,26 @@ class PetOwnerWindow : AppCompatActivity() {
             insets
         }
 
-        val user = FirebaseAuth.getInstance().currentUser!!
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user == null) {
+            Log.e("PetOwnerWindow", "Error: User is null")
+            // if user is null (not connected), go back to register
+            startActivity(Intent(this, MainActivity::class.java))
+            finish() // Closes the current Activity
+            return
+        }
         val db = FirebaseFirestore.getInstance()
 
+
         val textView: TextView = findViewById(R.id.HelloText)
-        textView.text = "Welcome ${user.displayName}"
+        textView.text = "שלום"+" ${user.displayName} "
 
         updateDetails = findViewById(R.id.UpdateDetails)
         updateDetails.setOnClickListener {
             val intent = Intent(this, UpdatePetDetails::class.java)
+            intent.putExtra("EMAIL", user.email)
             startActivity(intent)
         }
-
         logOut = findViewById(R.id.LogOut)
         logOut.setOnClickListener {
             appointmentsListener.remove()
@@ -130,7 +134,6 @@ class PetOwnerWindow : AppCompatActivity() {
                     finish()
                 }
         }
-
         deleteAccount = findViewById(R.id.DeleteAccount)
         deleteAccount.setOnClickListener {
             val uid = user.uid
@@ -151,13 +154,11 @@ class PetOwnerWindow : AppCompatActivity() {
                     Log.i("Delete account", e.toString())
                 }
         }
-
         findVet = findViewById(R.id.FindVet)
         findVet.setOnClickListener {
             val intent = Intent(this, FindVet::class.java)
             startActivity(intent)
         }
-
         appointmentsList = findViewById(R.id.appointments)
         appointmentsListener = db
             .collection("appointments")
@@ -167,15 +168,12 @@ class PetOwnerWindow : AppCompatActivity() {
                     Log.e("PetOwnerActivity", "Error fetching appointments", error)
                     return@addSnapshotListener
                 }
-
                 val appointments = mutableListOf<Pair<DocumentSnapshot, String>>() // Pair of appointment and vet name
                 val vetIds = snapshot?.documents?.map { it.getString("vet") ?: "" }?.distinct() ?: emptyList()
-
                 if (vetIds.isEmpty()) {
                     appointmentsList.removeAllViews()
                     return@addSnapshotListener
                 }
-
                 db.collection("users")
                     .whereIn(FieldPath.documentId(), vetIds)
                     .get()
@@ -187,7 +185,6 @@ class PetOwnerWindow : AppCompatActivity() {
                             val vetName = vetNames[vetId] ?: "Unknown"
                             appointments.add(Pair(appointment, vetName))
                         }
-
                         showAppointments(appointments)
                     }
             }
