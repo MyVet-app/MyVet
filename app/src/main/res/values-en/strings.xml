@@ -1,4 +1,37 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">MyVet</string>
+    <string name="hello_pet">Hello %s</string>
+    <string name="title_activity_login">Login</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">התחברות</string>
+    <string name="welcome">"שלום !"</string>
+    <string name="invalid_username">שם משתמש לא חוקי</string>
+    <string name="title_activity_pet_sign_up">הרשמת בעל חיית מחמד</string>
+    <string name="fui_sign_in_default">התחברות</string>
+    <string name="fui_email_hint">כתובת מייל</string>
+    <string name="fui_next_default">הבא</string>
+    <string name="fui_name_hint">שם מלא</string>
+    <string name="fui_new_password_hint">סיסמה חדשה</string>
+    <string name="fui_password_hint">סיסמה</string>
+    <string name="fui_missing_first_and_last_name">נא להזין שם מלא</string>
+    <string name="fui_button_text_save">שמור</string>
+    <string name="fui_welcome_back_email_header">ברוכים השבים!</string>
+    <string name="fui_welcome_back_password_prompt_body">
+        כבר התחברת בעבר עם הכתובת  <xliff:g example="jane.doe@example.com" id="email_addr" translation_description="">%1$s</xliff:g>.
+        נא להזין סיסמה.
+    </string>
+    <string name="fui_trouble_signing_in">בעיות התחברות?</string>
+    <string name="fui_password_recovery_body">נא להזין כתובת מייל אליו יישלחו הוראות לאיפוס סיסמה</string>
+    <string name="fui_button_text_send">שליחה</string>
+    <plurals name="fui_error_weak_password">
+        <item quantity="one">סיסמה לא מספיק חזקה. יש להשתמש בלפחות תו אחד וערבוב של אותיות ומספרים</item>
+        <item quantity="other">סיסמה לא מספיק חזקה. יש להשתמש בלפחות %1$d תוים אחד וערבוב של אותיות ומספרים.</item>
+    </plurals>
+
+    <string name="facebook_application_id" translatable="false">3889928198001609</string>
+    <!--    <string name="facebook_app_id" translatable="false">3889928198001609</string>-->
+    <string name="facebook_client_token">fdf813bfc8309a8c097e8ec28d35baf5</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb3889928198001609</string>
 </resources>
