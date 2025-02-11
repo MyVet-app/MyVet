@@ -18,11 +18,12 @@ import android.widget.Toast
 
 class UpdatePetDetailsContinuation : AppCompatActivity() {
 
-    private lateinit var PetWeight: EditText
-    private lateinit var PetGender: EditText
-    private lateinit var MedicalHistory: EditText
-    private lateinit var ErorrMessage: TextView
-    private lateinit var UpdateDetails: Button
+    private lateinit var petWeight: EditText
+    private lateinit var petGender: EditText
+    private lateinit var medicalHistory: EditText
+    private lateinit var erorrMessage: TextView
+    private lateinit var updateDetails: Button
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,40 +39,40 @@ class UpdatePetDetailsContinuation : AppCompatActivity() {
             }
         })
 
-        PetWeight = findViewById(R.id.weight)
-        PetGender = findViewById(R.id.gender)
-        MedicalHistory = findViewById(R.id.medicalHistory)
-        ErorrMessage = findViewById(R.id.errorMessage)
-        UpdateDetails = findViewById(R.id.update)
+        petWeight = findViewById(R.id.weight)
+        petGender = findViewById(R.id.gender)
+        medicalHistory = findViewById(R.id.medicalHistory)
+        erorrMessage = findViewById(R.id.errorMessage)
+        updateDetails = findViewById(R.id.update)
 
         //Set the register button to be disabled
-        UpdateDetails.isEnabled = false
+        updateDetails.isEnabled = false
 
         //Function to check if the user has typed in all the information needed for the registration
 
         //Function to check if the user has typed in all the information needed for the registration
         fun checkInputs() {
-            val medicalHistory = MedicalHistory.text.toString()
-            UpdateDetails.isEnabled =  medicalHistory.isNotEmpty()
+            val medicalHistory = medicalHistory.text.toString()
+            updateDetails.isEnabled =  medicalHistory.isNotEmpty()
         }
 
-        MedicalHistory.addTextChangedListener { checkInputs() }
+        medicalHistory.addTextChangedListener { checkInputs() }
 
         val db = FirebaseFirestore.getInstance()
         val user = FirebaseAuth.getInstance().currentUser
 
-        UpdateDetails.setOnClickListener {
+        updateDetails.setOnClickListener {
             val petCollection = db.collection("users").document(user!!.uid).collection("petDetails")
             val petDocRef = petCollection.document("Pet")
 
             petDocRef.get().addOnSuccessListener { document ->
 
                         val currentMedicalHistory = document.getString("medicalHistory") ?: ""
-                        val updatedMedicalHistory = "$currentMedicalHistory\n${MedicalHistory.text}"
+                        val updatedMedicalHistory = "$currentMedicalHistory\n${medicalHistory.text}"
 
                         // Prepare updated data (without overwriting the medical history)
                         val updatedData = hashMapOf(
-                            "petWeight" to PetWeight.text.toString(),
+                            "petWeight" to petWeight.text.toString(),
                             "medicalHistory" to updatedMedicalHistory
                         )
 
