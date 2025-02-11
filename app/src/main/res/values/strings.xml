@@ -31,7 +31,6 @@
     </plurals>
 
     <string name="facebook_application_id" translatable="false">3889928198001609</string>
-    <!--    <string name="facebook_app_id" translatable="false">3889928198001609</string>-->
     <string name="facebook_client_token">fdf813bfc8309a8c097e8ec28d35baf5</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb3889928198001609</string>
 </resources>
