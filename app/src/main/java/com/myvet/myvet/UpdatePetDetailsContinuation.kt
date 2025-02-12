@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +20,6 @@ class UpdatePetDetailsContinuation : AppCompatActivity() {
     private lateinit var petWeight: EditText
     private lateinit var petGender: EditText
     private lateinit var medicalHistory: EditText
-    private lateinit var erorrMessage: TextView
     private lateinit var updateDetails: Button
 
     @SuppressLint("MissingInflatedId")
@@ -42,7 +40,6 @@ class UpdatePetDetailsContinuation : AppCompatActivity() {
         petWeight = findViewById(R.id.weight)
         petGender = findViewById(R.id.gender)
         medicalHistory = findViewById(R.id.medicalHistory)
-        erorrMessage = findViewById(R.id.errorMessage)
         updateDetails = findViewById(R.id.update)
 
         //Set the register button to be disabled

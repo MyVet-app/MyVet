@@ -90,9 +90,9 @@ class UpdatePetDetails : AppCompatActivity() {
                                 Log.i("Update pet details", "Pet details updated successfully")
                                 Toast.makeText(this, "Pet details updated successfully", Toast.LENGTH_SHORT).show()
                                 val intent = Intent(this, UpdatePetDetailsContinuation::class.java)
-                                Log.d("Navigation", "Attempting to open UpdatePetDetails2") // for check
+                                Log.d("Navigation", "Attempting to open UpdatePetDetails2")
                                 startActivity(intent)
-
+                                finish()
                             }
                             .addOnFailureListener {
                                 Log.e("Update pet details", "Pet details update failed")
