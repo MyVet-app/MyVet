@@ -6,7 +6,9 @@
     <string name="start_time">שעת התחלה</string>
     <string name="end_time">שעת סיום</string>
     <string name="select_end_time">בחר שעת סיום:</string>
-    <string name="find_vet">חפש וטרינר:</string>
+    <string name="find_vet">חפש ווטרינר:</string>
+    <string name="vet_name">שם הווטרינר</string>
+    <string name="available_appointments">תורים זמינים:</string>
     <string name="title_activity_login">כניסה</string>
     <string name="prompt_email">כתובת מייל</string>
     <string name="prompt_password">סיסמה</string>

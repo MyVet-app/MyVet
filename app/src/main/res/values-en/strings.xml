@@ -6,6 +6,8 @@
     <string name="end_time">End time</string>
     <string name="select_end_time">Select end time:</string>
     <string name="find_vet">Find vet:</string>
+    <string name="vet_name">Vet Name</string>
+    <string name="available_appointments">Available appointments:</string>
     <string name="hello_pet">Hello %s</string>
     <string name="title_activity_login">Login</string>
     <string name="prompt_email">Email</string>
