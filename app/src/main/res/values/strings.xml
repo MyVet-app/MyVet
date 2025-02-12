@@ -1,5 +1,10 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" translatable="false">MyVet</string>
+    <string name="pick_date">בחר תאריך:</string>
+    <string name="select_start_time">בחר שעת התחלה:</string>
+    <string name="start_time">שעת התחלה</string>
+    <string name="end_time">שעת סיום</string>
+    <string name="select_end_time">בחר שעת סיום:</string>
     <string name="hello_pet">שלום %s</string>
     <string name="title_activity_login">כניסה</string>
     <string name="prompt_email">כתובת מייל</string>
