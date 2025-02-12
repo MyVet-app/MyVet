@@ -42,10 +42,7 @@ class UpdatePetDetailsContinuation : AppCompatActivity() {
         medicalHistory = findViewById(R.id.medicalHistory)
         updateDetails = findViewById(R.id.update)
 
-        //Set the register button to be disabled
         updateDetails.isEnabled = false
-
-        //Function to check if the user has typed in all the information needed for the registration
 
         //Function to check if the user has typed in all the information needed for the registration
         fun checkInputs() {
