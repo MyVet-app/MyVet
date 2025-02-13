@@ -28,6 +28,7 @@
     <string name="update_vet_details">Update vet details</string>
     <string name="area_of_expertise">Area of expertise"</string>
     <string name="a_little_about_me">A little about me</string>
+    <string name="add_availability">Add availability</string>
     <string name="hello_pet">Hello %s</string>
     <string name="title_activity_login">Login</string>
     <string name="prompt_email">Email</string>
