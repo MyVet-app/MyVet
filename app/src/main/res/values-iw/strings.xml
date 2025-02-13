@@ -18,6 +18,10 @@
     <string name="i_am_a">אני:</string>
     <string name="pet_owner">בעל חיית מחמד</string>
     <string name="vet">ווטרינר</string>
+    <string name="pet_details">פרטי חיה:</string>
+    <string name="name">שם</string>
+    <string name="age">גיל</string>
+    <string name="strain">זן</string>
     <string name="title_activity_login">כניסה</string>
     <string name="prompt_email">כתובת מייל</string>
     <string name="prompt_password">סיסמה</string>

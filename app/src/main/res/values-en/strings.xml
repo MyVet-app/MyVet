@@ -17,6 +17,10 @@
     <string name="i_am_a">I am a:</string>
     <string name="pet_owner">Pet owner</string>
     <string name="vet">Veterinarian</string>
+    <string name="pet_details">Pet details:</string>
+    <string name="name">Name</string>
+    <string name="age">Age</string>
+    <string name="strain">Strain</string>
     <string name="hello_pet">Hello %s</string>
     <string name="title_activity_login">Login</string>
     <string name="prompt_email">Email</string>
