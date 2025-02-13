@@ -17,7 +17,7 @@
             android:layout_marginTop="50dp"
             android:layout_marginBottom="16dp"
             android:gravity="center"
-            android:text="פרטי חיה"
+            android:text="@string/pet_details"
             android:textColor="#213646"
             android:textSize="25sp"
             style="@style/titles"/>
@@ -25,7 +25,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="משקל"
+            android:text="@string/weight"
             android:textColor="#213646"
             android:textSize="18sp" />
 
@@ -43,7 +43,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="מין"
+            android:text="@string/genus"
             android:textColor="#213646"
             android:textSize="18sp" />
 
@@ -61,7 +61,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="הסטוריה רפואית"
+            android:text="@string/medical_history"
             android:textColor="#213646"
             android:textSize="18sp" />
 
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:background="@drawable/rounded_corner"
-            android:hint="שדה חובה"
+            android:hint="@string/mandatory_filed"
             android:importantForAutofill="no"
             android:inputType="text"
             android:padding="8dp"
@@ -81,7 +81,7 @@
             android:id="@+id/errorMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="לא כל השדות מלאים"
+            android:text="@string/not_all_fields_filled"
             android:textColor="#161313"
             android:visibility="gone" />
 
@@ -90,7 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="עדכון פרטים"
+            android:text="@string/update_details"
             android:textSize="16sp"
             android:gravity="center"
             android:background="@drawable/rounded_bottom"/>
