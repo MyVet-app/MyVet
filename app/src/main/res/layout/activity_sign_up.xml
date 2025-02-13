@@ -9,10 +9,7 @@
 
     tools:context=".SignUp">
 
-    <!-- Vertical LinearLayout to stack title and buttons -->
-
-
-    <LinearLayout
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -26,11 +23,10 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="70dp"
             android:gravity="center"
-            android:text="Who are you?"
+            android:text="@string/who_are_you"
             android:textColor="#213646"
             android:textSize="50sp" />
 
-        <!-- Title TextView -->
         <TextView
             android:id="@+id/title2"
             style="@style/titles"
@@ -38,13 +34,10 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
             android:gravity="center"
-            android:text="I am a:"
+            android:text="@string/i_am_a"
             android:textColor="#213646"
             android:textSize="30sp" />
-        <!--            android:fontFamily="@font/Lato-Thinltalic"-->
 
-
-        <!-- Horizontal LinearLayout for the buttons -->
         <LinearLayout
             android:id="@+id/mainLayout"
             android:layout_width="wrap_content"
@@ -53,7 +46,6 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <!-- Pet button section -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -75,12 +67,12 @@
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/roberto"
                     android:gravity="center"
-                    android:text="Pet owner"
+                    android:text="@string/pet_owner"
                     android:textColor="#213646"
                     android:textSize="19sp" />
             </LinearLayout>
 
-            <!-- Vet button section -->
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -99,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
-                    android:text="Veterinarian"
+                    android:text="@string/vet"
                     android:fontFamily="@font/roberto"
                     android:textColor="#213646"
                     android:textSize="19sp" />

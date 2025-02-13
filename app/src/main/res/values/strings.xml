@@ -13,6 +13,10 @@
     <string name="disconnect">התנתקות</string>
     <string name="delete_account">מחיקת משתמש</string>
     <string name="my_appointments">התורים שלי:</string>
+    <string name="who_are_you">מי אתה?</string>
+    <string name="i_am_a">אני:</string>
+    <string name="pet_owner">בעל חיית מחמד</string>
+    <string name="vet">ווטרינר</string>
     <string name="hello_pet">שלום %s</string>
     <string name="title_activity_login">כניסה</string>
     <string name="prompt_email">כתובת מייל</string>

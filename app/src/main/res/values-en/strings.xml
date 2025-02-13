@@ -13,6 +13,10 @@
     <string name="disconnect">Disconnect</string>
     <string name="delete_account">Delete Account</string>
     <string name="my_appointments">My Appointments:</string>
+    <string name="who_are_you">Who are you?</string>
+    <string name="i_am_a">I am a:</string>
+    <string name="pet_owner">Pet owner</string>
+    <string name="vet">Veterinarian</string>
     <string name="hello_pet">Hello %s</string>
     <string name="title_activity_login">Login</string>
     <string name="prompt_email">Email</string>
