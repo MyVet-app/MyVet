@@ -25,6 +25,9 @@
     <string name="genus">מין</string>
     <string name="medical_history">הסטוריה רפואית</string>
     <string name="update_details">עדכון פרטים</string>
+    <string name="update_vet_details">עדכון פרטי ווטרינר</string>
+    <string name="area_of_expertise">תחום התמחות</string>
+    <string name="a_little_about_me">קצת עליי</string>
     <string name="hello_pet">שלום %s</string>
     <string name="title_activity_login">כניסה</string>
     <string name="prompt_email">כתובת מייל</string>
