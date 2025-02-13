@@ -33,16 +33,25 @@
             android:scaleType="fitCenter"
             android:src="@drawable/ic_google" />
 
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/roberto"
             android:paddingStart="8dp"
-            android:text="@string/fui_sign_in_with_google"
+            android:text="@string/sign_in_with_google"
             android:textColor="#000000"
             android:textSize="25dp" />
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:fontFamily="@font/roberto"-->
+<!--            android:paddingStart="8dp"-->
+<!--            android:text="@string/fui_sign_in_with_google"-->
+<!--            android:textColor="#000000"-->
+<!--            android:textSize="25dp" />-->
 
     </LinearLayout>
     <Space
@@ -73,7 +82,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/roberto"
             android:paddingStart="8dp"
-            android:text="@string/fui_sign_in_with_facebook"
+            android:text="@string/sign_in_with_facebook"
             android:textColor="#000000"
             android:textSize="25dp" />
 
@@ -99,14 +108,13 @@
             android:scaleType="fitCenter"
             android:src="@drawable/ic_gmail" />
 
-        <!-- טקסט של הכפתור -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/roberto"
             android:paddingStart="8dp"
-            android:text="@string/fui_sign_in_with_email"
+            android:text="@string/sign_in_with_gmail"
             android:textColor="#000000"
             android:textSize="25dp" />
 
