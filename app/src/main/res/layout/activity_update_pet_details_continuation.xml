@@ -77,14 +77,6 @@
             android:padding="8dp"
             android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/errorMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="לא כל השדות מלאים"
-            android:textColor="#161313"
-            android:visibility="gone" />
-
         <Button
             android:id="@+id/update"
             android:layout_width="match_parent"

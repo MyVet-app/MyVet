@@ -1,18 +1,22 @@
 package com.myvet.myvet
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.provider.CalendarContract
 import android.provider.CalendarContract.Events
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.bumptech.glide.Glide
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
@@ -32,8 +36,9 @@ class PetOwnerWindow : AppCompatActivity() {
     private lateinit var deleteAccount: Button
     private lateinit var findVet: Button
     private lateinit var appointmentsList: LinearLayout
-
-
+    private lateinit var petDetails: LinearLayout
+    private lateinit var petName: TextView
+    private lateinit var petImage: ImageView
 
     private fun showAppointments(appointments: MutableList<Pair<DocumentSnapshot, String>>) {
         appointmentsList.removeAllViews()
@@ -184,5 +189,96 @@ class PetOwnerWindow : AppCompatActivity() {
                         showAppointments(appointments)
                     }
             }
+        petDetails = findViewById(R.id.petDetails)
+        petName = findViewById(R.id.petName)
+
+        db.collection("users").document(user.uid).collection("petDetails").document("Pet")
+            .addSnapshotListener { document, error ->
+                if (error != null) {
+                    petName.text = "Error loading pet details"
+                    return@addSnapshotListener
+                }
+                if (document != null && document.exists()) {
+                    petDetails.removeAllViews()
+
+                    val name = document.getString("petName") ?: "N/A"
+                    petName.text = "$name's Details"
+                    val type = document.getString("petType") ?: "N/A"
+                    val age = document.getString("petAge") ?: "N/A"
+                    val weight = document.getString("petWeight") ?: "N/A"
+                    val gender = document.getString("petGender") ?: "N/A"
+                    val medicalHistory = document.getString("medicalHistory") ?: "N/A"
+
+                    // Function to add a TextView to the LinearLayout
+                    fun addTextView(label: String, value: String) {
+                        val textView = TextView(this)
+                        textView.text = "$label: $value"
+                        textView.textSize = 16f
+                        textView.setPadding(10, 10, 10, 10)
+                        petDetails.addView(textView)
+                    }
+
+                    // Adding the pet details to the LinearLayout
+                    addTextView("Pet Name", name)
+                    addTextView("Pet Type", type)
+                    addTextView("Pet Age", age)
+                    addTextView("Pet Weight", weight)
+                    addTextView("Pet Gender", gender)
+                    addTextView("Medical History","\n$medicalHistory")
+                } else {
+                    petName.text = "No pet details found"
+                }
+            }
+
+        petImage = findViewById(R.id.petImage)
+        petImage.setOnClickListener {
+            val petDocRef = db.collection("users").document(user.uid)
+                .collection("petDetails").document("Pet")
+
+            petDocRef.get()
+                .addOnSuccessListener { document ->
+                    if (document.exists() && document.contains("PetImage")) {
+                        val imageUrl = document.getString("PetImage")
+                        Log.d("PetOwnerWindow", "PetImage URL: $imageUrl")
+                        imageUrl?.let { loadImageIntoView(it) } // Load the image into the ImageView
+                    } else {
+                        Log.d("PetOwnerWindow", "PetImage field not found or document does not exist")
+                        openGallery() // Open the gallery if the document doesn't exist or doesn't contain the PetImage field
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Log.e("Firestore", "Error fetching document", e)
+                    openGallery() // If there was an error, open the gallery
+                }
+        }
+
     }
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        galleryActivityResultLauncher.launch(intent)
+    }
+    private val galleryActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        val imageUri: Uri? = result.data?.data
+        if (imageUri != null) {
+            val db = FirebaseFirestore.getInstance()
+            val user = FirebaseAuth.getInstance().currentUser ?: return@registerForActivityResult
+
+            val petDocRef = db.collection("users").document(user.uid).collection("petDetails").document("Pet")
+            val imageUrl = imageUri.toString()
+            petDocRef.update("PetImage", imageUrl)
+                .addOnSuccessListener {
+                    loadImageIntoView(imageUrl)
+                }
+                .addOnFailureListener { e ->
+                    Log.e("FirebaseStorage", "Error uploading image", e)
+                }
+        }
+    }
+    fun loadImageIntoView(imageUrl: String) {
+        Glide.with(this)
+            .load(imageUrl)
+            .into(petImage)
+    }
+
 }

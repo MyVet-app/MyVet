@@ -9,21 +9,29 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-
 class UpdatePetDetails : AppCompatActivity() {
 
-    private lateinit var PetName: EditText
-    private lateinit var PetAge: EditText
-    private lateinit var PetType: EditText
-    private lateinit var Next: Button
+    private lateinit var petName: EditText
+    private lateinit var petType: EditText
+    private lateinit var petAge: EditText
+    private lateinit var next: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_update_pet_details)
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -34,36 +42,36 @@ class UpdatePetDetails : AppCompatActivity() {
             }
         })
 
-        PetName = findViewById(R.id.name)
-        PetType = findViewById(R.id.typeOfPet)
-        PetAge = findViewById(R.id.age)
-        Next = findViewById(R.id.next)
+        petName = findViewById(R.id.name)
+        petType = findViewById(R.id.typeOfPet)
+        petAge = findViewById(R.id.age)
+        next = findViewById(R.id.next)
 
         //Set the register button to be disabled
-        Next.isEnabled = false
+        next.isEnabled = false
 
         //Function to check if the user has typed in all the information needed for the registration
         fun checkInputs() {
-            val name = PetName.text.toString()
-            val typeOfPet = PetType.text.toString()
-            val age = PetAge.text.toString()
-            Next.isEnabled = name.isNotEmpty() && typeOfPet.isNotEmpty() &&
-                    age.isNotEmpty()
+            val petName = petName.text.toString()
+            val petType = petType.text.toString()
+            val petAge = petAge.text.toString()
+            next.isEnabled = petName.isNotEmpty() && petType.isNotEmpty() &&
+                    petAge.isNotEmpty()
         }
 
-        PetName.addTextChangedListener { checkInputs() }
-        PetType.addTextChangedListener { checkInputs() }
-        PetAge.addTextChangedListener { checkInputs() }
+        petName.addTextChangedListener { checkInputs() }
+        petType.addTextChangedListener { checkInputs() }
+        petAge.addTextChangedListener { checkInputs() }
 
         val db = FirebaseFirestore.getInstance()
         val user = FirebaseAuth.getInstance().currentUser
 
-        Next.setOnClickListener {
+        next.setOnClickListener {
             val petCollection = db.collection("users").document(user!!.uid).collection("petDetails")
             val petDocRef = petCollection.document("Pet")
 
             petDocRef.get().addOnSuccessListener { document ->
-                val enteredPetName = PetName.text.toString()
+                val enteredPetName = petName.text.toString()
 
                 if (document.exists()) {
                     val existingPetName = document.getString("petName")
@@ -73,8 +81,8 @@ class UpdatePetDetails : AppCompatActivity() {
 
                         // Prepare updated data (without overwriting the medical history)
                         val updatedData = hashMapOf(
-                            "age" to PetAge.text.toString(),
-                            "typeOfPet" to PetType.text.toString()
+                            "age" to petAge.text.toString(),
+                            "typeOfPet" to petType.text.toString()
                         )
 
                         petDocRef.update(updatedData as Map<String, Any>)
@@ -82,9 +90,9 @@ class UpdatePetDetails : AppCompatActivity() {
                                 Log.i("Update pet details", "Pet details updated successfully")
                                 Toast.makeText(this, "Pet details updated successfully", Toast.LENGTH_SHORT).show()
                                 val intent = Intent(this, UpdatePetDetailsContinuation::class.java)
-                                Log.d("Navigation", "Attempting to open UpdatePetDetails2") // for check
+                                Log.d("Navigation", "Attempting to open UpdatePetDetails2")
                                 startActivity(intent)
-
+                                finish()
                             }
                             .addOnFailureListener {
                                 Log.e("Update pet details", "Pet details update failed")
@@ -98,8 +106,8 @@ class UpdatePetDetails : AppCompatActivity() {
                     // There is no pet details document for the user - create a new one
                     val newPetData = hashMapOf(
                         "petName" to enteredPetName,
-                        "petType" to PetType.text.toString(),
-                        "petAge" to PetAge.text.toString()
+                        "petType" to petType.text.toString(),
+                        "petAge" to petAge.text.toString()
                     )
 
                     petDocRef.set(newPetData)

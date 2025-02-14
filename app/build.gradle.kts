@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.firebase.ui.auth)
     implementation(libs.facebook.login)
     implementation(libs.places)
+    implementation(libs.firebase.storage.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -81,4 +82,6 @@ dependencies {
     implementation (libs.okhttp)
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
+        implementation(libs.glide.v4160)
+        annotationProcessor (libs.compiler)
 }
