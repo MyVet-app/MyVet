@@ -12,9 +12,11 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.bumptech.glide.Glide
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
@@ -37,7 +39,6 @@ class PetOwnerWindow : AppCompatActivity() {
     private lateinit var petDetails: LinearLayout
     private lateinit var petName: TextView
     private lateinit var petImage: ImageView
-    private val PICK_IMAGE_REQUEST = 1
 
     private fun showAppointments(appointments: MutableList<Pair<DocumentSnapshot, String>>) {
         appointmentsList.removeAllViews()
@@ -231,20 +232,53 @@ class PetOwnerWindow : AppCompatActivity() {
 
         petImage = findViewById(R.id.petImage)
         petImage.setOnClickListener {
-            openGallery()
+            val petDocRef = db.collection("users").document(user.uid)
+                .collection("petDetails").document("Pet")
+
+            petDocRef.get()
+                .addOnSuccessListener { document ->
+                    if (document.exists() && document.contains("PetImage")) {
+                        val imageUrl = document.getString("PetImage")
+                        Log.d("PetOwnerWindow", "PetImage URL: $imageUrl")
+                        imageUrl?.let { loadImageIntoView(it) } // Load the image into the ImageView
+                    } else {
+                        Log.d("PetOwnerWindow", "PetImage field not found or document does not exist")
+                        openGallery() // Open the gallery if the document doesn't exist or doesn't contain the PetImage field
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Log.e("Firestore", "Error fetching document", e)
+                    openGallery() // If there was an error, open the gallery
+                }
         }
+
     }
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
-        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+        galleryActivityResultLauncher.launch(intent)
     }
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
-            val imageUri: Uri? = data.data
-            petImage.setImageURI(imageUri) // Showing the image in the ImageView
+    private val galleryActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        val imageUri: Uri? = result.data?.data
+        if (imageUri != null) {
+            val db = FirebaseFirestore.getInstance()
+            val user = FirebaseAuth.getInstance().currentUser ?: return@registerForActivityResult
+
+            val petDocRef = db.collection("users").document(user.uid).collection("petDetails").document("Pet")
+            val imageUrl = imageUri.toString()
+            petDocRef.update("PetImage", imageUrl)
+                .addOnSuccessListener {
+                    loadImageIntoView(imageUrl)
+                }
+                .addOnFailureListener { e ->
+                    Log.e("FirebaseStorage", "Error uploading image", e)
+                }
         }
     }
+    fun loadImageIntoView(imageUrl: String) {
+        Glide.with(this)
+            .load(imageUrl)
+            .into(petImage)
+    }
+
 }
