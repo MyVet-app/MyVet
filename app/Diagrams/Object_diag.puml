@@ -1,0 +1,36 @@
+@startuml
+
+object MainActivity {
+    signInLauncher : null
+}
+
+object PetOwnerWindow {
+    updateDetails : Button
+    logOut : Button
+    deleteAccount : Button
+    findVet : Button
+}
+
+object VetWindow {
+    logOut : Button
+    deleteAccount : Button
+    addAvailability : Button
+    availabilityWindowsList : LinearLayout
+}
+
+object AddAvailability {
+    calendar : CalendarView
+    startTimeButton : Button
+    startTimeText : TextView
+    endTimeButton : Button
+    endTimeText : TextView
+    save : Button
+    startTime : null
+    endTime : null
+}
+
+MainActivity -- PetOwnerWindow : association
+MainActivity -- VetWindow : association
+VetWindow -- AddAvailability : composition
+
+@enduml

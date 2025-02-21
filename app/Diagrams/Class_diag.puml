@@ -1,0 +1,168 @@
+'
+'skinparam classAttributeIconSize 0
+'
+'class AddAvailability {
+'    - calendar: CalendarView
+'    - startTimeButton: Button
+'    - startTimeText: TextView
+'    - endTimeButton: Button
+'    - endTimeText: TextView
+'    - save: Button
+'    - startTime: LocalTime?
+'    - endTime: LocalTime?
+'    + selectTime(isStartTime: Boolean)
+'}
+'
+'class FindVet {
+'    - vetsList: LinearLayout
+'    + updateUIWithData(snapshot: QuerySnapshot)
+'}
+'
+'class MainActivity {
+'    - signInLauncher: ActivityResultLauncher<Intent>?
+'    + authFlow()
+'    + goHome(auth: FirebaseAuth)
+'    + handleSignInResult(result: FirebaseAuthUIAuthenticationResult)
+'}
+'
+'class MakeAppointment {
+'    - vetId: String
+'    - vetTitle: TextView
+'    - calendarView: CalendarView
+'    - appointmentList: LinearLayout
+'    + makeAppointment(date: LocalDate, time: LocalTime)
+'    + queryAvailabilityWindows(date: LocalDate)
+'}
+'
+'class OwnerSignUp {
+'    - address: EditText
+'    - register: Button
+'    - errorMessage: TextView
+'    + checkInputs()
+'}
+'
+'class PetOwnerWindow {
+'    - updateDetails: Button
+'    - logOut: Button
+'    - deleteAccount: Button
+'    - findVet: Button
+'}
+'
+'class VetWindow {
+'    - logOut: Button
+'    - deleteAccount: Button
+'    - addAvailability: Button
+'    - availabilityWindowsList: LinearLayout
+'    + updateUIWithData(snapshot: QuerySnapshot)
+'}
+'
+'class VeterinarianSignUp {
+'    - clinicName: EditText
+'    - clinicLocation: EditText
+'    - yearsOfExperience: EditText
+'    - expertise: EditText
+'    - aboutMe: EditText
+'    - register: Button
+'    + checkInputs()
+'}
+'
+'MainActivity *--> PetOwnerWindow
+'MainActivity *--> VetWindow
+'VetWindow o--> AddAvailability
+'OwnerSignUp --> PetOwnerWindow
+'FindVet --> MakeAppointment
+'MainActivity --> OwnerSignUp
+'MainActivity --> VeterinarianSignUp
+'
+'@enduml
+
+'
+'skinparam classAttributeIconSize 0
+'
+'class AddAvailability {
+'    + ניהול זמינות
+'}
+'
+'class FindVet {
+'    + חיפוש וטרינרים
+'}
+'
+'class MainActivity {
+'    + ניווט ראשי
+'}
+'
+'class MakeAppointment {
+'    + קביעת תורים
+'}
+'
+'class OwnerSignUp {
+'    + הרשמת משתמשים
+'}
+'
+'class PetOwnerWindow {
+'    + ממשק בעל חיות מחמד
+'}
+'
+'class VetWindow {
+'    + ממשק וטרינרים
+'}
+'
+'class VeterinarianSignUp {
+'    + הרשמת וטרינרים
+'}
+'
+'MainActivity *--> PetOwnerWindow
+'MainActivity *--> VetWindow
+'VetWindow o--> AddAvailability
+'OwnerSignUp --> PetOwnerWindow
+'FindVet --> MakeAppointment
+'MainActivity --> OwnerSignUp
+'MainActivity --> VeterinarianSignUp
+'
+'@enduml
+
+
+@startuml
+skinparam classAttributeIconSize 0
+
+
+class חיפוש_וטרינר {
+
+}
+
+class מסך_פתיחה {
+    + ניווט ראשי
+}
+
+class לוח_שנה {
+    + קביעת תורים
+}
+
+class הרשמת_בעל_חיית_מחמד {
+
+}
+
+class מסך_הבית_של_בעל_חיית_מחמד {
+    + ממשק בעל חיות מחמד
+    + בקשת מרשם
+    + עדכון פרטי חיות מחמד
+}
+
+class מסך_הבית_של_וטרינר {
+
+}
+
+class הרשמת_וטרינר {
+}
+
+מסך_פתיחה --> מסך_הבית_של_בעל_חיית_מחמד
+מסך_פתיחה --> מסך_הבית_של_וטרינר
+לוח_שנה <-- חיפוש_וטרינר
+"בקשת מרשם" <-- חיפוש_וטרינר
+מסך_הבית_של_וטרינר --> מסך_הבית_של_בעל_חיית_מחמד : "אישור מרשם"
+הרשמת_בעל_חיית_מחמד --> מסך_הבית_של_בעל_חיית_מחמד
+מסך_פתיחה --> הרשמת_בעל_חיית_מחמד
+מסך_הבית_של_וטרינר --> חיפוש_וטרינר
+מסך_פתיחה --> הרשמת_וטרינר
+מסך_הבית_של_בעל_חיית_מחמד --> מסך_הבית_של_וטרינר : "בקשת מרשם"
+@enduml

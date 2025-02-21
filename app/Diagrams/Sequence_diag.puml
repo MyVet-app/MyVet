@@ -1,0 +1,38 @@
+@startuml
+
+title Sequence Diagram for User Interaction
+
+actor User
+participant MainActivity
+participant PetOwnerWindow
+participant VetWindow
+participant AddAvailability
+participant OwnerSignUp
+participant VeterinarianSignUp
+
+User -> MainActivity: Open App
+MainActivity -> User: Check Login Status
+
+alt User is logged in
+    MainActivity -> User: Redirect to specific window
+    User -> MainActivity: Request PetOwnerWindow or VetWindow
+    alt User chooses PetOwnerWindow
+        MainActivity -> PetOwnerWindow: Open PetOwnerWindow
+    else User chooses VetWindow
+        MainActivity -> VetWindow: Open VetWindow
+    end
+else User is not logged in
+    MainActivity -> User: Display Login Options
+    alt User chooses "Owner"
+        MainActivity -> OwnerSignUp: Redirect to OwnerSignUp
+    else User chooses "Vet"
+        MainActivity -> VeterinarianSignUp: Redirect to VeterinarianSignUp
+    end
+end
+
+alt User interacts with VetWindow
+    User -> VetWindow: Perform actions
+    VetWindow -> AddAvailability: Open AddAvailability
+end
+
+@enduml
