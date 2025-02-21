@@ -21,9 +21,9 @@
     <string name="pet_details">פרטי חיה:</string>
     <string name="name">שם</string>
     <string name="age">גיל</string>
-    <string name="strain">זן</string>
+    <string name="breed">זן</string>
     <string name="weight">משקל</string>
-    <string name="genus">מין</string>
+    <string name="gender">מין</string>
     <string name="medical_history">הסטוריה רפואית</string>
     <string name="update_vet_details">עדכון פרטי ווטרינר</string>
     <string name="area_of_expertise">תחום התמחות</string>
@@ -67,7 +67,8 @@
     <string name="fui_button_text_send">שליחה</string>
     <plurals name="fui_error_weak_password">
         <item quantity="one">סיסמה לא מספיק חזקה. יש להשתמש בלפחות תו אחד וערבוב של אותיות ומספרים</item>
-        <item quantity="other">סיסמה לא מספיק חזקה. יש להשתמש בלפחות %1$d תוים אחד וערבוב של אותיות ומספרים.</item>
+        <item quantity="two">סיסמה לא מספיק חזקה. יש להשתמש בלפחות %1$d תוים וערבוב של אותיות ומספרים.</item>
+        <item quantity="other">סיסמה לא מספיק חזקה. יש להשתמש בלפחות %1$d תוים וערבוב של אותיות ומספרים.</item>
     </plurals>
 
 <!--    <string name="facebook_application_id" translatable="false">3889928198001609</string>-->

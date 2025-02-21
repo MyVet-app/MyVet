@@ -20,9 +20,9 @@
     <string name="pet_details">פרטי חיה:</string>
     <string name="name">שם</string>
     <string name="age">גיל</string>
-    <string name="strain">זן</string>
+    <string name="breed">זן</string>
     <string name="weight">משקל</string>
-    <string name="genus">מין</string>
+    <string name="gender">מין</string>
     <string name="medical_history">הסטוריה רפואית</string>
     <string name="update_details">עדכון פרטים</string>
     <string name="update_vet_details">עדכון פרטי ווטרינר</string>
