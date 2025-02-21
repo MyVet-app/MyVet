@@ -10,8 +10,8 @@ android {
 
     defaultConfig {
         applicationId = "com.myvet.myvet"
-        minSdk = 24
-        targetSdk = 34
+        minSdk = 35
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -64,16 +64,29 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.firebase.ui.auth)
     implementation(libs.facebook.login)
+    implementation(libs.places)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
+    androidTestImplementation("androidx.test.espresso:espresso-intents:3.4.0")
+    androidTestImplementation("androidx.test.espresso:espresso-idling-resource:3.4.0")
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
-
-    implementation ("com.google.firebase:firebase-firestore:24.0.2")
+    implementation (libs.firebase.firestore)
+    implementation (libs.geofire.android.common)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation (libs.okhttp)
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
+
+
+    // Mockito and PowerMock
+    testImplementation("org.mockito:mockito-core:3.12.4")
+    testImplementation("org.powermock:powermock-module-junit4:2.0.9")
+    testImplementation("org.powermock:powermock-api-mockito2:2.0.9")
+    testImplementation("androidx.arch.core:core-testing:2.2.0") // For LiveData testing
+    testImplementation("net.java.dev.jna:jna:5.12.1") // Required for Mockito inline mocking on Java 17+
 }

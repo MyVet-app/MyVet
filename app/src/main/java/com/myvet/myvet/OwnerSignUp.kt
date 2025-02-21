@@ -54,10 +54,11 @@ class OwnerSignUp : AppCompatActivity() {
         register.setOnClickListener {
             val userData = hashMapOf(
                 "type" to "owner",
+                "name" to user!!.displayName,
                 "address" to address.text.toString()
             )
             db.collection("users")
-                .document(user!!.uid)  // Use the uid as the document ID
+                .document(user.uid)  // Use the uid as the document ID
                 .set(userData)  // Set the data in the document
                 .addOnSuccessListener {
                     Log.i(

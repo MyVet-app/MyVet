@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_backround"
+    android:background="@drawable/background"
+    android:orientation="vertical"
     tools:context=".PetOwnerWindow">
 
     <TextView
         android:id="@+id/HelloText"
-        android:layout_width="224dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="332dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="18sp"
-        app:layout_constraintHorizontal_bias="0.497" />
+        android:textSize="30dp"
+        android:padding="50dp"
+        style="@style/titles"
+        tools:text="@string/welcome"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,22 +26,83 @@
 
         <Button
             android:id="@+id/UpdateDetails"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="עדכון פרטי חיה" />
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/rounded_bottom"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="@string/update_details_pet" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+
+        <Button
+            android:id="@+id/FindVet"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/search_vet"
+            android:background="@drawable/rounded_bottom"
+            android:gravity="center"
+            android:textSize="20sp"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
 
         <Button
             android:id="@+id/LogOut"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="Log Out" />
+            android:layout_gravity="center_horizontal"
+            android:text="@string/disconnect"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:background="@drawable/rounded_bottom"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
 
         <Button
             android:id="@+id/DeleteAccount"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="38dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/rounded_bottom"
+            android:gravity="center"
+            android:text="@string/delete_account"
+            android:textSize="20sp" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+        <TextView
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="Delete Account" />
+            android:layout_gravity="center_horizontal"
+            android:text="@string/my_appointments"
+            android:gravity="right"
+            android:textSize="20sp"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/appointments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
 
     </LinearLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

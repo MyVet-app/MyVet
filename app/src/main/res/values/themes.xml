@@ -1,9 +1,46 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.LogginApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="titles">
+        <!-- Color text -->
+        <item name="android:textColor">#FF000000</item>
+        <!-- Size text -->
+        <item name="android:textSize">24sp</item>
+        <!--  Design text -->
+        <item name="android:fontFamily">@font/roberto</item>
+        <!-- Gravitazion text -->
+        <item name="android:gravity">center</item>
+        <!--Spacious in text -->
+        <item name="android:letterSpacing">0.02</item>
+        <!-- Margin text -->
+        <item name="android:layout_marginBottom">16dp</item>
     </style>
 
+    <style name="buttonStyle">
+        <!-- Background buttom -->
+        <item name="android:backgroundTint">#BFFF80</item>
+
+        <!-- White text -->
+        <item name="android:textColor">#FF000000</item>
+
+        <!-- Size text -->
+        <item name="android:textSize">18sp</item>
+
+        <!--Gravitazion text  -->
+        <item name="android:gravity">center</item>
+
+        <!-- Button height and width -->
+        <item name="android:minWidth">200dp</item>
+        <item name="android:minHeight">48dp</item>
+
+        <!-- Rounded corner -->
+        <item name="android:background">@drawable/rounded_corner</item>
+
+        <!-- Design modern bottom -->
+        <item name="android:elevation">4dp</item>
+
+        <!--Font text -->
+        <item name="android:fontFamily">@font/roberto</item>
+
+    </style>
     <style name="Theme.LogginApp" parent="Base.Theme.LogginApp" />
+
 </resources>

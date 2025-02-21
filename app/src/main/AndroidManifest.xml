@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.myvet.myvet">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="com.google.android.gms.permission.AD_ID"
+        tools:node="remove" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -14,27 +18,49 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.LogginApp"
+        android:theme="@style/Theme.AppCompat.Light"
         tools:targetApi="31">
+        <activity
+            android:name=".MakeAppointment"
+            android:exported="false" />
+        <activity
+            android:name=".FindVet"
+            android:exported="false" />
+        <activity
+            android:name=".AddAvailability"
+            android:exported="false" />
 
-        <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
+        <meta-data
+            android:name="com.facebook.sdk.ClientToken"
+            android:value="@string/facebook_client_token" />
 
         <activity
             android:name=".UpdatePetDetails"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light"/>
+        <activity android:name=".UpdatePetDetailsContinuation"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light"/>
         <activity
             android:name=".VetWindow"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light"/>
         <activity
             android:name=".VeterinarianSignUp"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light"/>
+        <activity
+            android:name=".VeterinarianSignUpContinuation"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light"/>
         <activity
             android:name=".PetOwnerWindow"
             android:exported="false"
-            android:theme="@style/Theme.LogginApp" />
+            android:theme="@style/Theme.AppCompat.Light"/>
         <activity
             android:name=".OwnerSignUp"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">

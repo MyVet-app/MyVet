@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
+import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.AuthUI.IdpConfig.EmailBuilder
 import com.firebase.ui.auth.AuthUI.IdpConfig.FacebookBuilder
@@ -20,54 +21,17 @@ import com.google.firebase.firestore.FirebaseFirestore
 class MainActivity : AppCompatActivity() {
     private var signInLauncher: ActivityResultLauncher<Intent>? = null
 
-    private fun goHome(auth: FirebaseAuth) {
-        val db = FirebaseFirestore.getInstance()
-
-        val uid = auth.currentUser!!.uid
-        val userRef = db.collection("users").document(uid)
-
-        userRef.get().addOnSuccessListener { document ->
-            if (document.exists()) {
-                val type = document.getString("type")
-                Log.d("Firestore", "User found: Type = $type")
-
-                val intent = when (type) {
-                    "owner" -> Intent(this, PetOwnerWindow::class.java)
-                    "vet" -> Intent(this, VetWindow::class.java)
-                    else -> throw IllegalArgumentException("Unknown type: $type")
-                }
-
-                startActivity(intent)
-                finish()
-            } else {
-                Log.d("Firestore", "No such user with UID $uid")
-            }
-        }.addOnFailureListener { exception ->
-            Log.e("Firestore", "Error getting user document: $uid", exception)
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
-
-        val auth = FirebaseAuth.getInstance()
-        if (auth.currentUser != null) {
-            goHome(auth)
-        }
-
-        signInLauncher = registerForActivityResult(
-            FirebaseAuthUIActivityResultContract()
-        ) { result: FirebaseAuthUIAuthenticationResult ->
-            // Handle the FirebaseAuthUIAuthenticationResult
-            handleSignInResult(result)
-        }
+    private fun authFlow() {
+        val customLayout = AuthMethodPickerLayout.Builder(R.layout.auth_window)
+            .setGoogleButtonId(R.id.googleButton)
+            .setEmailButtonId(R.id.emailButton)
+            .setFacebookButtonId(R.id.facebookButton)
+            .setTosAndPrivacyPolicyId(R.id.tosAndPp)
+            .build()
 
         val signInIntent = AuthUI.getInstance()
             .createSignInIntentBuilder()
-            .setLogo(R.drawable.icon_logo)
+            .setAuthMethodPickerLayout(customLayout)
             .setTosAndPrivacyPolicyUrls(
                 "https://www.freeprivacypolicy.com/live/67168b52-bccb-4544-b878-711f6943de60",
                 "https://www.freeprivacypolicy.com/live/67168b52-bccb-4544-b878-711f6943de60"
@@ -84,6 +48,57 @@ class MainActivity : AppCompatActivity() {
             .setTheme(R.style.Theme_LogginApp)
             .build()
         signInLauncher!!.launch(signInIntent)
+    }
+
+    private fun goHome(auth: FirebaseAuth) {
+        val db = FirebaseFirestore.getInstance()
+
+        val uid = auth.currentUser!!.uid
+        val userRef = db.collection("users").document(uid)
+
+        userRef.get().addOnSuccessListener { document ->
+            if (document.exists()) {
+                val type = document.getString("type")
+                Log.d("Firestore", "User found: Type = $type")
+
+                val intent = when (type) {
+                    "owner" -> Intent(this, PetOwnerWindow::class.java)
+                    "vet" -> Intent(this, VetWindow::class.java)
+                    else -> Intent(this, SignUp::class.java)
+                }
+
+                startActivity(intent)
+                finish()
+            } else {
+                Log.d("Firestore", "No such user with UID $uid")
+                val intent = Intent(this, SignUp::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }.addOnFailureListener { exception ->
+            Log.e("Firestore", "Error getting user document: $uid", exception)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_main)
+
+        signInLauncher = registerForActivityResult(
+            FirebaseAuthUIActivityResultContract()
+        ) { result: FirebaseAuthUIAuthenticationResult ->
+            // Handle the FirebaseAuthUIAuthenticationResult
+            handleSignInResult(result)
+        }
+
+        val auth = FirebaseAuth.getInstance()
+        if (auth.currentUser != null) {
+            goHome(auth)
+        } else {
+            authFlow()
+        }
     }
 
     private fun handleSignInResult(result: FirebaseAuthUIAuthenticationResult) {
