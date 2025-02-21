@@ -1,5 +1,4 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">MyVet</string>
     <string name="pick_date">Pick date:</string>
     <string name="select_start_time">Select start time:</string>
     <string name="start_time">Start time</string>
@@ -70,7 +69,4 @@
         <item quantity="other">Password not strong enough. Use at least one %1$d characters and a mix of letters and numbers.</item>
     </plurals>
 
-    <string name="facebook_application_id" translatable="false">3889928198001609</string>
-    <string name="facebook_client_token">fdf813bfc8309a8c097e8ec28d35baf5</string>
-    <string name="facebook_login_protocol_scheme" translatable="false">fb3889928198001609</string>
 </resources>
