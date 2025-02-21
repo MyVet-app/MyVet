@@ -334,6 +334,7 @@ class VetWindow : AppCompatActivity() {
             availabilityContainer.addView(availabilityText)
             availabilityContainer.addView(deleteButton)
 
+
             availabilityWindowsList.addView(availabilityContainer)
         }
     }

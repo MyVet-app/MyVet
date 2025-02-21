@@ -50,6 +50,10 @@
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light"/>
         <activity
+            android:name=".VeterinarianSignUpContinuation"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light"/>
+        <activity
             android:name=".PetOwnerWindow"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light"/>

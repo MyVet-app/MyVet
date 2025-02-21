@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backround"
+    android:background="@drawable/background"
     android:orientation="vertical"
     tools:context=".VetWindow">
 
@@ -16,8 +16,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingTop="40dp"
-        android:textSize="40dp"
-        tools:text="Hello!" />
+        android:textSize="40sp"
+        tools:text="@string/welcome"/>
 
     <TextView
         android:id="@+id/clinicNameTitle"
@@ -54,7 +54,7 @@
             android:background="@drawable/rounded_bottom"
             android:gravity="center"
             android:textSize="20sp"
-            android:text="Update Details" />
+            android:text="@string/update_details" />
 
         <Space
             android:layout_width="match_parent"
@@ -68,7 +68,7 @@
             android:background="@drawable/rounded_bottom"
             android:gravity="center"
             android:textSize="20sp"
-            android:text="Add availability" />
+            android:text="@string/add_availability" />
         <Space
             android:layout_width="match_parent"
             android:layout_height="10dp"/>
@@ -81,7 +81,7 @@
             android:background="@drawable/rounded_bottom"
             android:gravity="center"
             android:textSize="20sp"
-            android:text="Log Out" />
+            android:text="@string/disconnect" />
 
         <Space
             android:layout_width="match_parent"
@@ -95,7 +95,7 @@
             android:background="@drawable/rounded_bottom"
             android:gravity="center"
             android:textSize="20sp"
-            android:text="Delete Account" />
+            android:text="@string/delete_account" />
 
         <View
             android:id="@+id/divider"

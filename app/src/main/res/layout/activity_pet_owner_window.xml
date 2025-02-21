@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backround"
+    android:background="@drawable/background"
     android:orientation="vertical"
     tools:context=".PetOwnerWindow">
 
@@ -17,7 +17,7 @@
         android:textSize="30dp"
         android:padding="50dp"
         style="@style/titles"
-        tools:text="שלום ליאת!"/>
+        tools:text="@string/welcome"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
             android:background="@drawable/rounded_bottom"
             android:gravity="center"
             android:textSize="20sp"
-            android:text="עדכון פרטי חיה" />
+            android:text="@string/update_details_pet" />
 
         <Space
             android:layout_width="match_parent"
@@ -43,7 +43,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="חיפוש וטרינר"
+            android:text="@string/search_vet"
             android:background="@drawable/rounded_bottom"
             android:gravity="center"
             android:textSize="20sp"/>
@@ -61,7 +61,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="התנתקות"
+            android:text="@string/disconnect"
             android:gravity="center"
             android:textSize="20sp"
             android:background="@drawable/rounded_bottom"/>
@@ -76,7 +76,7 @@
             android:layout_gravity="center_horizontal"
             android:background="@drawable/rounded_bottom"
             android:gravity="center"
-            android:text="מחיקת משתמש"
+            android:text="@string/delete_account"
             android:textSize="20sp" />
         <Space
             android:layout_width="match_parent"
@@ -85,7 +85,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="התורים שלי:"
+            android:text="@string/my_appointments"
             android:gravity="right"
             android:textSize="20sp"/>
         <Space

@@ -1,4 +1,72 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">MyVet</string>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="pick_date">Pick date:</string>
+    <string name="select_start_time">Select start time:</string>
+    <string name="start_time">Start time</string>
+    <string name="end_time">End time</string>
+    <string name="select_end_time">Select end time:</string>
+    <string name="find_vet">Find vet:</string>
+    <string name="vet_name">Vet Name</string>
+    <string name="available_appointments">Available appointments:</string>
+    <string name="update_details_pet">Update details pet</string>
+    <string name="search_vet">Find Vet</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="my_appointments">My Appointments:</string>
+    <string name="who_are_you">Who are you?</string>
+    <string name="i_am_a">I am a:</string>
+    <string name="pet_owner">Pet owner</string>
+    <string name="vet">Veterinarian</string>
+    <string name="pet_details">Pet details:</string>
+    <string name="name">Name</string>
+    <string name="age">Age</string>
+    <string name="breed">Breed</string>
+    <string name="weight">Weight</string>
+    <string name="gender">Gender</string>
+    <string name="medical_history">Medical history</string>
+    <string name="update_details">Update details</string>
+    <string name="update_vet_details">Update vet details</string>
+    <string name="area_of_expertise">Area of expertise"</string>
+    <string name="a_little_about_me">A little about me</string>
+    <string name="add_availability">Add availability</string>
+    <string name="title_activity_vet_sign_up">Vet Sign Up:</string>
+    <string name="the_name_of_the_clinic">The name of the clinic</string>
+    <string name="the_location_of_the_clinic">The location of the clinic</string>
+    <string name="years_of_seniority">Years of seniority</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="sign_in_with_facebook">Sign in with Facebook</string>
+    <string name="sign_in_with_gmail">Sign in with Gmail</string>
+    <string name="hello_pet">Hello %s</string>
+    <string name="title_activity_login">Login</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="action_sign_in_short_connection">Connection</string>
+    <string name="not_all_fields_filled">Not all fields filled</string>
+    <string name="welcome">"Hello!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="title_activity_pet_sign_up">Pet Sign Up:</string>
+    <string name="fui_sign_in_default">Sign in</string>
+    <string name="fui_email_hint">Email Address</string>
+    <string name="mandatory_filed">Mandatory filed</string>
+    <string name="fui_address_hint">Address</string>
+    <string name="fui_next_default">Next</string>
+    <string name="fui_name_hint">Full Name</string>
+    <string name="fui_new_password_hint">New Password</string>
+    <string name="fui_password_hint">Password</string>
+    <string name="fui_missing_first_and_last_name">Please enter your full name</string>
+    <string name="fui_button_text_save">Save</string>
+    <string name="fui_welcome_back_email_header">Welcome Back!</string>
+    <string name="fui_welcome_back_password_prompt_body">
+              <xliff:g example="jane.doe@example.com" id="email_addr" translation_description="">%1$s</xliff:g>.
+        You have already logged in with the address, please enter a password.
+    </string>
+    <string name="fui_trouble_signing_in">Trouble signing in?</string>
+    <string name="fui_password_recovery_body">Enter the email address to receive reset instructions.</string>
+    <string name="fui_button_text_send">Send</string>
+    <plurals name="fui_error_weak_password">
+        <item quantity="one">Password not strong enough. Use at least one character and a mix of letters and numbers</item>
+        <item quantity="other">Password not strong enough. Use at least one %1$d characters and a mix of letters and numbers.</item>
+    </plurals>
+
 </resources>
