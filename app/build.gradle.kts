@@ -68,20 +68,25 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
+    androidTestImplementation("androidx.test.espresso:espresso-intents:3.4.0")
+    androidTestImplementation("androidx.test.espresso:espresso-idling-resource:3.4.0")
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
-
     implementation (libs.firebase.firestore)
     implementation (libs.geofire.android.common)
-
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
     implementation (libs.okhttp)
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
 
+
+    // Mockito and PowerMock
+    testImplementation("org.mockito:mockito-core:3.12.4")
+    testImplementation("org.powermock:powermock-module-junit4:2.0.9")
+    testImplementation("org.powermock:powermock-api-mockito2:2.0.9")
+    testImplementation("androidx.arch.core:core-testing:2.2.0") // For LiveData testing
+    testImplementation("net.java.dev.jna:jna:5.12.1") // Required for Mockito inline mocking on Java 17+
 }

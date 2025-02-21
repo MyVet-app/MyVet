@@ -18,6 +18,8 @@ import java.time.Instant
 import java.time.LocalTime
 import java.time.ZoneId
 import java.util.Calendar
+import java.util.GregorianCalendar
+
 
 class AddAvailability : AppCompatActivity() {
 
@@ -27,6 +29,8 @@ class AddAvailability : AppCompatActivity() {
     private lateinit var endTimeButton: Button
     private lateinit var endTimeText: TextView
     private lateinit var save: Button
+
+    private var selectedDate: GregorianCalendar = Calendar.getInstance() as GregorianCalendar
 
     private var startTime: LocalTime? = null
     private var endTime: LocalTime? = null
@@ -62,6 +66,10 @@ class AddAvailability : AppCompatActivity() {
                 val selectedTime = LocalTime.of(selectedHour, adjustedMinute)
 
                 for (existingWindow in existingWindows) {
+                    if (existingWindow.getString("date") != selectedDate.toZonedDateTime().toLocalDate().toString()) {
+                        continue
+                    }
+
                     val existingWindowStartTime =
                         LocalTime.ofSecondOfDay(existingWindow.getLong("startTime")!!)
                     val existingWindowEndTime =
@@ -160,6 +168,12 @@ class AddAvailability : AppCompatActivity() {
         endTimeText = findViewById(R.id.endTimeText)
         save = findViewById(R.id.save)
 
+        calendar.setOnDateChangeListener { _, year, month, day ->
+            val c = Calendar.getInstance() as GregorianCalendar
+            c[year, month] = day
+            selectedDate = c
+        }
+
         val db = FirebaseFirestore.getInstance()
         val user = FirebaseAuth.getInstance().currentUser!!
 
@@ -211,6 +225,6 @@ class AddAvailability : AppCompatActivity() {
                     Toast.makeText(this, "Availability window creation failed", Toast.LENGTH_SHORT)
                         .show()
                 }
+            }
         }
-    }
 }
