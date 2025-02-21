@@ -25,7 +25,7 @@
         android:layout_height="30dp"
         android:gravity="center_horizontal"
         android:textSize="20sp"
-        android:text="TextView" />
+        android:text="" />
 
     <Space
         android:layout_width="match_parent"
@@ -38,7 +38,7 @@
         android:layout_height="30dp"
         android:gravity="center_horizontal"
         android:textSize="20sp"
-        android:text="TextView" />
+        android:text="" />
 
 
     <LinearLayout
@@ -131,7 +131,7 @@
                     android:id="@+id/appointmentsList"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"></LinearLayout>
+                    android:orientation="vertical" />
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
