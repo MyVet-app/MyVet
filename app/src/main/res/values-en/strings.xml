@@ -51,6 +51,7 @@
     <string name="delete_button">Delete</string>
     <string name="add_to_calandar">Add to calendar</string>
     <string name="avilable_windows">Available windows:</string>
+    <string name="doctor">Dr.</string>
     <string name="fui_sign_in_default">Sign in</string>
     <string name="fui_email_hint">Email Address</string>
     <string name="mandatory_filed">Mandatory filed</string>

@@ -50,10 +50,10 @@ class PetOwnerWindow : AppCompatActivity() {
 
             val appointmentText = TextView(this)
             appointmentText.text =
-                "Dr. $vet\n$date $time - ${time.plusMinutes(15)}"
+                "@string/doctor $vet\n$date $time - ${time.plusMinutes(15)}"
 
             val deleteButton = Button(this)
-            deleteButton.text = "Delete"
+            deleteButton.text = "@string/delete_button"
             deleteButton.setOnClickListener {
                 db.collection("appointments").document(pair.first.id).delete().addOnSuccessListener {
                     Toast.makeText(this, "Appointment deleted successfully", Toast.LENGTH_SHORT).show()
@@ -61,7 +61,7 @@ class PetOwnerWindow : AppCompatActivity() {
             }
 
             val calendarButton = Button(this)
-            calendarButton.text = "Add to Calendar"
+            calendarButton.text = "@string/add_to_calendar"
             calendarButton.setOnClickListener {
                 val beginTime: Calendar = Calendar.getInstance()
                 beginTime.set(date.year, date.monthValue, date.dayOfMonth, time.hour, time.minute)
@@ -111,7 +111,7 @@ class PetOwnerWindow : AppCompatActivity() {
 
 
         val textView: TextView = findViewById(R.id.HelloText)
-        textView.text = "שלום"+" ${user.displayName} "
+        textView.text = "@string/welcome_vet_or_pet "+" ${user.displayName} "
 
         updateDetails = findViewById(R.id.UpdateDetails)
         updateDetails.setOnClickListener {
