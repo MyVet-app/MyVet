@@ -46,6 +46,11 @@
     <string name="welcome">"Hello!"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="title_activity_pet_sign_up">Pet Sign Up:</string>
+    <string name="welcome_vet_or_pet">Welcome</string>
+    <string name="appointments">Appointments:</string>
+    <string name="delete_button">Delete</string>
+    <string name="add_to_calandar">Add to calendar</string>
+    <string name="avilable_windows">Available windows:</string>
     <string name="fui_sign_in_default">Sign in</string>
     <string name="fui_email_hint">Email Address</string>
     <string name="mandatory_filed">Mandatory filed</string>

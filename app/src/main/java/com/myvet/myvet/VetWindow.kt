@@ -104,7 +104,7 @@ class VetWindow : AppCompatActivity() {
         }
 
         val textView: TextView = findViewById(R.id.HelloText)
-        textView.text = "Welcome ${user.displayName}"
+        textView.text = "@string/welcome_vet_or_pet ${user.displayName}"
 
         addAvailability = findViewById(R.id.AddAvailability)
         addAvailability.setOnClickListener {
@@ -175,7 +175,7 @@ class VetWindow : AppCompatActivity() {
         appointmentsList.removeAllViews()
 
         val title = TextView(this)
-        title.text = "Appointments:"
+        title.text = "@string/appointments"
 
         appointmentsList.addView(title)
 
@@ -194,7 +194,7 @@ class VetWindow : AppCompatActivity() {
                 "$owner\n$date $time - ${time.plusMinutes(15)}"
 
             val deleteButton = Button(this)
-            deleteButton.text = "Delete"
+            deleteButton.text = "@string/delete_button"
             deleteButton.setOnClickListener {
                 db.collection("appointments").document(pair.first.id).delete().addOnSuccessListener {
                     Log.i("Appointment Deletion", "Appointment deleted successfully")
@@ -206,7 +206,7 @@ class VetWindow : AppCompatActivity() {
             }
 
             val calendarButton = Button(this)
-            calendarButton.text = "Add to Calendar"
+            calendarButton.text = "@string/add_to_calendar"
             calendarButton.setOnClickListener {
                 val beginTime: Calendar = Calendar.getInstance()
                 beginTime.set(date.year, date.monthValue, date.dayOfMonth, time.hour, time.minute)
@@ -242,7 +242,7 @@ class VetWindow : AppCompatActivity() {
         availabilityWindowsList.removeAllViews()
 
         val title = TextView(this)
-        title.text = "Availability Windows:"
+        title.text = "@string/availability_windows"
 
         availabilityWindowsList.addView(title)
 
@@ -263,7 +263,7 @@ class VetWindow : AppCompatActivity() {
                 "Date: $date\n$startTime - $endTime"
 
             val deleteButton = Button(this)
-            deleteButton.text = "Delete"
+            deleteButton.text = "@string/delete_button"
             deleteButton.setOnClickListener {
                 db.collection("users")
                     .document(user.uid)

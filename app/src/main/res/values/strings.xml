@@ -47,6 +47,11 @@
     <string name="welcome">"שלום!"</string>
     <string name="invalid_username">שם משתמש לא חוקי</string>
     <string name="title_activity_pet_sign_up">רישום בעלים:</string>
+    <string name="welcome_vet_or_pet">שלום</string>
+    <string name="appointments">תורים:</string>
+    <string name="delete_button">מחיקה</string>
+    <string name="add_to_calandar">הוסף ליומן</string>
+    <string name="avilable_windows">חלונות זמינים:</string>
     <string name="fui_sign_in_default">התחברות</string>
     <string name="fui_email_hint">כתובת מייל</string>
     <string name="mandatory_filed">שדה חובה</string>
