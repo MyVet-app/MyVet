@@ -95,13 +95,14 @@ class UpdateVetDetails : AppCompatActivity() {
                     }
                     .addOnFailureListener {
                         Log.e("Update vet details", "Failed to save vet details")
-                        Toast.makeText(this, "Failed to save vet details", Toast.LENGTH_SHORT)
+                        Toast.makeText(this,
+                            getString(R.string.failed_to_save_vet_details), Toast.LENGTH_SHORT)
                             .show()
                     }
             }
         }.addOnFailureListener {
             Log.e("Update vet details", "Failed to check vet existence")
-            Toast.makeText(this, "Error checking vet details", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.error_checking_vet_details), Toast.LENGTH_SHORT).show()
         }
     }
 }}
