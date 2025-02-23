@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.firebase.ui.auth)
     implementation(libs.facebook.login)
     implementation(libs.places)
+    implementation(libs.firebase.messaging.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -1,15 +1,20 @@
 package com.myvet.myvet
 
+import android.Manifest
 import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.AuthUI.IdpConfig.EmailBuilder
 import com.firebase.ui.auth.AuthUI.IdpConfig.FacebookBuilder
@@ -22,6 +27,40 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
     private var signInLauncher: ActivityResultLauncher<Intent>? = null
+
+    // Declare the launcher at the top of your Activity/Fragment:
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { isGranted ->
+        if (isGranted) {
+            // Permission is granted, FCM can post notifications
+        } else {
+            // Permission is denied, inform the user
+            AlertDialog.Builder(this)
+                .setTitle("Notification Permission Required")
+                .setMessage("This app needs the notification permission to show alerts. Please enable it in the settings.")
+                .setPositiveButton("Settings") { _, _ ->
+                    // Send user to app settings
+                    val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                        .putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+                    startActivity(intent)
+                }
+                .setNegativeButton("Cancel") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
+    }
+
+    private fun askNotificationPermission() {
+        if (ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.POST_NOTIFICATIONS
+        ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+    }
 
     private fun authFlow() {
         val signInIntent = AuthUI.getInstance()
@@ -78,10 +117,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        createNotificationChannel()
-
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+        askNotificationPermission()
 
         signInLauncher = registerForActivityResult(
             FirebaseAuthUIActivityResultContract()
@@ -133,25 +172,6 @@ class MainActivity : AppCompatActivity() {
 
             // show it
             alertDialog.show()
-        }
-    }
-
-    private fun createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is not in the Support Library.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            val name = getString(R.string.channel_name)
-            val name = "MyVet"
-//            val descriptionText = getString(R.string.channel_description)
-            val descriptionText = "MyVet notifications"
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel("MYVET_CHANNEL_ID", name, importance).apply {
-                description = descriptionText
-            }
-            // Register the channel with the system.
-            val notificationManager: NotificationManager =
-                getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
         }
     }
 }
