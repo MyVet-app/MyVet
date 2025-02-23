@@ -56,7 +56,7 @@ class PetOwnerWindow : AppCompatActivity() {
             deleteButton.text = getString(R.string.delete_button)
             deleteButton.setOnClickListener {
                 db.collection("appointments").document(pair.first.id).delete().addOnSuccessListener {
-                    Toast.makeText(this, "Appointment deleted successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.appointment_deleted_successfully), Toast.LENGTH_SHORT).show()
                 }
             }
 
