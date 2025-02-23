@@ -53,6 +53,8 @@
     <string name="avilable_windows">Available windows:</string>
     <string name="doctor">Dr.</string>
     <string name="select_button">Select</string>
+    <string name="name_vet">Name:</string>
+    <string name="address">Address:</string>
     <string name="fui_sign_in_default">Sign in</string>
     <string name="fui_email_hint">Email Address</string>
     <string name="mandatory_filed">Mandatory filed</string>
