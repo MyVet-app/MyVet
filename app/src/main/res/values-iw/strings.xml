@@ -65,6 +65,7 @@
     <string name="availability_window_deleted_successfully">חלון הזמינות נמחק בהצלחה</string>
     <string name="date">תאריך:</string>
     <string name="appointment_deleted_successfully">הפגישה נמחקה בהצלחה</string>
+    <string name="permission_denied">הרשאה נדחתה</string>
     <string name="fui_sign_in_default">התחברות</string>
     <string name="fui_email_hint">כתובת מייל</string>
     <string name="mandatory_filed">שדה חובה</string>

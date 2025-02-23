@@ -216,7 +216,7 @@ class FindVet : AppCompatActivity() {
 
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
-                    Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, getString(R.string.permission_denied), Toast.LENGTH_LONG).show()
 
                     // Check if we are in a state where the user has denied the permission and
                     // selected Don't ask again

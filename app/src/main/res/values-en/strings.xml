@@ -65,6 +65,8 @@
     <string name="availability_window_deleted_successfully">Availability window deleted successfully</string>
     <string name="date">Date:</string>
     <string name="appointment_deleted_successfully">Appointment deleted successfully</string>
+    <string name="permission_denied">Permission denied</string>
+
     <string name="fui_sign_in_default">Sign in</string>
     <string name="fui_email_hint">Email Address</string>
     <string name="mandatory_filed">Mandatory filed</string>
