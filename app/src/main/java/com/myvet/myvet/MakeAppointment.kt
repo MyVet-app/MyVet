@@ -46,7 +46,8 @@ class MakeAppointment : AppCompatActivity() {
                     "Appointment creation",
                     "Appointment created successfully"
                 )
-                Toast.makeText(this, "Appointment made successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    getString(R.string.appointment_made_successfully), Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -99,7 +100,8 @@ class MakeAppointment : AppCompatActivity() {
                         appointmentContainer.orientation = LinearLayout.HORIZONTAL
 
                         val appointmentText = TextView(this)
-                        appointmentText.text = "$appointmentTime - ${appointmentTime.plusMinutes(15)}"
+                        val timeRange = getString(R.string.time_range, appointmentTime, appointmentTime.plusMinutes(15))
+                        appointmentText.text = timeRange
                         appointmentText.layoutParams = LinearLayout.LayoutParams(
                             0,
                             LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -107,8 +109,9 @@ class MakeAppointment : AppCompatActivity() {
                         )
 
                         val selectButton = Button(this)
-                        selectButton.text = "Select"
-                        selectButton.layoutParams = LinearLayout.LayoutParams(
+                        selectButton.text = getString(R.string.select_button)
+
+                    selectButton.layoutParams = LinearLayout.LayoutParams(
                             0,
                             LinearLayout.LayoutParams.WRAP_CONTENT,
                             0.3f
@@ -177,15 +180,5 @@ class MakeAppointment : AppCompatActivity() {
 
         queryAvailabilityWindows(LocalDate.now())
 
-//        db.collection("users")
-//            .document(vetId)
-//            .collection("availability")
-//            .get()
-//            .addOnSuccessListener { result ->
-//                val dates = result.documents
-//                    .mapNotNull { it.getString("date") }
-//                    .distinct() // Get unique dates
-//                processDates(dates)
-//            }
     }
 }
