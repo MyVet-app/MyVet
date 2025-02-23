@@ -80,7 +80,8 @@ class UpdatePetDetails : AppCompatActivity() {
                         petDocRef.update(updatedData as Map<String, Any>)
                             .addOnSuccessListener {
                                 Log.i("Update pet details", "Pet details updated successfully")
-                                Toast.makeText(this, "Pet details updated successfully", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this,
+                                    getString(R.string.pet_details_updated_successfully), Toast.LENGTH_SHORT).show()
                                 val intent = Intent(this, UpdatePetDetailsContinuation::class.java)
                                 Log.d("Navigation", "Attempting to open UpdatePetDetails2") // for check
                                 startActivity(intent)
@@ -88,11 +89,13 @@ class UpdatePetDetails : AppCompatActivity() {
                             }
                             .addOnFailureListener {
                                 Log.e("Update pet details", "Pet details update failed")
-                                Toast.makeText(this, "Pet details update failed", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this,
+                                    getString(R.string.pet_details_update_failed), Toast.LENGTH_SHORT).show()
                             }
                     } else {
                         // The user tried to change the pet's name
-                        Toast.makeText(this, "You cannot add a new pet!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this,
+                            getString(R.string.you_cannot_add_a_new_pet), Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     // There is no pet details document for the user - create a new one
@@ -105,18 +108,21 @@ class UpdatePetDetails : AppCompatActivity() {
                     petDocRef.set(newPetData)
                         .addOnSuccessListener {
                             Log.i("Update pet details", "Pet details saved successfully")
-                            Toast.makeText(this, "Pet details saved successfully", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this,
+                                getString(R.string.pet_details_saved_successfully), Toast.LENGTH_SHORT).show()
                             startActivity(Intent(this, UpdatePetDetailsContinuation::class.java))
                             finish()
                         }
                         .addOnFailureListener {
                             Log.e("Update pet details", "Failed to save pet details")
-                            Toast.makeText(this, "Failed to save pet details", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this,
+                                getString(R.string.failed_to_save_pet_details), Toast.LENGTH_SHORT).show()
                         }
                 }
             }.addOnFailureListener {
                 Log.e("Update pet details", "Failed to check pet existence")
-                Toast.makeText(this, "Error checking pet details", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    getString(R.string.error_checking_pet_details), Toast.LENGTH_SHORT).show()
             }
         }
     }

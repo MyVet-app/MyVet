@@ -67,6 +67,13 @@
     <string name="appointment_deleted_successfully">הפגישה נמחקה בהצלחה</string>
     <string name="permission_denied">הרשאה נדחתה</string>
     <string name="appointment_made_successfully">הפגישה בוצעה בהצלחה</string>
+    <string name="pet_details_updated_successfully">פרטי חיית המחמד עודכנו בהצלחה</string>
+    <string name="pet_details_update_failed">עדכון פרטי חיית המחמד נכשל</string>
+    <string name="you_cannot_add_a_new_pet">אתה לא יכול להוסיף חיית מחמד חדשה!</string>
+    <string name="pet_details_saved_successfully">פרטי חיית המחמד נשמרו בהצלחה</string>
+    <string name="failed_to_save_pet_details">שמירת פרטי חיית המחמד נכשלה</string>
+    <string name="error_checking_pet_details">שגיאה בבדיקת פרטי חיית המחמד</string>
+
     <string name="fui_sign_in_default">התחברות</string>
     <string name="fui_email_hint">כתובת מייל</string>
     <string name="mandatory_filed">שדה חובה</string>

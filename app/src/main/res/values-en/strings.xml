@@ -67,6 +67,12 @@
     <string name="appointment_deleted_successfully">Appointment deleted successfully</string>
     <string name="permission_denied">Permission denied</string>
     <string name="appointment_made_successfully">Appointment made successfully</string>
+    <string name="pet_details_updated_successfully">Pet details updated successfully</string>
+    <string name="pet_details_update_failed">Pet details update failed</string>
+    <string name="you_cannot_add_a_new_pet">You cannot add a new pet!</string>
+    <string name="pet_details_saved_successfully">Pet details saved successfully</string>
+    <string name="failed_to_save_pet_details">Failed to save pet details</string>
+    <string name="error_checking_pet_details">Error checking pet details</string>
 
     <string name="fui_sign_in_default">Sign in</string>
     <string name="fui_email_hint">Email Address</string>
