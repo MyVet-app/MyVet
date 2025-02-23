@@ -1,37 +1,31 @@
 package com.myvet.myvet
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.auth.FirebaseAuth
+import android.widget.Toast
+
 
 class UpdatePetDetails : AppCompatActivity() {
 
-    private lateinit var petName: EditText
-    private lateinit var petType: EditText
-    private lateinit var petAge: EditText
-    private lateinit var next: Button
+    private lateinit var petWeight: EditText
+    private lateinit var medicalHistory: EditText
+    private lateinit var updateDetails: Button
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_update_pet_details)
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -42,86 +36,51 @@ class UpdatePetDetails : AppCompatActivity() {
             }
         })
 
-        petName = findViewById(R.id.name)
-        petType = findViewById(R.id.typeOfPet)
-        petAge = findViewById(R.id.age)
-        next = findViewById(R.id.next)
+        petWeight = findViewById(R.id.weight)
+        medicalHistory = findViewById(R.id.medicalHistory)
+        updateDetails = findViewById(R.id.update)
 
-        //Set the register button to be disabled
-        next.isEnabled = false
+        updateDetails.isEnabled = false
 
         //Function to check if the user has typed in all the information needed for the registration
         fun checkInputs() {
-            val petName = petName.text.toString()
-            val petType = petType.text.toString()
-            val petAge = petAge.text.toString()
-            next.isEnabled = petName.isNotEmpty() && petType.isNotEmpty() &&
-                    petAge.isNotEmpty()
+            val medicalHistory = medicalHistory.text.toString()
+            updateDetails.isEnabled =  medicalHistory.isNotEmpty()
         }
 
-        petName.addTextChangedListener { checkInputs() }
-        petType.addTextChangedListener { checkInputs() }
-        petAge.addTextChangedListener { checkInputs() }
+        medicalHistory.addTextChangedListener { checkInputs() }
 
         val db = FirebaseFirestore.getInstance()
         val user = FirebaseAuth.getInstance().currentUser
 
-        next.setOnClickListener {
+        updateDetails.setOnClickListener {
             val petCollection = db.collection("users").document(user!!.uid).collection("petDetails")
             val petDocRef = petCollection.document("Pet")
 
             petDocRef.get().addOnSuccessListener { document ->
-                val enteredPetName = petName.text.toString()
 
-                if (document.exists()) {
-                    val existingPetName = document.getString("petName")
-
-                    if (existingPetName == enteredPetName) {
-                        // The user did not try to enter a new pet (the pet name is the same)
+                        val currentMedicalHistory = document.getString("medicalHistory") ?: ""
+                        val updatedMedicalHistory = "$currentMedicalHistory\n${medicalHistory.text}"
 
                         // Prepare updated data (without overwriting the medical history)
                         val updatedData = hashMapOf(
-                            "age" to petAge.text.toString(),
-                            "typeOfPet" to petType.text.toString()
+                            "petWeight" to petWeight.text.toString(),
+                            "medicalHistory" to updatedMedicalHistory
                         )
 
                         petDocRef.update(updatedData as Map<String, Any>)
                             .addOnSuccessListener {
                                 Log.i("Update pet details", "Pet details updated successfully")
                                 Toast.makeText(this, "Pet details updated successfully", Toast.LENGTH_SHORT).show()
-                                val intent = Intent(this, UpdatePetDetailsContinuation::class.java)
-                                Log.d("Navigation", "Attempting to open UpdatePetDetails2")
-                                startActivity(intent)
+
+                                startActivity(Intent(this, PetOwnerWindow::class.java))
                                 finish()
                             }
                             .addOnFailureListener {
                                 Log.e("Update pet details", "Pet details update failed")
                                 Toast.makeText(this, "Pet details update failed", Toast.LENGTH_SHORT).show()
                             }
-                    } else {
-                        // The user tried to change the pet's name
-                        Toast.makeText(this, "You cannot add a new pet!", Toast.LENGTH_SHORT).show()
-                    }
-                } else {
-                    // There is no pet details document for the user - create a new one
-                    val newPetData = hashMapOf(
-                        "petName" to enteredPetName,
-                        "petType" to petType.text.toString(),
-                        "petAge" to petAge.text.toString()
-                    )
 
-                    petDocRef.set(newPetData)
-                        .addOnSuccessListener {
-                            Log.i("Update pet details", "Pet details saved successfully")
-                            Toast.makeText(this, "Pet details saved successfully", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this, UpdatePetDetailsContinuation::class.java))
-                            finish()
-                        }
-                        .addOnFailureListener {
-                            Log.e("Update pet details", "Failed to save pet details")
-                            Toast.makeText(this, "Failed to save pet details", Toast.LENGTH_SHORT).show()
-                        }
-                }
             }.addOnFailureListener {
                 Log.e("Update pet details", "Failed to check pet existence")
                 Toast.makeText(this, "Error checking pet details", Toast.LENGTH_SHORT).show()
