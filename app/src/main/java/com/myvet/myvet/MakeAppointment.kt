@@ -100,7 +100,8 @@ class MakeAppointment : AppCompatActivity() {
                         appointmentContainer.orientation = LinearLayout.HORIZONTAL
 
                         val appointmentText = TextView(this)
-                        appointmentText.text = "$appointmentTime - ${appointmentTime.plusMinutes(15)}"
+                        val timeRange = getString(R.string.time_range, appointmentTime, appointmentTime.plusMinutes(15))
+                        appointmentText.text = timeRange
                         appointmentText.layoutParams = LinearLayout.LayoutParams(
                             0,
                             LinearLayout.LayoutParams.WRAP_CONTENT,

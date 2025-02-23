@@ -63,7 +63,7 @@
     <string name="availability_window_created_successfully">Availability window created successfully</string>
     <string name="availability_window_creation_failed">Availability window creation failed</string>
     <string name="availability_window_deleted_successfully">Availability window deleted successfully</string>
-    <string name="date">Date:</string>
+    <string name="date">"Date: "</string>
     <string name="appointment_deleted_successfully">Appointment deleted successfully</string>
     <string name="permission_denied">Permission denied</string>
     <string name="appointment_made_successfully">Appointment made successfully</string>

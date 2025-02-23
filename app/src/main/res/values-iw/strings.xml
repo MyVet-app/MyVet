@@ -63,7 +63,7 @@
     <string name="availability_window_created_successfully">חלון הזמינות נוצר בהצלחה</string>"
     <string name="availability_window_creation_failed">יצירת חלון הזמינות נכשלה</string>
     <string name="availability_window_deleted_successfully">חלון הזמינות נמחק בהצלחה</string>
-    <string name="date">תאריך:</string>
+    <string name="date">"תאריך: "</string>
     <string name="appointment_deleted_successfully">הפגישה נמחקה בהצלחה</string>
     <string name="permission_denied">הרשאה נדחתה</string>
     <string name="appointment_made_successfully">הפגישה בוצעה בהצלחה</string>
@@ -80,7 +80,7 @@
     <string name="error_checking_vet_details">שגיאה בבדיקת פרטי הוטרינר</string>
     <string name="address_not_found">כתובת לא נמצאה</string>
     <string name="time_range">%2$s - %1$s</string>
-    <string name="availability">%1$s - %2$s\nתאריך: %3$s</string>
+    <string name="availability">תאריך: %1$s\n%3$s - %2$s</string>
 
     <string name="fui_sign_in_default">התחברות</string>
     <string name="fui_email_hint">כתובת מייל</string>

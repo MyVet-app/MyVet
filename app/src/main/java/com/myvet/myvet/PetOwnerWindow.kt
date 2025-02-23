@@ -49,8 +49,9 @@ class PetOwnerWindow : AppCompatActivity() {
             val vet = pair.second
 
             val appointmentText = TextView(this)
+            val timeRange = getString(R.string.time_range, time, time.plusMinutes(15))
             appointmentText.text =
-                "${getString(R.string.doctor)} $vet\n$date $time - ${time.plusMinutes(15)}"
+                "${getString(R.string.doctor)} $vet\n$date $timeRange}"
 
             val deleteButton = Button(this)
             deleteButton.text = getString(R.string.delete_button)

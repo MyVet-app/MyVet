@@ -282,7 +282,7 @@ class VetWindow : AppCompatActivity() {
             val endFormatted = endTime.format(formatter)
 
 // מחרוזת עם סדר מתאים לשפה
-            val availability = getString(R.string.availability, startFormatted, endFormatted, date)
+            val availability = getString(R.string.availability, date, startFormatted, endFormatted)
             availabilityText.text = availability
 
 
