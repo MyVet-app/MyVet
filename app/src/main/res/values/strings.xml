@@ -67,6 +67,7 @@
     <string name="date">תאריך:</string>
     <string name="appointment_deleted_successfully">הפגישה נמחקה בהצלחה</string>
     <string name="permission_denied">הרשאה נדחתה</string>
+    <string name="appointment_made_successfully">הפגישה בוצעה בהצלחה</string>
 
     <string name="fui_sign_in_default">התחברות</string>
     <string name="fui_email_hint">כתובת מייל</string>

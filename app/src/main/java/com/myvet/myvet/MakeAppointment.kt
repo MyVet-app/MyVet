@@ -46,7 +46,8 @@ class MakeAppointment : AppCompatActivity() {
                     "Appointment creation",
                     "Appointment created successfully"
                 )
-                Toast.makeText(this, "Appointment made successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    getString(R.string.appointment_made_successfully), Toast.LENGTH_SHORT).show()
             }
     }
 
