@@ -109,4 +109,8 @@
     <string name="facebook_application_id" translatable="false">3889928198001609</string>
     <string name="facebook_client_token" translatable="false">fdf813bfc8309a8c097e8ec28d35baf5</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb3889928198001609</string>
+    <string name="no_pet_details_found">לא נמצאו פרטי חיה</string>
+    <string name="pet_detail_text" translatable="false">%1$s: %2$s</string>
+    <string name="pet_details_title">פרטי %1$s</string>
+    <string name="error_loading_pet_details">שגיאה בעת טעינת פרטי חיה</string>
 </resources>

@@ -100,6 +100,9 @@
     <string name="fui_trouble_signing_in">בעיות התחברות?</string>
     <string name="fui_password_recovery_body">נא להזין כתובת מייל אליו יישלחו הוראות לאיפוס סיסמה</string>
     <string name="fui_button_text_send">שליחה</string>
+    <string name="no_pet_details_found">לא נמצאו פרטי חיה</string>
+    <string name="pet_details_title">פרטי %1$s</string>
+    <string name="error_loading_pet_details">שגיאה בעת טעינת פרטי חיה</string>
     <plurals name="fui_error_weak_password">
         <item quantity="one">סיסמה לא מספיק חזקה. יש להשתמש בלפחות תו אחד וערבוב של אותיות ומספרים</item>
         <item quantity="two">סיסמה לא מספיק חזקה. יש להשתמש בלפחות %1$d תוים וערבוב של אותיות ומספרים.</item>

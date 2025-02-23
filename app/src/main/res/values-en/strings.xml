@@ -72,7 +72,7 @@
     <string name="you_cannot_add_a_new_pet">You cannot add a new pet!</string>
     <string name="pet_details_saved_successfully">Pet details saved successfully</string>
     <string name="failed_to_save_pet_details">Failed to save pet details</string>
-    <string name="error_checking_pet_details">Error checking pet details</string>
+    <string name="error_checking_pet_details">Error loading pet details</string>
     <string name="vet_details_updated_successfully">Vet details updated successfully</string>
     <string name="vet_details_update_failed">Vet details update failed</string>
     <string name="vet_details_saved_successfully">Vet details saved successfully</string>
@@ -100,6 +100,9 @@
     <string name="fui_trouble_signing_in">Trouble signing in?</string>
     <string name="fui_password_recovery_body">Enter the email address to receive reset instructions.</string>
     <string name="fui_button_text_send">Send</string>
+    <string name="no_pet_details_found">Pet details not found</string>
+    <string name="pet_details_title">%1$s\'s Details</string>
+    <string name="error_loading_pet_details">שגיאה בעת טעינת פרטי חיה</string>
     <plurals name="fui_error_weak_password">
         <item quantity="one">Password not strong enough. Use at least one character and a mix of letters and numbers</item>
         <item quantity="other">Password not strong enough. Use at least one %1$d characters and a mix of letters and numbers.</item>

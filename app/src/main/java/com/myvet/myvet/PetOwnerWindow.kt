@@ -1,18 +1,22 @@
 package com.myvet.myvet
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.provider.CalendarContract
 import android.provider.CalendarContract.Events
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.bumptech.glide.Glide
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
@@ -32,8 +36,9 @@ class PetOwnerWindow : AppCompatActivity() {
     private lateinit var deleteAccount: Button
     private lateinit var findVet: Button
     private lateinit var appointmentsList: LinearLayout
-
-
+    private lateinit var petDetails: LinearLayout
+    private lateinit var petName: TextView
+    private lateinit var petImage: ImageView
 
     private fun showAppointments(appointments: MutableList<Pair<DocumentSnapshot, String>>) {
         appointmentsList.removeAllViews()
@@ -56,9 +61,11 @@ class PetOwnerWindow : AppCompatActivity() {
             val deleteButton = Button(this)
             deleteButton.text = getString(R.string.delete_button)
             deleteButton.setOnClickListener {
-                db.collection("appointments").document(pair.first.id).delete().addOnSuccessListener {
-                    Toast.makeText(this, getString(R.string.appointment_deleted_successfully), Toast.LENGTH_SHORT).show()
-                }
+                db.collection("appointments").document(pair.first.id).delete()
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Appointment deleted successfully", Toast.LENGTH_SHORT)
+                            .show()
+                    }
             }
 
             val calendarButton = Button(this)
@@ -68,7 +75,13 @@ class PetOwnerWindow : AppCompatActivity() {
                 beginTime.set(date.year, date.monthValue, date.dayOfMonth, time.hour, time.minute)
 
                 val endTime: Calendar = Calendar.getInstance()
-                endTime.set(date.year, date.monthValue, date.dayOfMonth, time.plusMinutes(15).hour, time.plusMinutes(15).minute)
+                endTime.set(
+                    date.year,
+                    date.monthValue,
+                    date.dayOfMonth,
+                    time.plusMinutes(15).hour,
+                    time.plusMinutes(15).minute
+                )
                 val intent: Intent = Intent(Intent.ACTION_INSERT)
                     .setData(Events.CONTENT_URI)
                     .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.timeInMillis)
@@ -79,9 +92,21 @@ class PetOwnerWindow : AppCompatActivity() {
                 startActivity(intent)
             }
 
-            appointmentText.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f) // 70% width
-            deleteButton.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f) // 30% width
-            calendarButton.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.4f) // 30% width
+            appointmentText.layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.3f
+            ) // 70% width
+            deleteButton.layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.3f
+            ) // 30% width
+            calendarButton.layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.4f
+            ) // 30% width
             appointmentContainer.addView(appointmentText)
             appointmentContainer.addView(deleteButton)
             appointmentContainer.addView(calendarButton)
@@ -113,7 +138,6 @@ class PetOwnerWindow : AppCompatActivity() {
 
         val textView: TextView = findViewById(R.id.HelloText)
         textView.text = getString(R.string.welcome_vet_or_pet) + " ${user.displayName}"
-
 
         updateDetails = findViewById(R.id.UpdateDetails)
         updateDetails.setOnClickListener {
@@ -166,8 +190,10 @@ class PetOwnerWindow : AppCompatActivity() {
                     Log.e("PetOwnerActivity", "Error fetching appointments", error)
                     return@addSnapshotListener
                 }
-                val appointments = mutableListOf<Pair<DocumentSnapshot, String>>() // Pair of appointment and vet name
-                val vetIds = snapshot?.documents?.map { it.getString("vet") ?: "" }?.distinct() ?: emptyList()
+                val appointments =
+                    mutableListOf<Pair<DocumentSnapshot, String>>() // Pair of appointment and vet name
+                val vetIds = snapshot?.documents?.map { it.getString("vet") ?: "" }?.distinct()
+                    ?: emptyList()
                 if (vetIds.isEmpty()) {
                     appointmentsList.removeAllViews()
                     return@addSnapshotListener
@@ -176,7 +202,8 @@ class PetOwnerWindow : AppCompatActivity() {
                     .whereIn(FieldPath.documentId(), vetIds)
                     .get()
                     .addOnSuccessListener { userSnapshots ->
-                        val vetNames = userSnapshots.documents.associateBy({ it.id }, { it.getString("name") ?: "Unknown" })
+                        val vetNames = userSnapshots.documents.associateBy({ it.id },
+                            { it.getString("name") ?: "Unknown" })
 
                         snapshot?.documents?.forEach { appointment ->
                             val vetId = appointment.getString("vet")
@@ -186,5 +213,104 @@ class PetOwnerWindow : AppCompatActivity() {
                         showAppointments(appointments)
                     }
             }
+        petDetails = findViewById(R.id.petDetails)
+        petName = findViewById(R.id.petName)
+
+        db.collection("users").document(user.uid).collection("petDetails").document("Pet")
+            .addSnapshotListener { document, error ->
+                if (error != null) {
+                    petName.text = getString(R.string.error_loading_pet_details)
+                    return@addSnapshotListener
+                }
+                if (document != null && document.exists()) {
+                    petDetails.removeAllViews()
+
+                    val name = document.getString("petName") ?: "N/A"
+                    petName.text = getString(R.string.pet_details_title, name)
+                    val type = document.getString("petType") ?: "N/A"
+                    val age = document.getString("petAge") ?: "N/A"
+                    val weight = document.getString("petWeight") ?: "N/A"
+                    val gender = document.getString("petGender") ?: "N/A"
+                    val medicalHistory = document.getString("medicalHistory") ?: "N/A"
+
+                    // Function to add a TextView to the LinearLayout
+                    fun addTextView(label: String, value: String) {
+                        val petDetailLine = TextView(this)
+                        petDetailLine.text = getString(R.string.pet_detail_text, label, value)
+                        petDetailLine.textSize = 16f
+                        petDetailLine.setPadding(10, 10, 10, 10)
+                        petDetails.addView(petDetailLine)
+                    }
+
+                    // Adding the pet details to the LinearLayout
+                    addTextView(getString(R.string.name), name)
+                    addTextView(getString(R.string.breed), type)
+                    addTextView(getString(R.string.age), age)
+                    addTextView(getString(R.string.weight), weight)
+                    addTextView(getString(R.string.gender), gender)
+                    addTextView(getString(R.string.medical_history), "\n$medicalHistory")
+                } else {
+                    petName.text = getString(R.string.no_pet_details_found)
+                }
+            }
+
+        petImage = findViewById(R.id.petImage)
+        petImage.setOnClickListener {
+            val petDocRef = db.collection("users").document(user.uid)
+                .collection("petDetails").document("Pet")
+
+            petDocRef.get()
+                .addOnSuccessListener { document ->
+                    if (document.exists() && document.contains("PetImage")) {
+                        val imageUrl = document.getString("PetImage")
+                        Log.d("PetOwnerWindow", "PetImage URL: $imageUrl")
+                        imageUrl?.let { loadImageIntoView(it) } // Load the image into the ImageView
+                    } else {
+                        Log.d(
+                            "PetOwnerWindow",
+                            "PetImage field not found or document does not exist"
+                        )
+                        openGallery() // Open the gallery if the document doesn't exist or doesn't contain the PetImage field
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Log.e("Firestore", "Error fetching document", e)
+                    openGallery() // If there was an error, open the gallery
+                }
+        }
+
+    }
+
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        galleryActivityResultLauncher.launch(intent)
+    }
+
+    private val galleryActivityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            val imageUri: Uri? = result.data?.data
+            if (imageUri != null) {
+                val db = FirebaseFirestore.getInstance()
+                val user =
+                    FirebaseAuth.getInstance().currentUser ?: return@registerForActivityResult
+
+                val petDocRef = db.collection("users").document(user.uid).collection("petDetails")
+                    .document("Pet")
+                val imageUrl = imageUri.toString()
+                petDocRef.update("PetImage", imageUrl)
+                    .addOnSuccessListener {
+                        loadImageIntoView(imageUrl)
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("FirebaseStorage", "Error uploading image", e)
+                    }
+            }
+        }
+
+    private fun loadImageIntoView(imageUrl: String) {
+        Glide.with(this)
+            .load(imageUrl)
+            .into(petImage)
     }
 }
