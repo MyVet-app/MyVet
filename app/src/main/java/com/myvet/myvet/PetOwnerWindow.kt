@@ -54,11 +54,12 @@ class PetOwnerWindow : AppCompatActivity() {
             val vet = pair.second
 
             val appointmentText = TextView(this)
+            val timeRange = getString(R.string.time_range, time, time.plusMinutes(15))
             appointmentText.text =
-                "Dr. $vet\n$date $time - ${time.plusMinutes(15)}"
+                "${getString(R.string.doctor)} $vet\n$date $timeRange}"
 
             val deleteButton = Button(this)
-            deleteButton.text = "Delete"
+            deleteButton.text = getString(R.string.delete_button)
             deleteButton.setOnClickListener {
                 db.collection("appointments").document(pair.first.id).delete()
                     .addOnSuccessListener {
@@ -68,7 +69,7 @@ class PetOwnerWindow : AppCompatActivity() {
             }
 
             val calendarButton = Button(this)
-            calendarButton.text = "Add to Calendar"
+            calendarButton.text = getString(R.string.add_to_calendar)
             calendarButton.setOnClickListener {
                 val beginTime: Calendar = Calendar.getInstance()
                 beginTime.set(date.year, date.monthValue, date.dayOfMonth, time.hour, time.minute)
@@ -136,7 +137,7 @@ class PetOwnerWindow : AppCompatActivity() {
 
 
         val textView: TextView = findViewById(R.id.HelloText)
-        textView.text = "שלום" + " ${user.displayName} "
+        textView.text = getString(R.string.welcome_vet_or_pet) + " ${user.displayName}"
 
         updateDetails = findViewById(R.id.UpdateDetails)
         updateDetails.setOnClickListener {
@@ -218,14 +219,14 @@ class PetOwnerWindow : AppCompatActivity() {
         db.collection("users").document(user.uid).collection("petDetails").document("Pet")
             .addSnapshotListener { document, error ->
                 if (error != null) {
-                    petName.text = "Error loading pet details"
+                    petName.text = getString(R.string.error_loading_pet_details)
                     return@addSnapshotListener
                 }
                 if (document != null && document.exists()) {
                     petDetails.removeAllViews()
 
                     val name = document.getString("petName") ?: "N/A"
-                    petName.text = "$name's Details"
+                    petName.text = getString(R.string.pet_details_title, name)
                     val type = document.getString("petType") ?: "N/A"
                     val age = document.getString("petAge") ?: "N/A"
                     val weight = document.getString("petWeight") ?: "N/A"
@@ -235,21 +236,21 @@ class PetOwnerWindow : AppCompatActivity() {
                     // Function to add a TextView to the LinearLayout
                     fun addTextView(label: String, value: String) {
                         val textView = TextView(this)
-                        textView.text = "$label: $value"
+                        textView.text = getString(R.string.pet_detail_text, label, value)
                         textView.textSize = 16f
                         textView.setPadding(10, 10, 10, 10)
                         petDetails.addView(textView)
                     }
 
                     // Adding the pet details to the LinearLayout
-                    addTextView("Pet Name", name)
-                    addTextView("Pet Type", type)
-                    addTextView("Pet Age", age)
-                    addTextView("Pet Weight", weight)
-                    addTextView("Pet Gender", gender)
-                    addTextView("Medical History", "\n$medicalHistory")
+                    addTextView(getString(R.string.name), name)
+                    addTextView(getString(R.string.breed), type)
+                    addTextView(getString(R.string.age), age)
+                    addTextView(getString(R.string.weight), weight)
+                    addTextView(getString(R.string.gender), gender)
+                    addTextView(getString(R.string.medical_history), "\n$medicalHistory")
                 } else {
-                    petName.text = "No pet details found"
+                    petName.text = getString(R.string.no_pet_details_found)
                 }
             }
 
