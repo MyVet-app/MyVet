@@ -60,9 +60,11 @@ class PetOwnerWindow : AppCompatActivity() {
             val deleteButton = Button(this)
             deleteButton.text = "Delete"
             deleteButton.setOnClickListener {
-                db.collection("appointments").document(pair.first.id).delete().addOnSuccessListener {
-                    Toast.makeText(this, "Appointment deleted successfully", Toast.LENGTH_SHORT).show()
-                }
+                db.collection("appointments").document(pair.first.id).delete()
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Appointment deleted successfully", Toast.LENGTH_SHORT)
+                            .show()
+                    }
             }
 
             val calendarButton = Button(this)
@@ -72,7 +74,13 @@ class PetOwnerWindow : AppCompatActivity() {
                 beginTime.set(date.year, date.monthValue, date.dayOfMonth, time.hour, time.minute)
 
                 val endTime: Calendar = Calendar.getInstance()
-                endTime.set(date.year, date.monthValue, date.dayOfMonth, time.plusMinutes(15).hour, time.plusMinutes(15).minute)
+                endTime.set(
+                    date.year,
+                    date.monthValue,
+                    date.dayOfMonth,
+                    time.plusMinutes(15).hour,
+                    time.plusMinutes(15).minute
+                )
                 val intent: Intent = Intent(Intent.ACTION_INSERT)
                     .setData(Events.CONTENT_URI)
                     .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.timeInMillis)
@@ -83,9 +91,21 @@ class PetOwnerWindow : AppCompatActivity() {
                 startActivity(intent)
             }
 
-            appointmentText.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f) // 70% width
-            deleteButton.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f) // 30% width
-            calendarButton.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.4f) // 30% width
+            appointmentText.layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.3f
+            ) // 70% width
+            deleteButton.layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.3f
+            ) // 30% width
+            calendarButton.layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.4f
+            ) // 30% width
             appointmentContainer.addView(appointmentText)
             appointmentContainer.addView(deleteButton)
             appointmentContainer.addView(calendarButton)
@@ -116,7 +136,7 @@ class PetOwnerWindow : AppCompatActivity() {
 
 
         val textView: TextView = findViewById(R.id.HelloText)
-        textView.text = "שלום"+" ${user.displayName} "
+        textView.text = "שלום" + " ${user.displayName} "
 
         updateDetails = findViewById(R.id.UpdateDetails)
         updateDetails.setOnClickListener {
@@ -169,8 +189,10 @@ class PetOwnerWindow : AppCompatActivity() {
                     Log.e("PetOwnerActivity", "Error fetching appointments", error)
                     return@addSnapshotListener
                 }
-                val appointments = mutableListOf<Pair<DocumentSnapshot, String>>() // Pair of appointment and vet name
-                val vetIds = snapshot?.documents?.map { it.getString("vet") ?: "" }?.distinct() ?: emptyList()
+                val appointments =
+                    mutableListOf<Pair<DocumentSnapshot, String>>() // Pair of appointment and vet name
+                val vetIds = snapshot?.documents?.map { it.getString("vet") ?: "" }?.distinct()
+                    ?: emptyList()
                 if (vetIds.isEmpty()) {
                     appointmentsList.removeAllViews()
                     return@addSnapshotListener
@@ -179,7 +201,8 @@ class PetOwnerWindow : AppCompatActivity() {
                     .whereIn(FieldPath.documentId(), vetIds)
                     .get()
                     .addOnSuccessListener { userSnapshots ->
-                        val vetNames = userSnapshots.documents.associateBy({ it.id }, { it.getString("name") ?: "Unknown" })
+                        val vetNames = userSnapshots.documents.associateBy({ it.id },
+                            { it.getString("name") ?: "Unknown" })
 
                         snapshot?.documents?.forEach { appointment ->
                             val vetId = appointment.getString("vet")
@@ -224,7 +247,7 @@ class PetOwnerWindow : AppCompatActivity() {
                     addTextView("Pet Age", age)
                     addTextView("Pet Weight", weight)
                     addTextView("Pet Gender", gender)
-                    addTextView("Medical History","\n$medicalHistory")
+                    addTextView("Medical History", "\n$medicalHistory")
                 } else {
                     petName.text = "No pet details found"
                 }
@@ -242,7 +265,10 @@ class PetOwnerWindow : AppCompatActivity() {
                         Log.d("PetOwnerWindow", "PetImage URL: $imageUrl")
                         imageUrl?.let { loadImageIntoView(it) } // Load the image into the ImageView
                     } else {
-                        Log.d("PetOwnerWindow", "PetImage field not found or document does not exist")
+                        Log.d(
+                            "PetOwnerWindow",
+                            "PetImage field not found or document does not exist"
+                        )
                         openGallery() // Open the gallery if the document doesn't exist or doesn't contain the PetImage field
                     }
                 }
@@ -253,32 +279,37 @@ class PetOwnerWindow : AppCompatActivity() {
         }
 
     }
+
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         galleryActivityResultLauncher.launch(intent)
     }
-    private val galleryActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        val imageUri: Uri? = result.data?.data
-        if (imageUri != null) {
-            val db = FirebaseFirestore.getInstance()
-            val user = FirebaseAuth.getInstance().currentUser ?: return@registerForActivityResult
 
-            val petDocRef = db.collection("users").document(user.uid).collection("petDetails").document("Pet")
-            val imageUrl = imageUri.toString()
-            petDocRef.update("PetImage", imageUrl)
-                .addOnSuccessListener {
-                    loadImageIntoView(imageUrl)
-                }
-                .addOnFailureListener { e ->
-                    Log.e("FirebaseStorage", "Error uploading image", e)
-                }
+    private val galleryActivityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            val imageUri: Uri? = result.data?.data
+            if (imageUri != null) {
+                val db = FirebaseFirestore.getInstance()
+                val user =
+                    FirebaseAuth.getInstance().currentUser ?: return@registerForActivityResult
+
+                val petDocRef = db.collection("users").document(user.uid).collection("petDetails")
+                    .document("Pet")
+                val imageUrl = imageUri.toString()
+                petDocRef.update("PetImage", imageUrl)
+                    .addOnSuccessListener {
+                        loadImageIntoView(imageUrl)
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("FirebaseStorage", "Error uploading image", e)
+                    }
+            }
         }
-    }
-    fun loadImageIntoView(imageUrl: String) {
+
+    private fun loadImageIntoView(imageUrl: String) {
         Glide.with(this)
             .load(imageUrl)
             .into(petImage)
     }
-
 }
