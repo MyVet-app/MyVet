@@ -78,7 +78,7 @@
     <string name="vet_details_saved_successfully">Vet details saved successfully</string>
     <string name="failed_to_save_vet_details">Failed to save vet details</string>
     <string name="error_checking_vet_details">Error checking vet details</string>
-
+    <string name="address_not_found">Address not found</string>
     <string name="fui_sign_in_default">Sign in</string>
     <string name="fui_email_hint">Email Address</string>
     <string name="mandatory_filed">Mandatory filed</string>

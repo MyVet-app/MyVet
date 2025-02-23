@@ -78,7 +78,7 @@
     <string name="vet_details_saved_successfully">פרטי הוטרינר נשמרו בהצלחה</string>
     <string name="failed_to_save_vet_details">שמירת פרטי הוטרינר נכשלה</string>
     <string name="error_checking_vet_details">שגיאה בבדיקת פרטי הוטרינר</string>
-
+    <string name="address_not_found">כתובת לא נמצאה</string>
     <string name="fui_sign_in_default">התחברות</string>
     <string name="fui_email_hint">כתובת מייל</string>
     <string name="mandatory_filed">שדה חובה</string>
