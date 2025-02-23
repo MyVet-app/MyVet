@@ -70,8 +70,9 @@
         <item quantity="two">סיסמה לא מספיק חזקה. יש להשתמש בלפחות %1$d תוים וערבוב של אותיות ומספרים.</item>
         <item quantity="other">סיסמה לא מספיק חזקה. יש להשתמש בלפחות %1$d תוים וערבוב של אותיות ומספרים.</item>
     </plurals>
+    <string name="cancel">ביטול</string>
 
-<!--    <string name="facebook_application_id" translatable="false">3889928198001609</string>-->
+    <!--    <string name="facebook_application_id" translatable="false">3889928198001609</string>-->
 <!--    <string name="facebook_client_token" translatable="false">fdf813bfc8309a8c097e8ec28d35baf5</string>-->
 <!--    <string name="facebook_login_protocol_scheme" translatable="false">fb3889928198001609</string>-->
 </resources>

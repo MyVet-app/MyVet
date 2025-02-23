@@ -68,5 +68,6 @@
         <item quantity="one">Password not strong enough. Use at least one character and a mix of letters and numbers</item>
         <item quantity="other">Password not strong enough. Use at least one %1$d characters and a mix of letters and numbers.</item>
     </plurals>
+    <string name="cancel">Cancel</string>
 
 </resources>
