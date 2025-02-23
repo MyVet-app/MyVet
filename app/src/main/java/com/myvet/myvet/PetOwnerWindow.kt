@@ -49,19 +49,20 @@ class PetOwnerWindow : AppCompatActivity() {
             val vet = pair.second
 
             val appointmentText = TextView(this)
+            val timeRange = getString(R.string.time_range, time, time.plusMinutes(15))
             appointmentText.text =
-                "Dr. $vet\n$date $time - ${time.plusMinutes(15)}"
+                "${getString(R.string.doctor)} $vet\n$date $timeRange}"
 
             val deleteButton = Button(this)
-            deleteButton.text = "Delete"
+            deleteButton.text = getString(R.string.delete_button)
             deleteButton.setOnClickListener {
                 db.collection("appointments").document(pair.first.id).delete().addOnSuccessListener {
-                    Toast.makeText(this, "Appointment deleted successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.appointment_deleted_successfully), Toast.LENGTH_SHORT).show()
                 }
             }
 
             val calendarButton = Button(this)
-            calendarButton.text = "Add to Calendar"
+            calendarButton.text = getString(R.string.add_to_calendar)
             calendarButton.setOnClickListener {
                 val beginTime: Calendar = Calendar.getInstance()
                 beginTime.set(date.year, date.monthValue, date.dayOfMonth, time.hour, time.minute)
@@ -111,7 +112,8 @@ class PetOwnerWindow : AppCompatActivity() {
 
 
         val textView: TextView = findViewById(R.id.HelloText)
-        textView.text = "שלום"+" ${user.displayName} "
+        textView.text = getString(R.string.welcome_vet_or_pet) + " ${user.displayName}"
+
 
         updateDetails = findViewById(R.id.UpdateDetails)
         updateDetails.setOnClickListener {

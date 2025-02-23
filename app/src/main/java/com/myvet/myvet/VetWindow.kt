@@ -24,6 +24,7 @@ import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.QuerySnapshot
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
 class VetWindow : AppCompatActivity() {
@@ -104,7 +105,8 @@ class VetWindow : AppCompatActivity() {
         }
 
         val textView: TextView = findViewById(R.id.HelloText)
-        textView.text = "Welcome ${user.displayName}"
+        textView.text = getString(R.string.welcome_vet_or_pet) + " ${user.displayName}"
+
 
         addAvailability = findViewById(R.id.AddAvailability)
         addAvailability.setOnClickListener {
@@ -175,7 +177,7 @@ class VetWindow : AppCompatActivity() {
         appointmentsList.removeAllViews()
 
         val title = TextView(this)
-        title.text = "Appointments:"
+        title.text = getString(R.string.appointments)
 
         appointmentsList.addView(title)
 
@@ -189,24 +191,36 @@ class VetWindow : AppCompatActivity() {
             val time = LocalTime.ofSecondOfDay(pair.first.getLong("time")!!)
             val owner = pair.second
 
-            val appointmentText = TextView(this)
-            appointmentText.text =
-                "$owner\n$date $time - ${time.plusMinutes(15)}"
+//            val appointmentText = TextView(this)
+//            appointmentText.text =
+//                "$owner\n$date $time - ${time.plusMinutes(15)}"
+
+
+                        val appointmentText = TextView(this)
+            val formatter = DateTimeFormatter.ofPattern("HH:mm") // לדוגמה: 14:30
+            val timeFormatted = time.format(formatter)
+            val timeEndFormatted = time.plusMinutes(15).format(formatter)
+
+            val timeRange = getString(R.string.time_range, timeFormatted, timeEndFormatted)
+            appointmentText.text = timeRange
+
+
 
             val deleteButton = Button(this)
-            deleteButton.text = "Delete"
+            deleteButton.text = getString(R.string.delete_button)
             deleteButton.setOnClickListener {
                 db.collection("appointments").document(pair.first.id).delete().addOnSuccessListener {
                     Log.i("Appointment Deletion", "Appointment deleted successfully")
                     Handler(Looper.getMainLooper()).post {
-                        Toast.makeText(this, "Appointment deleted successfully", Toast.LENGTH_SHORT)
+                        Toast.makeText(this,
+                            getString(R.string.appointment_deleted_successfully), Toast.LENGTH_SHORT)
                             .show()
                     }
                 }
             }
 
             val calendarButton = Button(this)
-            calendarButton.text = "Add to Calendar"
+            calendarButton.text = getString(R.string.add_to_calendar)
             calendarButton.setOnClickListener {
                 val beginTime: Calendar = Calendar.getInstance()
                 beginTime.set(date.year, date.monthValue, date.dayOfMonth, time.hour, time.minute)
@@ -242,7 +256,7 @@ class VetWindow : AppCompatActivity() {
         availabilityWindowsList.removeAllViews()
 
         val title = TextView(this)
-        title.text = "Availability Windows:"
+        title.text = getString(R.string.avilable_windows)
 
         availabilityWindowsList.addView(title)
 
@@ -258,12 +272,22 @@ class VetWindow : AppCompatActivity() {
             val availabilityContainer = LinearLayout(this)
             availabilityContainer.orientation = LinearLayout.HORIZONTAL
 
+//            val availabilityText = TextView(this)
+//            availabilityText.text =
+//                "${getString(R.string.date)}$date\n$startTime - $endTime"
             val availabilityText = TextView(this)
-            availabilityText.text =
-                "Date: $date\n$startTime - $endTime"
+
+            val formatter = DateTimeFormatter.ofPattern("HH:mm") // תבנית שעה:דקה
+            val startFormatted = startTime.format(formatter)
+            val endFormatted = endTime.format(formatter)
+
+// מחרוזת עם סדר מתאים לשפה
+            val availability = getString(R.string.availability, date, startFormatted, endFormatted)
+            availabilityText.text = availability
+
 
             val deleteButton = Button(this)
-            deleteButton.text = "Delete"
+            deleteButton.text = getString(R.string.delete_button)
             deleteButton.setOnClickListener {
                 db.collection("users")
                     .document(user.uid)
@@ -307,7 +331,7 @@ class VetWindow : AppCompatActivity() {
 
                         Toast.makeText(
                             this,
-                            "Availability window deleted successfully",
+                            getString(R.string.availability_window_deleted_successfully),
                             Toast.LENGTH_SHORT
                         )
                             .show()

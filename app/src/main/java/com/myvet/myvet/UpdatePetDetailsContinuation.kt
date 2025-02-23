@@ -78,19 +78,19 @@ class UpdatePetDetailsContinuation : AppCompatActivity() {
                         petDocRef.update(updatedData as Map<String, Any>)
                             .addOnSuccessListener {
                                 Log.i("Update pet details", "Pet details updated successfully")
-                                Toast.makeText(this, "Pet details updated successfully", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, getString(R.string.pet_details_updated_successfully), Toast.LENGTH_SHORT).show()
 
                                 startActivity(Intent(this, PetOwnerWindow::class.java))
                                 finish()
                             }
                             .addOnFailureListener {
                                 Log.e("Update pet details", "Pet details update failed")
-                                Toast.makeText(this, "Pet details update failed", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, getString(R.string.pet_details_update_failed), Toast.LENGTH_SHORT).show()
                             }
 
             }.addOnFailureListener {
                 Log.e("Update pet details", "Failed to check pet existence")
-                Toast.makeText(this, "Error checking pet details", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,getString(R.string.error_checking_pet_details), Toast.LENGTH_SHORT).show()
             }
         }
     }
