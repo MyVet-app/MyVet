@@ -73,6 +73,9 @@
     <string name="pet_details_saved_successfully">Pet details saved successfully</string>
     <string name="failed_to_save_pet_details">Failed to save pet details</string>
     <string name="error_checking_pet_details">Error checking pet details</string>
+    <string name="vet_details_updated_successfully">Vet details updated successfully</string>
+    <string name="vet_details_update_failed">Vet details update failed</string>
+    <string name="vet_details_saved_successfully">Vet details saved successfully</string>
 
     <string name="fui_sign_in_default">Sign in</string>
     <string name="fui_email_hint">Email Address</string>
