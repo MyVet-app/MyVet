@@ -5,87 +5,134 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_backround"
+    android:background="@drawable/background"
     android:orientation="vertical"
-    android:gravity="center"
     tools:context=".VetWindow">
 
     <TextView
         android:id="@+id/HelloText"
+        style="@style/titles"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Hello"
-        android:textSize="18sp" />
+        android:paddingTop="40dp"
+        android:textSize="40sp"
+        tools:text="@string/welcome"/>
 
     <TextView
         android:id="@+id/clinicNameTitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:gravity="center_horizontal"
-        android:text="TextView" />
+        android:textSize="20sp"
+        android:text="" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+
 
     <TextView
         android:id="@+id/clinicAddressTitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:gravity="center_horizontal"
-        android:text="TextView" />
+        android:textSize="20sp"
+        android:text="" />
 
-    <Button
-        android:id="@+id/LogOut"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Log Out" />
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/DeleteAccount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Delete Account" />
-
-    <Button
-        android:id="@+id/AddAvailability"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add availability" />
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:id="@+id/scrollContent"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/UpdateVetDetails"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/rounded_bottom"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="@string/update_details" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+
+        <Button
+            android:id="@+id/AddAvailability"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/rounded_bottom"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="@string/add_availability" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+
+        <Button
+            android:id="@+id/LogOut"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/rounded_bottom"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="@string/disconnect" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+
+        <Button
+            android:id="@+id/DeleteAccount"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/rounded_bottom"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="@string/delete_account" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="202dp">
 
             <LinearLayout
-                android:id="@+id/availabilityWindowsList"
+                android:id="@+id/scrollContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
+                <LinearLayout
+                    android:id="@+id/availabilityWindowsList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                    android:id="@+id/appointmentsList"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" />
             </LinearLayout>
-
-            <View
-                android:id="@+id/divider2"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" />
-
-            <LinearLayout
-                android:id="@+id/appointmentsList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"></LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-
+        </ScrollView>
+    </LinearLayout>
 </LinearLayout>

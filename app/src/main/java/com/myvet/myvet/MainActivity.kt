@@ -2,11 +2,8 @@ package com.myvet.myvet
 
 import android.Manifest
 import android.app.AlertDialog
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -15,6 +12,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.AuthUI.IdpConfig.EmailBuilder
 import com.firebase.ui.auth.AuthUI.IdpConfig.FacebookBuilder
@@ -63,9 +61,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun authFlow() {
+        val customLayout = AuthMethodPickerLayout.Builder(R.layout.auth_window)
+            .setGoogleButtonId(R.id.googleButton)
+            .setEmailButtonId(R.id.emailButton)
+            .setFacebookButtonId(R.id.facebookButton)
+            .setTosAndPrivacyPolicyId(R.id.tosAndPp)
+            .build()
+
         val signInIntent = AuthUI.getInstance()
             .createSignInIntentBuilder()
-            .setLogo(R.drawable.icon_logo)
+            .setAuthMethodPickerLayout(customLayout)
             .setTosAndPrivacyPolicyUrls(
                 "https://www.freeprivacypolicy.com/live/67168b52-bccb-4544-b878-711f6943de60",
                 "https://www.freeprivacypolicy.com/live/67168b52-bccb-4544-b878-711f6943de60"
@@ -98,7 +103,7 @@ class MainActivity : AppCompatActivity() {
                 val intent = when (type) {
                     "owner" -> Intent(this, PetOwnerWindow::class.java)
                     "vet" -> Intent(this, VetWindow::class.java)
-                    else -> throw IllegalArgumentException("Unknown type: $type")
+                    else -> Intent(this, SignUp::class.java)
                 }
 
                 startActivity(intent)

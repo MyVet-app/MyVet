@@ -4,42 +4,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="@drawable/login_backround">
+    android:background="@drawable/background">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
-
+        android:padding="80dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="רישום בעלים"
+            android:layout_marginBottom="20dp"
+            android:text="@string/title_activity_pet_sign_up"
             android:textColor="#213646"
             android:gravity="center"
             android:layout_marginTop="50dp"
-            android:textSize="25sp" />
+            android:textSize="28sp"
+            style="@style/titles"/>
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="כתובת מגורים"
-            android:textSize="18sp"
-            android:textColor="#213646" />
+            android:layout_height="match_parent"
+            android:text="@string/fui_address_hint"
+            android:textColor="#213646"
+            android:layout_marginTop="30dp"
+            android:textSize="20sp"
+            android:fontFamily="@font/roberto"/>
 
         <EditText
             android:id="@+id/homeAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="שדה חובה"
-            android:inputType="textPostalAddress"
-            android:autofillHints="postalAddress"
-            android:textSize="16sp"
-            android:background="@drawable/rounded_corner"
             android:layout_marginBottom="16dp"
-            android:padding="8dp" />
+            android:gravity="center_vertical|start"
+            android:autofillHints="postalAddress"
+            android:background="@drawable/rounded_corner"
+            android:hint="@string/mandatory_filed"
+            android:inputType="textPostalAddress"
+            android:padding="14dp"
+            android:layout_gravity="center_horizontal"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/errorMessage"
@@ -47,14 +51,16 @@
             android:layout_height="wrap_content"
             android:textColor="#161313"
             android:visibility="gone"
-            android:text="לא כל השדות מלאים" />
+            android:text="@string/not_all_fields_filled" />
 
         <Button
             android:id="@+id/submitButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="הרשמה"
+            android:layout_marginTop="24dp"
+            android:text="@string/action_sign_in_short"
             android:textSize="16sp"
-            android:layout_marginTop="24dp" />
+            android:gravity="center"
+            android:background="@drawable/rounded_bottom"/>
     </LinearLayout>
 </ScrollView>
