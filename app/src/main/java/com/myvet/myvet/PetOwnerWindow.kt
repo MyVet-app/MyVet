@@ -235,11 +235,11 @@ class PetOwnerWindow : AppCompatActivity() {
 
                     // Function to add a TextView to the LinearLayout
                     fun addTextView(label: String, value: String) {
-                        val textView = TextView(this)
-                        textView.text = getString(R.string.pet_detail_text, label, value)
-                        textView.textSize = 16f
-                        textView.setPadding(10, 10, 10, 10)
-                        petDetails.addView(textView)
+                        val petDetailLine = TextView(this)
+                        petDetailLine.text = getString(R.string.pet_detail_text, label, value)
+                        petDetailLine.textSize = 16f
+                        petDetailLine.setPadding(10, 10, 10, 10)
+                        petDetails.addView(petDetailLine)
                     }
 
                     // Adding the pet details to the LinearLayout
