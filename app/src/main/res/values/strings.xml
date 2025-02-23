@@ -80,6 +80,9 @@
     <string name="failed_to_save_vet_details">שמירת פרטי הוטרינר נכשלה</string>
     <string name="error_checking_vet_details">שגיאה בבדיקת פרטי הוטרינר</string>
     <string name="address_not_found">כתובת לא נמצאה</string>
+    <string name="availability">%1$s - %2$s\nתאריך: %3$s</string>
+    <string name="time_range">%1$s - %2$s</string>
+
     <string name="fui_sign_in_default">התחברות</string>
     <string name="fui_email_hint">כתובת מייל</string>
     <string name="mandatory_filed">שדה חובה</string>

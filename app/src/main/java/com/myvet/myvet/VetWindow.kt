@@ -24,6 +24,7 @@ import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.QuerySnapshot
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
 class VetWindow : AppCompatActivity() {
@@ -190,9 +191,20 @@ class VetWindow : AppCompatActivity() {
             val time = LocalTime.ofSecondOfDay(pair.first.getLong("time")!!)
             val owner = pair.second
 
-            val appointmentText = TextView(this)
-            appointmentText.text =
-                "$owner\n$date $time - ${time.plusMinutes(15)}"
+//            val appointmentText = TextView(this)
+//            appointmentText.text =
+//                "$owner\n$date $time - ${time.plusMinutes(15)}"
+
+
+                        val appointmentText = TextView(this)
+            val formatter = DateTimeFormatter.ofPattern("HH:mm") // לדוגמה: 14:30
+            val timeFormatted = time.format(formatter)
+            val timeEndFormatted = time.plusMinutes(15).format(formatter)
+
+            val timeRange = getString(R.string.time_range, timeFormatted, timeEndFormatted)
+            appointmentText.text = timeRange
+
+
 
             val deleteButton = Button(this)
             deleteButton.text = getString(R.string.delete_button)
@@ -260,9 +272,19 @@ class VetWindow : AppCompatActivity() {
             val availabilityContainer = LinearLayout(this)
             availabilityContainer.orientation = LinearLayout.HORIZONTAL
 
+//            val availabilityText = TextView(this)
+//            availabilityText.text =
+//                "${getString(R.string.date)}$date\n$startTime - $endTime"
             val availabilityText = TextView(this)
-            availabilityText.text =
-                "${getString(R.string.date)}$date\n$startTime - $endTime"
+
+            val formatter = DateTimeFormatter.ofPattern("HH:mm") // תבנית שעה:דקה
+            val startFormatted = startTime.format(formatter)
+            val endFormatted = endTime.format(formatter)
+
+// מחרוזת עם סדר מתאים לשפה
+            val availability = getString(R.string.availability, startFormatted, endFormatted, date)
+            availabilityText.text = availability
+
 
             val deleteButton = Button(this)
             deleteButton.text = getString(R.string.delete_button)
