@@ -87,19 +87,19 @@ class AddPet : AppCompatActivity() {
                 petDocRef.set(newPetData)
                     .addOnSuccessListener {
                         Log.i("Update pet details", "Pet details saved successfully")
-                        Toast.makeText(this, "Pet details saved successfully", Toast.LENGTH_SHORT)
+                        Toast.makeText(this, getString(R.string.pet_details_saved_successfully), Toast.LENGTH_SHORT)
                             .show()
                         startActivity(Intent(this, PetOwnerWindow::class.java))
                         finish()
                     }
                     .addOnFailureListener {
                         Log.e("Update pet details", "Failed to save pet details")
-                        Toast.makeText(this, "Failed to save pet details", Toast.LENGTH_SHORT)
+                        Toast.makeText(this, getString(R.string.failed_to_save_pet_details), Toast.LENGTH_SHORT)
                             .show()
                     }
             }.addOnFailureListener {
                 Log.e("Update pet details", "Failed to check pet existence")
-                Toast.makeText(this, "Error checking pet details", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.failed_to_save_pet_details), Toast.LENGTH_SHORT).show()
             }
         }
     }
