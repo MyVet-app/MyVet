@@ -158,10 +158,11 @@ class FindVet : AppCompatActivity() {
 
             val vetText = TextView(this)
             vetText.text =
-                "@string/name_vet: $name\n@string/address: $address"
+                "${getString(R.string.name_vet)}: $name\n${getString(R.string.address)}: $address"
 
             val selectButton = Button(this)
-            selectButton.text = "@string/select_button"
+            selectButton.text = getString(R.string.select_button)
+
             selectButton.setOnClickListener {
                 val i = Intent(this, MakeAppointment::class.java)
                 i.putExtra("vetId", vet.id)

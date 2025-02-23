@@ -107,8 +107,9 @@ class MakeAppointment : AppCompatActivity() {
                         )
 
                         val selectButton = Button(this)
-                        selectButton.text = "@string/select_button"
-                        selectButton.layoutParams = LinearLayout.LayoutParams(
+                        selectButton.text = getString(R.string.select_button)
+
+                    selectButton.layoutParams = LinearLayout.LayoutParams(
                             0,
                             LinearLayout.LayoutParams.WRAP_CONTENT,
                             0.3f

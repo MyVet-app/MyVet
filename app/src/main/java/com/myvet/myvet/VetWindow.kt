@@ -104,7 +104,8 @@ class VetWindow : AppCompatActivity() {
         }
 
         val textView: TextView = findViewById(R.id.HelloText)
-        textView.text = "@string/welcome_vet_or_pet ${user.displayName}"
+        textView.text = getString(R.string.welcome_vet_or_pet) + " ${user.displayName}"
+
 
         addAvailability = findViewById(R.id.AddAvailability)
         addAvailability.setOnClickListener {
@@ -175,7 +176,7 @@ class VetWindow : AppCompatActivity() {
         appointmentsList.removeAllViews()
 
         val title = TextView(this)
-        title.text = "@string/appointments"
+        title.text = getString(R.string.appointments)
 
         appointmentsList.addView(title)
 
@@ -194,7 +195,7 @@ class VetWindow : AppCompatActivity() {
                 "$owner\n$date $time - ${time.plusMinutes(15)}"
 
             val deleteButton = Button(this)
-            deleteButton.text = "@string/delete_button"
+            deleteButton.text = getString(R.string.delete_button)
             deleteButton.setOnClickListener {
                 db.collection("appointments").document(pair.first.id).delete().addOnSuccessListener {
                     Log.i("Appointment Deletion", "Appointment deleted successfully")
@@ -206,7 +207,7 @@ class VetWindow : AppCompatActivity() {
             }
 
             val calendarButton = Button(this)
-            calendarButton.text = "@string/add_to_calendar"
+            calendarButton.text = getString(R.string.add_to_calendar)
             calendarButton.setOnClickListener {
                 val beginTime: Calendar = Calendar.getInstance()
                 beginTime.set(date.year, date.monthValue, date.dayOfMonth, time.hour, time.minute)
@@ -242,7 +243,7 @@ class VetWindow : AppCompatActivity() {
         availabilityWindowsList.removeAllViews()
 
         val title = TextView(this)
-        title.text = "@string/availability_windows"
+        title.text = getString(R.string.avilable_windows)
 
         availabilityWindowsList.addView(title)
 
@@ -260,10 +261,10 @@ class VetWindow : AppCompatActivity() {
 
             val availabilityText = TextView(this)
             availabilityText.text =
-                "Date: $date\n$startTime - $endTime"
+                "${getString(R.string.date)}$date\n$startTime - $endTime"
 
             val deleteButton = Button(this)
-            deleteButton.text = "@string/delete_button"
+            deleteButton.text = getString(R.string.delete_button)
             deleteButton.setOnClickListener {
                 db.collection("users")
                     .document(user.uid)
@@ -307,7 +308,7 @@ class VetWindow : AppCompatActivity() {
 
                         Toast.makeText(
                             this,
-                            "Availability window deleted successfully",
+                            getString(R.string.availability_window_deleted_successfully),
                             Toast.LENGTH_SHORT
                         )
                             .show()

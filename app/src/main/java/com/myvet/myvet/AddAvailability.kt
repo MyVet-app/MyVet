@@ -93,7 +93,7 @@ class AddAvailability : AppCompatActivity() {
                     if (conflict) {
                         Toast.makeText(
                             this,
-                            "@string/toast_meetings_clash",
+                            getString(R.string.toast_meetings_clash),
                             Toast.LENGTH_SHORT
                         ).show()
                         return@TimePickerDialog
@@ -104,14 +104,13 @@ class AddAvailability : AppCompatActivity() {
                     if (endTime != null && endTime!!.isBefore(selectedTime)) {
                         Toast.makeText(
                             this,
-                            "@string/toast_end_and_start_time",
+                            getString(R.string.toast_end_and_start_time),
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
                         startTime = selectedTime
                         startTimeText.text =
-                            String.format("@string/start_time_add_availability %02d:%02d", selectedHour, adjustedMinute)
-
+                            String.format(getString(R.string.start_time_add_availability) + " %02d:%02d", selectedHour, adjustedMinute)
                         endTimeButton.isEnabled = true
                     }
                 } else {
@@ -119,18 +118,18 @@ class AddAvailability : AppCompatActivity() {
                         if (selectedTime.isBefore(it)) {
                             Toast.makeText(
                                 this,
-                                "@string/toast_end_and_start_time",
+                                getString(R.string.toast_end_and_start_time),
                                 Toast.LENGTH_SHORT
                             )
                                 .show()
                         } else {
                             endTime = selectedTime
                             endTimeText.text =
-                                String.format("@string/end_time_add_availability %02d:%02d", selectedHour, adjustedMinute)
+                                String.format(getString(R.string.end_time_add_availability) + " %02d:%02d", selectedHour, adjustedMinute)
 
                             save.isEnabled = true
                         }
-                    } ?: Toast.makeText(this, "@string/select_start_time_first", Toast.LENGTH_SHORT).show()
+                    } ?: Toast.makeText(this, getString(R.string.select_start_time_first), Toast.LENGTH_SHORT).show()
                 }
             },
             hour, minute, true // true for 24-hour time format
@@ -200,7 +199,7 @@ class AddAvailability : AppCompatActivity() {
 
                     Toast.makeText(
                         this,
-                        "@string/availability_window_created_successfully",
+                        getString(R.string.availability_window_created_successfully),
                         Toast.LENGTH_SHORT
                     ).show()
                     finish()
@@ -211,7 +210,7 @@ class AddAvailability : AppCompatActivity() {
                         "Availability window creation failed"
                     )
 
-                    Toast.makeText(this, "@string/availability_window_creation_failed", Toast.LENGTH_SHORT)
+                    Toast.makeText(this, getString(R.string.availability_window_creation_failed), Toast.LENGTH_SHORT)
                         .show()
                 }
             }
