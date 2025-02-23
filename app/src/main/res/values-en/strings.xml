@@ -55,6 +55,13 @@
     <string name="select_button">Select</string>
     <string name="name_vet">Name:</string>
     <string name="address">Address:</string>
+    <string name="toast_meetings_clash">Selected time conflicts with an existing availability window</string>
+    <string name="toast_end_and_start_time">End time must be after start time</string>
+    <string name="start_time_add_availability">Start time:</string>
+    <string name="end_time_add_availability">End time:</string>
+    <string name="select_start_time_first">Please select start time first</string>
+    <string name="availability_window_created_successfully">Availability window created successfully</string>
+    <string name="availability_window_creation_failed">Availability window creation failed</string>
     <string name="fui_sign_in_default">Sign in</string>
     <string name="fui_email_hint">Email Address</string>
     <string name="mandatory_filed">Mandatory filed</string>

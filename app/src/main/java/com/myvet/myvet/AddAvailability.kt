@@ -75,17 +75,6 @@ class AddAvailability : AppCompatActivity() {
                     val existingWindowEndTime =
                         LocalTime.ofSecondOfDay(existingWindow.getLong("endTime")!!)
 
-                    // only newstart:
-                    // newstart > existingstart && newstart < existingend
-
-                    // given both newstart and newend:
-                    // full overlap existing: newstart < existingstart && newend > existingend
-                    // newstart < existingstart && newend > existingstart && newend < existingend
-
-
-                    // fully contained in existing: newstart >= existingstart && newend <= existingend
-                    // newstart > existingstart && newstart < existingend && newend > existingend
-
                     var conflict = false
                     if (isStartTime && selectedTime >= existingWindowStartTime && selectedTime < existingWindowEndTime) {
                         conflict = true
@@ -104,7 +93,7 @@ class AddAvailability : AppCompatActivity() {
                     if (conflict) {
                         Toast.makeText(
                             this,
-                            "Selected time conflicts with an existing availability window",
+                            "@string/toast_meetings_clash",
                             Toast.LENGTH_SHORT
                         ).show()
                         return@TimePickerDialog
@@ -115,13 +104,13 @@ class AddAvailability : AppCompatActivity() {
                     if (endTime != null && endTime!!.isBefore(selectedTime)) {
                         Toast.makeText(
                             this,
-                            "End time must be after start time",
+                            "@string/toast_end_and_start_time",
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
                         startTime = selectedTime
                         startTimeText.text =
-                            String.format("Start time: %02d:%02d", selectedHour, adjustedMinute)
+                            String.format("@string/start_time_add_availability %02d:%02d", selectedHour, adjustedMinute)
 
                         endTimeButton.isEnabled = true
                     }
@@ -130,18 +119,18 @@ class AddAvailability : AppCompatActivity() {
                         if (selectedTime.isBefore(it)) {
                             Toast.makeText(
                                 this,
-                                "End time must be after start time",
+                                "@string/toast_end_and_start_time",
                                 Toast.LENGTH_SHORT
                             )
                                 .show()
                         } else {
                             endTime = selectedTime
                             endTimeText.text =
-                                String.format("End time: %02d:%02d", selectedHour, adjustedMinute)
+                                String.format("@string/end_time_add_availability %02d:%02d", selectedHour, adjustedMinute)
 
                             save.isEnabled = true
                         }
-                    } ?: Toast.makeText(this, "Select start time first", Toast.LENGTH_SHORT).show()
+                    } ?: Toast.makeText(this, "@string/select_start_time_first", Toast.LENGTH_SHORT).show()
                 }
             },
             hour, minute, true // true for 24-hour time format
@@ -211,7 +200,7 @@ class AddAvailability : AppCompatActivity() {
 
                     Toast.makeText(
                         this,
-                        "Availability window created successfully",
+                        "@string/availability_window_created_successfully",
                         Toast.LENGTH_SHORT
                     ).show()
                     finish()
@@ -222,7 +211,7 @@ class AddAvailability : AppCompatActivity() {
                         "Availability window creation failed"
                     )
 
-                    Toast.makeText(this, "Availability window creation failed", Toast.LENGTH_SHORT)
+                    Toast.makeText(this, "@string/availability_window_creation_failed", Toast.LENGTH_SHORT)
                         .show()
                 }
             }

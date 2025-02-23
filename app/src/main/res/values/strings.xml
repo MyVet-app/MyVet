@@ -56,6 +56,13 @@
     <string name="select_button">בחר</string>
     <string name="name_vet">שם:</string>
     <string name="address">כתובת:</string>
+    <string name="toast_meetings_clash">הזמן שנבחר מתנגש עם חלון זמינות קיים</string>
+    <string name="toast_end_and_start_time">שעת הסיום חייבת להיות אחרי שעת ההתחלה</string>
+    <string name="start_time_add_availability">שעת התחלה:</string>
+    <string name="end_time_add_availability">שעת סיום:</string>
+    <string name="select_start_time_first">נא לבחור שעת התחלה קודם</string>
+    <string name="availability_window_created_successfully">חלון הזמינות נוצר בהצלחה</string>
+    <string name="availability_window_creation_failed">יצירת חלון הזמינות נכשלה</string>
     <string name="fui_sign_in_default">התחברות</string>
     <string name="fui_email_hint">כתובת מייל</string>
     <string name="mandatory_filed">שדה חובה</string>
