@@ -107,7 +107,7 @@ class MakeAppointment : AppCompatActivity() {
                         )
 
                         val selectButton = Button(this)
-                        selectButton.text = "Select"
+                        selectButton.text = "@string/select_button"
                         selectButton.layoutParams = LinearLayout.LayoutParams(
                             0,
                             LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -177,15 +177,5 @@ class MakeAppointment : AppCompatActivity() {
 
         queryAvailabilityWindows(LocalDate.now())
 
-//        db.collection("users")
-//            .document(vetId)
-//            .collection("availability")
-//            .get()
-//            .addOnSuccessListener { result ->
-//                val dates = result.documents
-//                    .mapNotNull { it.getString("date") }
-//                    .distinct() // Get unique dates
-//                processDates(dates)
-//            }
     }
 }
