@@ -200,7 +200,8 @@ class VetWindow : AppCompatActivity() {
                 db.collection("appointments").document(pair.first.id).delete().addOnSuccessListener {
                     Log.i("Appointment Deletion", "Appointment deleted successfully")
                     Handler(Looper.getMainLooper()).post {
-                        Toast.makeText(this, "Appointment deleted successfully", Toast.LENGTH_SHORT)
+                        Toast.makeText(this,
+                            getString(R.string.appointment_deleted_successfully), Toast.LENGTH_SHORT)
                             .show()
                     }
                 }
