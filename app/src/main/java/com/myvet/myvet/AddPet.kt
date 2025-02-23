@@ -80,7 +80,8 @@ class AddPet : AppCompatActivity() {
                 val newPetData = hashMapOf(
                     "petName" to enteredPetName,
                     "petType" to petType.text.toString(),
-                    "petAge" to petAge.text.toString()
+                    "petAge" to petAge.text.toString(),
+                    "petGender" to petAge.text.toString()
                 )
 
                 petDocRef.set(newPetData)
