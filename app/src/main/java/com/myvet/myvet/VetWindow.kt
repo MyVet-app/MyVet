@@ -332,117 +332,118 @@ class VetWindow : AppCompatActivity() {
                 appointmentsList.addView(appointmentContainer)
             }
         }
+    }
 
-        private fun updateAvailabilityWindows(snapshot: QuerySnapshot) {
-            // Clear the existing UI
-            availabilityWindowsList.removeAllViews()
+    private fun updateAvailabilityWindows(snapshot: QuerySnapshot) {
+        // Clear the existing UI
+        availabilityWindowsList.removeAllViews()
 
-            val title = TextView(this)
-            title.text = getString(R.string.avilable_windows)
+        val title = TextView(this)
+        title.text = getString(R.string.avilable_windows)
 
-            availabilityWindowsList.addView(title)
+        availabilityWindowsList.addView(title)
 
-            val db = FirebaseFirestore.getInstance()
-            val user = FirebaseAuth.getInstance().currentUser!!
+        val db = FirebaseFirestore.getInstance()
+        val user = FirebaseAuth.getInstance().currentUser!!
 
-            // Build the UI elements dynamically based on the updated data
-            for (window in snapshot) {
-                val date = LocalDate.parse(window.getString("date"))
-                val startTime = LocalTime.ofSecondOfDay(window.getLong("startTime")!!)
-                val endTime = LocalTime.ofSecondOfDay(window.getLong("endTime")!!)
+        // Build the UI elements dynamically based on the updated data
+        for (window in snapshot) {
+            val date = LocalDate.parse(window.getString("date"))
+            val startTime = LocalTime.ofSecondOfDay(window.getLong("startTime")!!)
+            val endTime = LocalTime.ofSecondOfDay(window.getLong("endTime")!!)
 
-                val availabilityContainer = LinearLayout(this)
-                availabilityContainer.orientation = LinearLayout.HORIZONTAL
+            val availabilityContainer = LinearLayout(this)
+            availabilityContainer.orientation = LinearLayout.HORIZONTAL
 
 //            val availabilityText = TextView(this)
 //            availabilityText.text =
 //                "${getString(R.string.date)}$date\n$startTime - $endTime"
-                val availabilityText = TextView(this)
+            val availabilityText = TextView(this)
 
-                val formatter = DateTimeFormatter.ofPattern("HH:mm") // תבנית שעה:דקה
-                val startFormatted = startTime.format(formatter)
-                val endFormatted = endTime.format(formatter)
+            val formatter = DateTimeFormatter.ofPattern("HH:mm") // תבנית שעה:דקה
+            val startFormatted = startTime.format(formatter)
+            val endFormatted = endTime.format(formatter)
 
 // מחרוזת עם סדר מתאים לשפה
-                val availability =
-                    getString(R.string.availability, date, startFormatted, endFormatted)
-                availabilityText.text = availability
+            val availability =
+                getString(R.string.availability, date, startFormatted, endFormatted)
+            availabilityText.text = availability
 
 
-                val deleteButton = Button(this)
-                deleteButton.text = getString(R.string.delete_button)
-                deleteButton.setOnClickListener {
-                    db.collection("users")
-                        .document(user.uid)
-                        .collection("availability")
-                        .document(window.id)
-                        .delete()
-                        .addOnSuccessListener {
+            val deleteButton = Button(this)
+            deleteButton.text = getString(R.string.delete_button)
+            deleteButton.setOnClickListener {
+                db.collection("users")
+                    .document(user.uid)
+                    .collection("availability")
+                    .document(window.id)
+                    .delete()
+                    .addOnSuccessListener {
 
-                            db.collection("appointments")
-                                .whereEqualTo("vet", user.uid)
-                                .whereEqualTo("date", window.getString("date"))
-                                .whereGreaterThanOrEqualTo("time", window.getLong("startTime")!!)
-                                .whereLessThan("time", window.getLong("endTime")!!)
-                                .get()
-                                .addOnCompleteListener { task ->
-                                    Log.i(
-                                        "Availability deletion",
-                                        "Task status: ${task.isSuccessful} ${task.exception}"
-                                    )
-                                }
-                                .addOnSuccessListener { appointments ->
-                                    for (appointment in appointments) {
-                                        db.collection("appointments")
-                                            .document(appointment.id)
-                                            .delete()
-                                            .addOnCompleteListener { task ->
-                                                if (!task.isSuccessful) {
-                                                    Log.e(
-                                                        "Availability deletion",
-                                                        "Appointment ${appointment.id} failed to delete"
-                                                    )
-                                                } else {
-                                                    Log.i(
-                                                        "Availability deletion",
-                                                        "Appointment ${appointment.id} deleted successfully"
-                                                    )
-                                                }
+                        db.collection("appointments")
+                            .whereEqualTo("vet", user.uid)
+                            .whereEqualTo("date", window.getString("date"))
+                            .whereGreaterThanOrEqualTo("time", window.getLong("startTime")!!)
+                            .whereLessThan("time", window.getLong("endTime")!!)
+                            .get()
+                            .addOnCompleteListener { task ->
+                                Log.i(
+                                    "Availability deletion",
+                                    "Task status: ${task.isSuccessful} ${task.exception}"
+                                )
+                            }
+                            .addOnSuccessListener { appointments ->
+                                for (appointment in appointments) {
+                                    db.collection("appointments")
+                                        .document(appointment.id)
+                                        .delete()
+                                        .addOnCompleteListener { task ->
+                                            if (!task.isSuccessful) {
+                                                Log.e(
+                                                    "Availability deletion",
+                                                    "Appointment ${appointment.id} failed to delete"
+                                                )
+                                            } else {
+                                                Log.i(
+                                                    "Availability deletion",
+                                                    "Appointment ${appointment.id} deleted successfully"
+                                                )
                                             }
-                                    }
+                                        }
                                 }
+                            }
 
-                            Toast.makeText(
-                                this,
-                                getString(R.string.availability_window_deleted_successfully),
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
-                        }
-                }
-
-                // Optionally, set some layout parameters
-                availabilityText.layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-
-                availabilityText.layoutParams = LinearLayout.LayoutParams(
-                    0,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    0.7f
-                ) // 70% width
-                deleteButton.layoutParams = LinearLayout.LayoutParams(
-                    0,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    0.3f
-                ) // 30% width
-
-                availabilityContainer.addView(availabilityText)
-                availabilityContainer.addView(deleteButton)
-
-
-                availabilityWindowsList.addView(availabilityContainer)
+                        Toast.makeText(
+                            this,
+                            getString(R.string.availability_window_deleted_successfully),
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
             }
+
+            // Optionally, set some layout parameters
+            availabilityText.layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+
+            availabilityText.layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.7f
+            ) // 70% width
+            deleteButton.layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.3f
+            ) // 30% width
+
+            availabilityContainer.addView(availabilityText)
+            availabilityContainer.addView(deleteButton)
+
+
+            availabilityWindowsList.addView(availabilityContainer)
         }
     }
+}
