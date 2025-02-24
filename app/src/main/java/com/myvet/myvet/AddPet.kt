@@ -81,7 +81,7 @@ class AddPet : AppCompatActivity() {
                     "petName" to enteredPetName,
                     "petType" to petType.text.toString(),
                     "petAge" to petAge.text.toString(),
-                    "petGender" to petAge.text.toString()
+                    "petGender" to petGender.text.toString()
                 )
 
                 petDocRef.set(newPetData)

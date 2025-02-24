@@ -50,6 +50,9 @@
         <activity android:name=".UpdatePetDetails"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light"/>
+        <activity android:name=".UpdateVetDetails"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light"/>
         <activity
             android:name=".VetWindow"
             android:exported="false"
