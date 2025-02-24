@@ -34,7 +34,7 @@
     <string name="years_of_experience">Years of experience</string>
     <string name="sign_in_with_google">Sign in with Google</string>
     <string name="sign_in_with_facebook">Sign in with Facebook</string>
-    <string name="sign_in_with_gmail">Sign in with Gmail</string>
+    <string name="sign_in_with_gmail">Sign in with E-mail</string>
     <string name="hello_pet">Hello %s</string>
     <string name="title_activity_login">Login</string>
     <string name="prompt_email">Email</string>

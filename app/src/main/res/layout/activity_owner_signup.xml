@@ -54,7 +54,7 @@
             android:text="@string/not_all_fields_filled" />
 
         <Button
-            android:id="@+id/submitButton"
+            android:id="@+id/nextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"

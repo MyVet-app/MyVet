@@ -38,7 +38,7 @@ class UpdateVetDetails : AppCompatActivity() {
         aboutMe = findViewById(R.id.aboutMe)
 
         erorrMessage = findViewById(R.id.errorMessage)
-        updateDetails = findViewById(R.id.submitButton)
+        updateDetails = findViewById(R.id.nextButton)
 
         val db = FirebaseFirestore.getInstance()
         val user = FirebaseAuth.getInstance().currentUser
