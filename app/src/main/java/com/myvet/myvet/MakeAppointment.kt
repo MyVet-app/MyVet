@@ -46,8 +46,25 @@ class MakeAppointment : AppCompatActivity() {
                     "Appointment creation",
                     "Appointment created successfully"
                 )
-                Toast.makeText(this,
-                    getString(R.string.appointment_made_successfully), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.appointment_made_successfully), Toast.LENGTH_SHORT
+                ).show()
+            }
+
+        val messageData = hashMapOf(
+            "title" to getString(R.string.new_appointment_created),
+            "body" to getString(R.string.client_on_at, auth.currentUser!!.displayName, date, time),
+            "recipient" to vetId,
+        )
+        db.collection("messages")
+            .document()
+            .set(messageData)
+            .addOnSuccessListener {
+                Log.i(
+                    "Appointment creation",
+                    "Sent push notification"
+                )
             }
     }
 
@@ -91,40 +108,50 @@ class MakeAppointment : AppCompatActivity() {
 
                 for (snapshot in task.result) {
                     for (existingAppointment in snapshot) {
-                        appointmentTimes.remove(LocalTime.ofSecondOfDay(existingAppointment.getLong("time")!!))
+                        appointmentTimes.remove(
+                            LocalTime.ofSecondOfDay(
+                                existingAppointment.getLong(
+                                    "time"
+                                )!!
+                            )
+                        )
                     }
                 }
 
                 for (appointmentTime in appointmentTimes) {
                     val appointmentContainer = LinearLayout(this)
-                        appointmentContainer.orientation = LinearLayout.HORIZONTAL
+                    appointmentContainer.orientation = LinearLayout.HORIZONTAL
 
-                        val appointmentText = TextView(this)
-                        val timeRange = getString(R.string.time_range, appointmentTime, appointmentTime.plusMinutes(15))
-                        appointmentText.text = timeRange
-                        appointmentText.layoutParams = LinearLayout.LayoutParams(
-                            0,
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                            0.7f
-                        )
+                    val appointmentText = TextView(this)
+                    val timeRange = getString(
+                        R.string.time_range,
+                        appointmentTime,
+                        appointmentTime.plusMinutes(15)
+                    )
+                    appointmentText.text = timeRange
+                    appointmentText.layoutParams = LinearLayout.LayoutParams(
+                        0,
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        0.7f
+                    )
 
-                        val selectButton = Button(this)
-                        selectButton.text = getString(R.string.select_button)
+                    val selectButton = Button(this)
+                    selectButton.text = getString(R.string.select_button)
 
                     selectButton.layoutParams = LinearLayout.LayoutParams(
-                            0,
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                            0.3f
-                        )
-                        selectButton.setOnClickListener {
-                            makeAppointment(date, appointmentTime)
-                            finish()
-                        }
+                        0,
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        0.3f
+                    )
+                    selectButton.setOnClickListener {
+                        makeAppointment(date, appointmentTime)
+                        finish()
+                    }
 
-                        appointmentContainer.addView(appointmentText)
-                        appointmentContainer.addView(selectButton)
+                    appointmentContainer.addView(appointmentText)
+                    appointmentContainer.addView(selectButton)
 
-                        appointmentList.addView(appointmentContainer)
+                    appointmentList.addView(appointmentContainer)
                 }
             }
             .addOnFailureListener { exception ->

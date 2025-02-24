@@ -1,6 +1,11 @@
 package com.myvet.myvet
 
+import android.Manifest
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,6 +18,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.firebase.ui.auth.AuthUI
@@ -146,9 +154,82 @@ class VetWindow : AppCompatActivity() {
                     return@addSnapshotListener
                 }
 
-                snapshot?.let {
-                    val appointments = mutableListOf<Pair<DocumentSnapshot, String>>() // Pair of appointment and vet name
-                    val ownerIds = snapshot.documents.map { it.getString("user") ?: "" }.distinct() ?: emptyList()
+                for (change in snapshot!!.documentChanges.filter { it.type.name == "REMOVED" }) {
+                    val title = getString(R.string.appointment_cancelled)
+
+                    db.collection("users")
+                        .document(change.document.getString("user")!!)
+                        .get()
+                        .addOnSuccessListener { userRef ->
+                            val body = getString(
+                                R.string.appointment_text, userRef.getString("name")!!, getString(
+                                    R.string.time_range,
+                                    LocalTime.ofSecondOfDay(change.document.getLong("time")!!),
+                                    LocalDate.parse(change.document.getString("date"))
+                                )
+                            )
+
+                            val CHANNEL_ID = "MyVetChannel"
+                            val channel = NotificationChannel(
+                                CHANNEL_ID,
+                                "MyNotification",
+                                NotificationManager.IMPORTANCE_HIGH,
+                            )
+
+                            getSystemService(NotificationManager::class.java).createNotificationChannel(
+                                channel
+                            )
+                            val notification = Notification.Builder(this, CHANNEL_ID)
+                                .setContentTitle(title)
+                                .setContentText(body)
+                                .setSmallIcon(R.drawable.icon_logo)
+                                .setAutoCancel(true)
+
+                            if (ActivityCompat.checkSelfPermission(
+                                    this@VetWindow,
+                                    Manifest.permission.POST_NOTIFICATIONS
+                                ) == PackageManager.PERMISSION_GRANTED
+                            ) {
+                                NotificationManagerCompat.from(this).notify(1, notification.build())
+                            }
+                        }
+
+//                    val builder = NotificationCompat.Builder(this, "MYVET_CHANNEL_ID")
+//                        .setSmallIcon(R.drawable.icon_logo)
+//                        .setContentTitle("Appointment Cancelled")
+//                        .setContentText(
+//                            "Client ... cancelled an appointment at " +
+//                                    "${LocalTime.ofSecondOfDay(change.document.getLong("time")!!)} on " +
+//                                    "${LocalDate.parse(change.document.getString("date"))}"
+//                        )
+//                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+//
+//                    with(NotificationManagerCompat.from(this)) {
+//                        if (ActivityCompat.checkSelfPermission(
+//                                this@VetWindow,
+//                                Manifest.permission.POST_NOTIFICATIONS
+//                            ) != PackageManager.PERMISSION_GRANTED
+//                        ) {
+//                            // TODO: Consider calling
+//                            // ActivityCompat#requestPermissions
+//                            // here to request the missing permissions, and then overriding
+//                            // public fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
+//                            //                                        grantResults: IntArray)
+//                            // to handle the case where the user grants the permission. See the documentation
+//                            // for ActivityCompat#requestPermissions for more details.
+//
+//                            return@with
+//                        }
+//                        // notificationId is a unique int for each notification that you must define.
+//                        notify(1, builder.build())
+//                    }
+
+                }
+
+                snapshot.let {
+                    val appointments =
+                        mutableListOf<Pair<DocumentSnapshot, String>>() // Pair of appointment and vet name
+                    val ownerIds = snapshot.documents.map { it.getString("user") ?: "" }.distinct()
 
                     if (ownerIds.isEmpty()) {
                         appointmentsList.removeAllViews()
@@ -159,7 +240,8 @@ class VetWindow : AppCompatActivity() {
                         .whereIn(FieldPath.documentId(), ownerIds)
                         .get()
                         .addOnSuccessListener { userSnapshots ->
-                            val ownerNames = userSnapshots.documents.associateBy({ it.id }, { it.getString("name") ?: "Unknown" })
+                            val ownerNames = userSnapshots.documents.associateBy({ it.id },
+                                { it.getString("name") ?: "Unknown" })
 
                             snapshot.documents.forEach { appointment ->
                                 val ownerId = appointment.getString("user")
@@ -191,42 +273,66 @@ class VetWindow : AppCompatActivity() {
             val time = LocalTime.ofSecondOfDay(pair.first.getLong("time")!!)
             val owner = pair.second
 
-//            val appointmentText = TextView(this)
-//            appointmentText.text =
-//                "$owner\n$date $time - ${time.plusMinutes(15)}"
-
-
-                        val appointmentText = TextView(this)
+            val appointmentText = TextView(this)
             val formatter = DateTimeFormatter.ofPattern("HH:mm") // לדוגמה: 14:30
             val timeFormatted = time.format(formatter)
             val timeEndFormatted = time.plusMinutes(15).format(formatter)
 
             val timeRange = getString(R.string.time_range, timeFormatted, timeEndFormatted)
-            appointmentText.text = timeRange
-
-
+            appointmentText.text = getString(R.string.appointment_text, owner, timeRange)
 
             val deleteButton = Button(this)
             deleteButton.text = getString(R.string.delete_button)
             deleteButton.setOnClickListener {
-                db.collection("appointments").document(pair.first.id).delete().addOnSuccessListener {
-                    Log.i("Appointment Deletion", "Appointment deleted successfully")
-                    Handler(Looper.getMainLooper()).post {
-                        Toast.makeText(this,
-                            getString(R.string.appointment_deleted_successfully), Toast.LENGTH_SHORT)
-                            .show()
+                db.collection("appointments").document(pair.first.id).delete()
+                    .addOnSuccessListener {
+                        Log.i("Appointment Deletion", "Appointment deleted successfully")
+                        Handler(Looper.getMainLooper()).post {
+                            Toast.makeText(
+                                this,
+                                getString(R.string.appointment_deleted_successfully),
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
+
+                        val messageData = hashMapOf(
+                            "title" to getString(R.string.appointment_cancelled),
+                            "body" to getString(R.string.cancelled_appointment_on_at, date, time),
+                            "recipient" to owner,
+                        )
+                        db.collection("messages")
+                            .document()
+                            .set(messageData)
+                            .addOnSuccessListener {
+                                Log.i(
+                                    "Appointment deletion",
+                                    "Sent push notification"
+                                )
+                            }
                     }
-                }
             }
 
             val calendarButton = Button(this)
             calendarButton.text = getString(R.string.add_to_calendar)
             calendarButton.setOnClickListener {
                 val beginTime: Calendar = Calendar.getInstance()
-                beginTime.set(date.year, date.monthValue, date.dayOfMonth, time.hour, time.minute)
+                beginTime.set(
+                    date.year,
+                    date.monthValue,
+                    date.dayOfMonth,
+                    time.hour,
+                    time.minute
+                )
 
                 val endTime: Calendar = Calendar.getInstance()
-                endTime.set(date.year, date.monthValue, date.dayOfMonth, time.plusMinutes(15).hour, time.plusMinutes(15).minute)
+                endTime.set(
+                    date.year,
+                    date.monthValue,
+                    date.dayOfMonth,
+                    time.plusMinutes(15).hour,
+                    time.plusMinutes(15).minute
+                )
                 val intent: Intent = Intent(Intent.ACTION_INSERT)
                     .setData(Events.CONTENT_URI)
                     .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.timeInMillis)
@@ -239,9 +345,21 @@ class VetWindow : AppCompatActivity() {
                 startActivity(intent)
             }
 
-            appointmentText.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f) // 70% width
-            deleteButton.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f) // 30% width
-            calendarButton.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.4f) // 30% width
+            appointmentText.layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.3f
+            ) // 70% width
+            deleteButton.layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.3f
+            ) // 30% width
+            calendarButton.layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.4f
+            ) // 30% width
 
             appointmentContainer.addView(appointmentText)
             appointmentContainer.addView(deleteButton)
@@ -282,7 +400,8 @@ class VetWindow : AppCompatActivity() {
             val endFormatted = endTime.format(formatter)
 
 // מחרוזת עם סדר מתאים לשפה
-            val availability = getString(R.string.availability, date, startFormatted, endFormatted)
+            val availability =
+                getString(R.string.availability, date, startFormatted, endFormatted)
             availabilityText.text = availability
 
 

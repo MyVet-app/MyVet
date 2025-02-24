@@ -158,7 +158,7 @@ class FindVet : AppCompatActivity() {
 
             val vetText = TextView(this)
             vetText.text =
-                "${getString(R.string.name_vet)}: $name\n${getString(R.string.address)}: $address"
+                "${getString(R.string.name_vet)} $name\n${getString(R.string.address)}: $address"
 
             val selectButton = Button(this)
             selectButton.text = getString(R.string.select_button)

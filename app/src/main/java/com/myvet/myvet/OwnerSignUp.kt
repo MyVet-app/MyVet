@@ -34,7 +34,7 @@ class OwnerSignUp : AppCompatActivity() {
         })
 
         address = findViewById(R.id.homeAddress)
-        register = findViewById(R.id.submitButton)
+        register = findViewById(R.id.nextButton)
         errorMessage = findViewById(R.id.errorMessage)
 
         val db = FirebaseFirestore.getInstance()

@@ -63,8 +63,23 @@ class PetOwnerWindow : AppCompatActivity() {
             deleteButton.setOnClickListener {
                 db.collection("appointments").document(pair.first.id).delete()
                     .addOnSuccessListener {
-                        Toast.makeText(this, "Appointment deleted successfully", Toast.LENGTH_SHORT)
+                        Toast.makeText(this, getString(R.string.appointment_deleted_successfully), Toast.LENGTH_SHORT)
                             .show()
+                    }
+
+                val messageData = hashMapOf(
+                    "title" to getString(R.string.appointment_deleted_successfully),
+                    "body" to getString(R.string.cancelled_appointment_on_at, date, time),
+                    "recipient" to vet,
+                )
+                db.collection("messages")
+                    .document()
+                    .set(messageData)
+                    .addOnSuccessListener {
+                        Log.i(
+                            "Appointment deletion",
+                            "Sent push notification"
+                        )
                     }
             }
 
