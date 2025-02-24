@@ -275,61 +275,61 @@ class VetWindow : AppCompatActivity() {
                                 )
                             }
                     }
-
-                val calendarButton = Button(this)
-                calendarButton.text = getString(R.string.add_to_calendar)
-                calendarButton.setOnClickListener {
-                    val beginTime: Calendar = Calendar.getInstance()
-                    beginTime.set(
-                        date.year,
-                        date.monthValue,
-                        date.dayOfMonth,
-                        time.hour,
-                        time.minute
-                    )
-
-                    val endTime: Calendar = Calendar.getInstance()
-                    endTime.set(
-                        date.year,
-                        date.monthValue,
-                        date.dayOfMonth,
-                        time.plusMinutes(15).hour,
-                        time.plusMinutes(15).minute
-                    )
-                    val intent: Intent = Intent(Intent.ACTION_INSERT)
-                        .setData(Events.CONTENT_URI)
-                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.timeInMillis)
-                        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.timeInMillis)
-                        .putExtra(Events.TITLE, "Appointment with vet Dr. $owner")
-//                    .putExtra(Events.DESCRIPTION, "Group class")
-                        .putExtra(Events.EVENT_LOCATION, "Virtual Meeting")
-                        .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
-//                    .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com")
-                    startActivity(intent)
-                }
-
-                appointmentText.layoutParams = LinearLayout.LayoutParams(
-                    0,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    0.3f
-                ) // 70% width
-                deleteButton.layoutParams = LinearLayout.LayoutParams(
-                    0,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    0.3f
-                ) // 30% width
-                calendarButton.layoutParams = LinearLayout.LayoutParams(
-                    0,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    0.4f
-                ) // 30% width
-
-                appointmentContainer.addView(appointmentText)
-                appointmentContainer.addView(deleteButton)
-                appointmentContainer.addView(calendarButton)
-
-                appointmentsList.addView(appointmentContainer)
             }
+
+            val calendarButton = Button(this)
+            calendarButton.text = getString(R.string.add_to_calendar)
+            calendarButton.setOnClickListener {
+                val beginTime: Calendar = Calendar.getInstance()
+                beginTime.set(
+                    date.year,
+                    date.monthValue,
+                    date.dayOfMonth,
+                    time.hour,
+                    time.minute
+                )
+
+                val endTime: Calendar = Calendar.getInstance()
+                endTime.set(
+                    date.year,
+                    date.monthValue,
+                    date.dayOfMonth,
+                    time.plusMinutes(15).hour,
+                    time.plusMinutes(15).minute
+                )
+                val intent: Intent = Intent(Intent.ACTION_INSERT)
+                    .setData(Events.CONTENT_URI)
+                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.timeInMillis)
+                    .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.timeInMillis)
+                    .putExtra(Events.TITLE, "Appointment with vet Dr. $owner")
+//                    .putExtra(Events.DESCRIPTION, "Group class")
+                    .putExtra(Events.EVENT_LOCATION, "Virtual Meeting")
+                    .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
+//                    .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com")
+                startActivity(intent)
+            }
+
+            appointmentText.layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.3f
+            ) // 70% width
+            deleteButton.layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.3f
+            ) // 30% width
+            calendarButton.layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.4f
+            ) // 30% width
+
+            appointmentContainer.addView(appointmentText)
+            appointmentContainer.addView(deleteButton)
+            appointmentContainer.addView(calendarButton)
+
+            appointmentsList.addView(appointmentContainer)
         }
     }
 
