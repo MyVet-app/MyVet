@@ -29,6 +29,7 @@ import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.QuerySnapshot
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
 class VetWindow : AppCompatActivity() {
@@ -109,7 +110,8 @@ class VetWindow : AppCompatActivity() {
         }
 
         val textView: TextView = findViewById(R.id.HelloText)
-        textView.text = "Welcome ${user.displayName}"
+        textView.text = getString(R.string.welcome_vet_or_pet) + " ${user.displayName}"
+
 
         addAvailability = findViewById(R.id.AddAvailability)
         addAvailability.setOnClickListener {
@@ -153,9 +155,11 @@ class VetWindow : AppCompatActivity() {
                     val builder = NotificationCompat.Builder(this, "MYVET_CHANNEL_ID")
                         .setSmallIcon(R.drawable.icon_logo)
                         .setContentTitle("Appointment Cancelled")
-                        .setContentText("Client ... cancelled an appointment at " +
-                                "${LocalTime.ofSecondOfDay(change.document.getLong("time")!!)} on " +
-                                "${LocalDate.parse(change.document.getString("date"))}")
+                        .setContentText(
+                            "Client ... cancelled an appointment at " +
+                                    "${LocalTime.ofSecondOfDay(change.document.getLong("time")!!)} on " +
+                                    "${LocalDate.parse(change.document.getString("date"))}"
+                        )
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
                     with(NotificationManagerCompat.from(this)) {
@@ -214,7 +218,7 @@ class VetWindow : AppCompatActivity() {
         appointmentsList.removeAllViews()
 
         val title = TextView(this)
-        title.text = "Appointments:"
+        title.text = getString(R.string.appointments)
 
         appointmentsList.addView(title)
 
@@ -228,12 +232,22 @@ class VetWindow : AppCompatActivity() {
             val time = LocalTime.ofSecondOfDay(pair.first.getLong("time")!!)
             val owner = pair.second
 
+//            val appointmentText = TextView(this)
+//            appointmentText.text =
+//                "$owner\n$date $time - ${time.plusMinutes(15)}"
+
+
             val appointmentText = TextView(this)
-            appointmentText.text =
-                "$owner\n$date $time - ${time.plusMinutes(15)}"
+            val formatter = DateTimeFormatter.ofPattern("HH:mm") // לדוגמה: 14:30
+            val timeFormatted = time.format(formatter)
+            val timeEndFormatted = time.plusMinutes(15).format(formatter)
+
+            val timeRange = getString(R.string.time_range, timeFormatted, timeEndFormatted)
+            appointmentText.text = timeRange
+
 
             val deleteButton = Button(this)
-            deleteButton.text = "Delete"
+            deleteButton.text = getString(R.string.delete_button)
             deleteButton.setOnClickListener {
                 db.collection("appointments").document(pair.first.id).delete()
                     .addOnSuccessListener {
@@ -241,178 +255,194 @@ class VetWindow : AppCompatActivity() {
                         Handler(Looper.getMainLooper()).post {
                             Toast.makeText(
                                 this,
-                                "Appointment deleted successfully",
+                                getString(R.string.appointment_deleted_successfully),
                                 Toast.LENGTH_SHORT
                             )
                                 .show()
                         }
-                    }
 
-                val messageData = hashMapOf(
-                    "title" to "Appointment cancelled",
-                    "body" to "Cancelled appointment on $date at $time",
-                    "recipient" to owner,
-                )
-                db.collection("messages")
-                    .document()
-                    .set(messageData)
-                    .addOnSuccessListener {
-                        Log.i(
-                            "Appointment deletion",
-                            "Sent push notification"
+                        val messageData = hashMapOf(
+                            "title" to getString(R.string.appointment_cancelled),
+                            "body" to getString(R.string.cancelled_appointment_on_at, date, time),
+                            "recipient" to owner,
                         )
-                    }
-            }
-
-            val calendarButton = Button(this)
-            calendarButton.text = "Add to Calendar"
-            calendarButton.setOnClickListener {
-                val beginTime: Calendar = Calendar.getInstance()
-                beginTime.set(date.year, date.monthValue, date.dayOfMonth, time.hour, time.minute)
-
-                val endTime: Calendar = Calendar.getInstance()
-                endTime.set(
-                    date.year,
-                    date.monthValue,
-                    date.dayOfMonth,
-                    time.plusMinutes(15).hour,
-                    time.plusMinutes(15).minute
-                )
-                val intent: Intent = Intent(Intent.ACTION_INSERT)
-                    .setData(Events.CONTENT_URI)
-                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.timeInMillis)
-                    .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.timeInMillis)
-                    .putExtra(Events.TITLE, "Appointment with vet Dr. $owner")
-//                    .putExtra(Events.DESCRIPTION, "Group class")
-                    .putExtra(Events.EVENT_LOCATION, "Virtual Meeting")
-                    .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
-//                    .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com")
-                startActivity(intent)
-            }
-
-            appointmentText.layoutParams = LinearLayout.LayoutParams(
-                0,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                0.3f
-            ) // 70% width
-            deleteButton.layoutParams = LinearLayout.LayoutParams(
-                0,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                0.3f
-            ) // 30% width
-            calendarButton.layoutParams = LinearLayout.LayoutParams(
-                0,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                0.4f
-            ) // 30% width
-
-            appointmentContainer.addView(appointmentText)
-            appointmentContainer.addView(deleteButton)
-            appointmentContainer.addView(calendarButton)
-
-            appointmentsList.addView(appointmentContainer)
-        }
-    }
-
-    private fun updateAvailabilityWindows(snapshot: QuerySnapshot) {
-        // Clear the existing UI
-        availabilityWindowsList.removeAllViews()
-
-        val title = TextView(this)
-        title.text = "Availability Windows:"
-
-        availabilityWindowsList.addView(title)
-
-        val db = FirebaseFirestore.getInstance()
-        val user = FirebaseAuth.getInstance().currentUser!!
-
-        // Build the UI elements dynamically based on the updated data
-        for (window in snapshot) {
-            val date = LocalDate.parse(window.getString("date"))
-            val startTime = LocalTime.ofSecondOfDay(window.getLong("startTime")!!)
-            val endTime = LocalTime.ofSecondOfDay(window.getLong("endTime")!!)
-
-            val availabilityContainer = LinearLayout(this)
-            availabilityContainer.orientation = LinearLayout.HORIZONTAL
-
-            val availabilityText = TextView(this)
-            availabilityText.text =
-                "Date: $date\n$startTime - $endTime"
-
-            val deleteButton = Button(this)
-            deleteButton.text = "Delete"
-            deleteButton.setOnClickListener {
-                db.collection("users")
-                    .document(user.uid)
-                    .collection("availability")
-                    .document(window.id)
-                    .delete()
-                    .addOnSuccessListener {
-
-                        db.collection("appointments")
-                            .whereEqualTo("vet", user.uid)
-                            .whereEqualTo("date", window.getString("date"))
-                            .whereGreaterThanOrEqualTo("time", window.getLong("startTime")!!)
-                            .whereLessThan("time", window.getLong("endTime")!!)
-                            .get()
-                            .addOnCompleteListener { task ->
+                        db.collection("messages")
+                            .document()
+                            .set(messageData)
+                            .addOnSuccessListener {
                                 Log.i(
-                                    "Availability deletion",
-                                    "Task status: ${task.isSuccessful} ${task.exception}"
+                                    "Appointment deletion",
+                                    "Sent push notification"
                                 )
                             }
-                            .addOnSuccessListener { appointments ->
-                                for (appointment in appointments) {
-                                    db.collection("appointments")
-                                        .document(appointment.id)
-                                        .delete()
-                                        .addOnCompleteListener { task ->
-                                            if (!task.isSuccessful) {
-                                                Log.e(
-                                                    "Availability deletion",
-                                                    "Appointment ${appointment.id} failed to delete"
-                                                )
-                                            } else {
-                                                Log.i(
-                                                    "Availability deletion",
-                                                    "Appointment ${appointment.id} deleted successfully"
-                                                )
-                                            }
-                                        }
-                                }
-                            }
-
-                        Toast.makeText(
-                            this,
-                            "Availability window deleted successfully",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
                     }
+
+                val calendarButton = Button(this)
+                calendarButton.text = getString(R.string.add_to_calendar)
+                calendarButton.setOnClickListener {
+                    val beginTime: Calendar = Calendar.getInstance()
+                    beginTime.set(
+                        date.year,
+                        date.monthValue,
+                        date.dayOfMonth,
+                        time.hour,
+                        time.minute
+                    )
+
+                    val endTime: Calendar = Calendar.getInstance()
+                    endTime.set(
+                        date.year,
+                        date.monthValue,
+                        date.dayOfMonth,
+                        time.plusMinutes(15).hour,
+                        time.plusMinutes(15).minute
+                    )
+                    val intent: Intent = Intent(Intent.ACTION_INSERT)
+                        .setData(Events.CONTENT_URI)
+                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.timeInMillis)
+                        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.timeInMillis)
+                        .putExtra(Events.TITLE, "Appointment with vet Dr. $owner")
+//                    .putExtra(Events.DESCRIPTION, "Group class")
+                        .putExtra(Events.EVENT_LOCATION, "Virtual Meeting")
+                        .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
+//                    .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com")
+                    startActivity(intent)
+                }
+
+                appointmentText.layoutParams = LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    0.3f
+                ) // 70% width
+                deleteButton.layoutParams = LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    0.3f
+                ) // 30% width
+                calendarButton.layoutParams = LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    0.4f
+                ) // 30% width
+
+                appointmentContainer.addView(appointmentText)
+                appointmentContainer.addView(deleteButton)
+                appointmentContainer.addView(calendarButton)
+
+                appointmentsList.addView(appointmentContainer)
             }
+        }
 
-            // Optionally, set some layout parameters
-            availabilityText.layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
+        private fun updateAvailabilityWindows(snapshot: QuerySnapshot) {
+            // Clear the existing UI
+            availabilityWindowsList.removeAllViews()
 
-            availabilityText.layoutParams = LinearLayout.LayoutParams(
-                0,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                0.7f
-            ) // 70% width
-            deleteButton.layoutParams = LinearLayout.LayoutParams(
-                0,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                0.3f
-            ) // 30% width
+            val title = TextView(this)
+            title.text = getString(R.string.avilable_windows)
 
-            availabilityContainer.addView(availabilityText)
-            availabilityContainer.addView(deleteButton)
+            availabilityWindowsList.addView(title)
+
+            val db = FirebaseFirestore.getInstance()
+            val user = FirebaseAuth.getInstance().currentUser!!
+
+            // Build the UI elements dynamically based on the updated data
+            for (window in snapshot) {
+                val date = LocalDate.parse(window.getString("date"))
+                val startTime = LocalTime.ofSecondOfDay(window.getLong("startTime")!!)
+                val endTime = LocalTime.ofSecondOfDay(window.getLong("endTime")!!)
+
+                val availabilityContainer = LinearLayout(this)
+                availabilityContainer.orientation = LinearLayout.HORIZONTAL
+
+//            val availabilityText = TextView(this)
+//            availabilityText.text =
+//                "${getString(R.string.date)}$date\n$startTime - $endTime"
+                val availabilityText = TextView(this)
+
+                val formatter = DateTimeFormatter.ofPattern("HH:mm") // תבנית שעה:דקה
+                val startFormatted = startTime.format(formatter)
+                val endFormatted = endTime.format(formatter)
+
+// מחרוזת עם סדר מתאים לשפה
+                val availability =
+                    getString(R.string.availability, date, startFormatted, endFormatted)
+                availabilityText.text = availability
 
 
-            availabilityWindowsList.addView(availabilityContainer)
+                val deleteButton = Button(this)
+                deleteButton.text = getString(R.string.delete_button)
+                deleteButton.setOnClickListener {
+                    db.collection("users")
+                        .document(user.uid)
+                        .collection("availability")
+                        .document(window.id)
+                        .delete()
+                        .addOnSuccessListener {
+
+                            db.collection("appointments")
+                                .whereEqualTo("vet", user.uid)
+                                .whereEqualTo("date", window.getString("date"))
+                                .whereGreaterThanOrEqualTo("time", window.getLong("startTime")!!)
+                                .whereLessThan("time", window.getLong("endTime")!!)
+                                .get()
+                                .addOnCompleteListener { task ->
+                                    Log.i(
+                                        "Availability deletion",
+                                        "Task status: ${task.isSuccessful} ${task.exception}"
+                                    )
+                                }
+                                .addOnSuccessListener { appointments ->
+                                    for (appointment in appointments) {
+                                        db.collection("appointments")
+                                            .document(appointment.id)
+                                            .delete()
+                                            .addOnCompleteListener { task ->
+                                                if (!task.isSuccessful) {
+                                                    Log.e(
+                                                        "Availability deletion",
+                                                        "Appointment ${appointment.id} failed to delete"
+                                                    )
+                                                } else {
+                                                    Log.i(
+                                                        "Availability deletion",
+                                                        "Appointment ${appointment.id} deleted successfully"
+                                                    )
+                                                }
+                                            }
+                                    }
+                                }
+
+                            Toast.makeText(
+                                this,
+                                getString(R.string.availability_window_deleted_successfully),
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
+                }
+
+                // Optionally, set some layout parameters
+                availabilityText.layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+
+                availabilityText.layoutParams = LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    0.7f
+                ) // 70% width
+                deleteButton.layoutParams = LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    0.3f
+                ) // 30% width
+
+                availabilityContainer.addView(availabilityText)
+                availabilityContainer.addView(deleteButton)
+
+
+                availabilityWindowsList.addView(availabilityContainer)
+            }
         }
     }
-}

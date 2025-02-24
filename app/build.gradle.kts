@@ -82,7 +82,7 @@ dependencies {
     implementation (libs.okhttp)
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
-
+    implementation(libs.glide)
 
     // Mockito and PowerMock
     testImplementation("org.mockito:mockito-core:3.12.4")

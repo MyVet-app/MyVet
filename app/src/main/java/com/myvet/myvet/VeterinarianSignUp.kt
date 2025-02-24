@@ -127,7 +127,7 @@ class VeterinarianSignUp : AppCompatActivity() {
                                 Handler(Looper.getMainLooper()).post {
                                     Toast.makeText(
                                         this@VeterinarianSignUp,
-                                        "Address not found",
+                                        getString(R.string.address_not_found),
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }

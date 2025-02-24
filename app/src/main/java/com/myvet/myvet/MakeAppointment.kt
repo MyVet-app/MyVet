@@ -46,12 +46,15 @@ class MakeAppointment : AppCompatActivity() {
                     "Appointment creation",
                     "Appointment created successfully"
                 )
-                Toast.makeText(this, "Appointment made successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.appointment_made_successfully), Toast.LENGTH_SHORT
+                ).show()
             }
 
         val messageData = hashMapOf(
-            "title" to "New appointment created",
-            "body" to "Client ${auth.currentUser!!.displayName} on $date at $time",
+            "title" to getString(R.string.new_appointment_created),
+            "body" to getString(R.string.client_on_at, auth.currentUser!!.displayName, date, time),
             "recipient" to vetId,
         )
         db.collection("messages")
@@ -105,7 +108,13 @@ class MakeAppointment : AppCompatActivity() {
 
                 for (snapshot in task.result) {
                     for (existingAppointment in snapshot) {
-                        appointmentTimes.remove(LocalTime.ofSecondOfDay(existingAppointment.getLong("time")!!))
+                        appointmentTimes.remove(
+                            LocalTime.ofSecondOfDay(
+                                existingAppointment.getLong(
+                                    "time"
+                                )!!
+                            )
+                        )
                     }
                 }
 
@@ -114,7 +123,12 @@ class MakeAppointment : AppCompatActivity() {
                     appointmentContainer.orientation = LinearLayout.HORIZONTAL
 
                     val appointmentText = TextView(this)
-                    appointmentText.text = "$appointmentTime - ${appointmentTime.plusMinutes(15)}"
+                    val timeRange = getString(
+                        R.string.time_range,
+                        appointmentTime,
+                        appointmentTime.plusMinutes(15)
+                    )
+                    appointmentText.text = timeRange
                     appointmentText.layoutParams = LinearLayout.LayoutParams(
                         0,
                         LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -122,7 +136,8 @@ class MakeAppointment : AppCompatActivity() {
                     )
 
                     val selectButton = Button(this)
-                    selectButton.text = "Select"
+                    selectButton.text = getString(R.string.select_button)
+
                     selectButton.layoutParams = LinearLayout.LayoutParams(
                         0,
                         LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -192,15 +207,5 @@ class MakeAppointment : AppCompatActivity() {
 
         queryAvailabilityWindows(LocalDate.now())
 
-//        db.collection("users")
-//            .document(vetId)
-//            .collection("availability")
-//            .get()
-//            .addOnSuccessListener { result ->
-//                val dates = result.documents
-//                    .mapNotNull { it.getString("date") }
-//                    .distinct() // Get unique dates
-//                processDates(dates)
-//            }
     }
 }

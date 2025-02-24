@@ -44,10 +44,10 @@
             android:value="@string/facebook_client_token" />
 
         <activity
-            android:name=".UpdatePetDetails"
+            android:name=".AddPet"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light"/>
-        <activity android:name=".UpdatePetDetailsContinuation"
+        <activity android:name=".UpdatePetDetails"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light"/>
         <activity
