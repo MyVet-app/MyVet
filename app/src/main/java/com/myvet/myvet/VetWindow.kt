@@ -188,7 +188,6 @@ class VetWindow : AppCompatActivity() {
                     val appointments =
                         mutableListOf<Pair<DocumentSnapshot, String>>() // Pair of appointment and vet name
                     val ownerIds = snapshot.documents.map { it.getString("user") ?: "" }.distinct()
-                        ?: emptyList()
 
                     if (ownerIds.isEmpty()) {
                         appointmentsList.removeAllViews()

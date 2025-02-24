@@ -111,6 +111,8 @@
     <string name="cancel">ביטול</string>
     <string name="appointment_cancelled">תור בוטל</string>
     <string name="cancelled_appointment_on_at">בתאריך %1$s בשעה %2$s</string>
+    <string name="new_appointment_created">תור חדש נקבע</string>
+    <string name="client_on_at">לקוח %1$s בתאריך %2$s בשעה %3$s</string>
 
     <!--    <string name="facebook_application_id" translatable="false">3889928198001609</string>-->
 <!--    <string name="facebook_client_token" translatable="false">fdf813bfc8309a8c097e8ec28d35baf5</string>-->

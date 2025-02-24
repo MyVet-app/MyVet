@@ -110,5 +110,7 @@
     <string name="cancel">Cancel</string>
     <string name="appointment_cancelled">תור בוטל</string>
     <string name="cancelled_appointment_on_at">בתאריך %1$s בשעה %2$s</string>
+    <string name="new_appointment_created">תור חדש נקבע</string>
+    <string name="client_on_at">לקוח %1$s בתאריך %2$s בשעה %3$s</string>
 
 </resources>
