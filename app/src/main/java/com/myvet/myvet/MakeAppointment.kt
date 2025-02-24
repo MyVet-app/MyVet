@@ -48,6 +48,21 @@ class MakeAppointment : AppCompatActivity() {
                 )
                 Toast.makeText(this, "Appointment made successfully", Toast.LENGTH_SHORT).show()
             }
+
+        val messageData = hashMapOf(
+            "title" to "New appointment created",
+            "body" to "Client ${auth.currentUser!!.displayName} on $date at $time",
+            "recipient" to vetId,
+        )
+        db.collection("messages")
+            .document()
+            .set(messageData)
+            .addOnSuccessListener {
+                Log.i(
+                    "Appointment creation",
+                    "Sent push notification"
+                )
+            }
     }
 
     private fun displayAvailabilityWindows(date: LocalDate, windows: QuerySnapshot) {
@@ -96,32 +111,32 @@ class MakeAppointment : AppCompatActivity() {
 
                 for (appointmentTime in appointmentTimes) {
                     val appointmentContainer = LinearLayout(this)
-                        appointmentContainer.orientation = LinearLayout.HORIZONTAL
+                    appointmentContainer.orientation = LinearLayout.HORIZONTAL
 
-                        val appointmentText = TextView(this)
-                        appointmentText.text = "$appointmentTime - ${appointmentTime.plusMinutes(15)}"
-                        appointmentText.layoutParams = LinearLayout.LayoutParams(
-                            0,
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                            0.7f
-                        )
+                    val appointmentText = TextView(this)
+                    appointmentText.text = "$appointmentTime - ${appointmentTime.plusMinutes(15)}"
+                    appointmentText.layoutParams = LinearLayout.LayoutParams(
+                        0,
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        0.7f
+                    )
 
-                        val selectButton = Button(this)
-                        selectButton.text = "Select"
-                        selectButton.layoutParams = LinearLayout.LayoutParams(
-                            0,
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                            0.3f
-                        )
-                        selectButton.setOnClickListener {
-                            makeAppointment(date, appointmentTime)
-                            finish()
-                        }
+                    val selectButton = Button(this)
+                    selectButton.text = "Select"
+                    selectButton.layoutParams = LinearLayout.LayoutParams(
+                        0,
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        0.3f
+                    )
+                    selectButton.setOnClickListener {
+                        makeAppointment(date, appointmentTime)
+                        finish()
+                    }
 
-                        appointmentContainer.addView(appointmentText)
-                        appointmentContainer.addView(selectButton)
+                    appointmentContainer.addView(appointmentText)
+                    appointmentContainer.addView(selectButton)
 
-                        appointmentList.addView(appointmentContainer)
+                    appointmentList.addView(appointmentContainer)
                 }
             }
             .addOnFailureListener { exception ->

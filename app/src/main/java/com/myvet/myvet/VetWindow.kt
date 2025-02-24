@@ -247,6 +247,21 @@ class VetWindow : AppCompatActivity() {
                                 .show()
                         }
                     }
+
+                val messageData = hashMapOf(
+                    "title" to "Appointment cancelled",
+                    "body" to "Cancelled appointment on $date at $time",
+                    "recipient" to owner,
+                )
+                db.collection("messages")
+                    .document()
+                    .set(messageData)
+                    .addOnSuccessListener {
+                        Log.i(
+                            "Appointment deletion",
+                            "Sent push notification"
+                        )
+                    }
             }
 
             val calendarButton = Button(this)
