@@ -22,6 +22,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import androidx.test.espresso.action.ViewActions.*
 
 
 @RunWith(AndroidJUnit4::class)
@@ -41,17 +42,6 @@ class UITests {
 
     @Before
     fun setUp() {
-        // רישום IdlingResource
-//        IdlingRegistry.getInstance().register(vetLoadingIdlingResource)
-
-        // Wait for the MakeVet activity to be launched
-//        val makeVetActivityScenario = ActivityScenario.launch(FindVet::class.java)
-//
-//        // Register the IdlingResource from MakeVet activity
-//        makeVetActivityScenario.onActivity { activity ->
-//            vetLoadingIdlingResource = activity.getIdlingResource()
-//            IdlingRegistry.getInstance().register(vetLoadingIdlingResource)
-//        }
 
         val authTask = FirebaseAuth.getInstance()
             .signInWithEmailAndPassword("petowner@gmail.com", "Password1!")
@@ -64,9 +54,6 @@ class UITests {
 
     @After
     fun tearDown() {
-        // הסרת IdlingResource לאחר הבדיקה
-//        IdlingRegistry.getInstance().unregister(vetLoadingIdlingResource)
-
         ActivityScenario.launch(PetOwnerWindow::class.java)
         Thread.sleep(5000)
 
@@ -87,43 +74,93 @@ class UITests {
 
     @Test
     fun testSuccessfulAppointmentBooking() {
-        // מחכה ש-Activity ייטען
-//            onView(withId(R.id.main)).check(matches(isDisplayed()))
         onView(withId(R.id.HelloText)).check(matches(isDisplayed()))
 
-        // מוודא שהכפתור קיים ולוחץ עליו
         onView(withId(R.id.FindVet))
             .check(matches(isDisplayed()))
             .perform(click())
 
-//        // Wait for the MakeVet activity to be launched
-//        val makeVetActivityScenario = ActivityScenario.launch(FindVet::class.java)
-//
-//        // Register the IdlingResource from MakeVet activity
-//        makeVetActivityScenario.onActivity { activity ->
-//            vetLoadingIdlingResource = activity.getIdlingResource()
-//            IdlingRegistry.getInstance().register(vetLoadingIdlingResource)
-//        }
         Thread.sleep(5000)
 
-        // בחירת וטרינר
         onView(allOf(withText("SELECT"), hasSibling(withSubstring("Google Vet"))))
             .check(matches(isDisplayed()))
             .perform(click())
 
-        // לחיצה על לוח שנה
         onView(withText("Available appointments:"))
             .check(matches(isDisplayed()))
 
         Thread.sleep(5000)
 
-        // לחיצה על OK
         onView(allOf(withText("SELECT"), hasSibling(withText("10:30 - 10:45"))))
             .check(matches(isDisplayed()))
             .perform(click())
 
-        // מוודא שהודעת האישור מופיעה
         onView(withSubstring("10:30 - 10:45"))
             .check(matches(isDisplayed()))
+    }
+}
+
+
+
+@RunWith(AndroidJUnit4::class)
+class UITest {
+
+    @get:Rule
+    val activityRule = ActivityScenarioRule(PetOwnerWindow::class.java)
+
+
+    @Before
+    fun setUp() {
+        val authTask = FirebaseAuth.getInstance()
+            .signInWithEmailAndPassword("petowner@gmail.com", "Password1!")
+
+        Tasks.await(authTask) // Waits for the user to sign in
+        if (authTask.isSuccessful) {
+            ActivityScenario.launch(PetOwnerWindow::class.java)
         }
+    }
+
+    @After
+    fun tearDown() {
+        // No specific action needed after test
+    }
+
+    @Test
+    fun testSuccessfulPetDetailsUpdate() {
+        // Wait for the screen to load
+        onView(withId(R.id.HelloText)).check(matches(isDisplayed()))
+
+        // Click on "Update Pet Details" button
+        onView(withId(R.id.UpdateDetails))
+            .check(matches(isDisplayed()))
+            .perform(click())
+
+        // Fill in pet's name
+        onView(withId(R.id.name))
+            .perform(typeText("Luna"), closeSoftKeyboard())
+
+        // Fill in pet's age
+        onView(withId(R.id.age))
+            .perform(typeText("4"), closeSoftKeyboard())
+
+        // Fill in pet's breed
+        onView(withId(R.id.typeOfPet))
+            .perform(typeText("Golden Retriever"), closeSoftKeyboard())
+
+        // Click on "Next" button
+        onView(withId(R.id.next))
+            .perform(click())
+
+        Thread.sleep(5000)
+
+
+        // Fill in the medical history with "All good"
+        onView(withId(R.id.medicalHistory))
+            .perform(typeText("All good"), closeSoftKeyboard())
+
+        // Click on "Update Details" button
+        onView(withId(R.id.update))
+            .perform(click())
+
+    }
 }
