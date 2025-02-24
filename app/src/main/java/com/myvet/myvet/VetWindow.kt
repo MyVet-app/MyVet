@@ -1,6 +1,9 @@
 package com.myvet.myvet
 
 import android.Manifest
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -152,35 +155,74 @@ class VetWindow : AppCompatActivity() {
                 }
 
                 for (change in snapshot!!.documentChanges.filter { it.type.name == "REMOVED" }) {
-                    val builder = NotificationCompat.Builder(this, "MYVET_CHANNEL_ID")
-                        .setSmallIcon(R.drawable.icon_logo)
-                        .setContentTitle("Appointment Cancelled")
-                        .setContentText(
-                            "Client ... cancelled an appointment at " +
-                                    "${LocalTime.ofSecondOfDay(change.document.getLong("time")!!)} on " +
-                                    "${LocalDate.parse(change.document.getString("date"))}"
-                        )
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    val title = getString(R.string.appointment_cancelled)
 
-                    with(NotificationManagerCompat.from(this)) {
-                        if (ActivityCompat.checkSelfPermission(
-                                this@VetWindow,
-                                Manifest.permission.POST_NOTIFICATIONS
-                            ) != PackageManager.PERMISSION_GRANTED
-                        ) {
-                            // TODO: Consider calling
-                            // ActivityCompat#requestPermissions
-                            // here to request the missing permissions, and then overriding
-                            // public fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
-                            //                                        grantResults: IntArray)
-                            // to handle the case where the user grants the permission. See the documentation
-                            // for ActivityCompat#requestPermissions for more details.
+                    db.collection("users")
+                        .document(change.document.getString("user")!!)
+                        .get()
+                        .addOnSuccessListener { userRef ->
+                            val body = getString(
+                                R.string.appointment_text, userRef.getString("name")!!, getString(
+                                    R.string.time_range,
+                                    LocalTime.ofSecondOfDay(change.document.getLong("time")!!),
+                                    LocalDate.parse(change.document.getString("date"))
+                                )
+                            )
 
-                            return@with
+                            val CHANNEL_ID = "MyVetChannel"
+                            val channel = NotificationChannel(
+                                CHANNEL_ID,
+                                "MyNotification",
+                                NotificationManager.IMPORTANCE_HIGH,
+                            )
+
+                            getSystemService(NotificationManager::class.java).createNotificationChannel(
+                                channel
+                            )
+                            val notification = Notification.Builder(this, CHANNEL_ID)
+                                .setContentTitle(title)
+                                .setContentText(body)
+                                .setSmallIcon(R.drawable.icon_logo)
+                                .setAutoCancel(true)
+
+                            if (ActivityCompat.checkSelfPermission(
+                                    this@VetWindow,
+                                    Manifest.permission.POST_NOTIFICATIONS
+                                ) == PackageManager.PERMISSION_GRANTED
+                            ) {
+                                NotificationManagerCompat.from(this).notify(1, notification.build())
+                            }
                         }
-                        // notificationId is a unique int for each notification that you must define.
-                        notify(1, builder.build())
-                    }
+
+//                    val builder = NotificationCompat.Builder(this, "MYVET_CHANNEL_ID")
+//                        .setSmallIcon(R.drawable.icon_logo)
+//                        .setContentTitle("Appointment Cancelled")
+//                        .setContentText(
+//                            "Client ... cancelled an appointment at " +
+//                                    "${LocalTime.ofSecondOfDay(change.document.getLong("time")!!)} on " +
+//                                    "${LocalDate.parse(change.document.getString("date"))}"
+//                        )
+//                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+//
+//                    with(NotificationManagerCompat.from(this)) {
+//                        if (ActivityCompat.checkSelfPermission(
+//                                this@VetWindow,
+//                                Manifest.permission.POST_NOTIFICATIONS
+//                            ) != PackageManager.PERMISSION_GRANTED
+//                        ) {
+//                            // TODO: Consider calling
+//                            // ActivityCompat#requestPermissions
+//                            // here to request the missing permissions, and then overriding
+//                            // public fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
+//                            //                                        grantResults: IntArray)
+//                            // to handle the case where the user grants the permission. See the documentation
+//                            // for ActivityCompat#requestPermissions for more details.
+//
+//                            return@with
+//                        }
+//                        // notificationId is a unique int for each notification that you must define.
+//                        notify(1, builder.build())
+//                    }
 
                 }
 
@@ -231,19 +273,13 @@ class VetWindow : AppCompatActivity() {
             val time = LocalTime.ofSecondOfDay(pair.first.getLong("time")!!)
             val owner = pair.second
 
-//            val appointmentText = TextView(this)
-//            appointmentText.text =
-//                "$owner\n$date $time - ${time.plusMinutes(15)}"
-
-
             val appointmentText = TextView(this)
             val formatter = DateTimeFormatter.ofPattern("HH:mm") // לדוגמה: 14:30
             val timeFormatted = time.format(formatter)
             val timeEndFormatted = time.plusMinutes(15).format(formatter)
 
             val timeRange = getString(R.string.time_range, timeFormatted, timeEndFormatted)
-            appointmentText.text = timeRange
-
+            appointmentText.text = getString(R.string.appointment_text, owner, timeRange)
 
             val deleteButton = Button(this)
             deleteButton.text = getString(R.string.delete_button)
