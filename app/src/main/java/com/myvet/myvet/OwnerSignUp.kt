@@ -73,7 +73,7 @@ class OwnerSignUp : AppCompatActivity() {
                     )
                 }
 
-            val intent = Intent(this, PetOwnerWindow::class.java)
+            val intent = Intent(this, AddPet::class.java)
             startActivity(intent)
             finish()
         }

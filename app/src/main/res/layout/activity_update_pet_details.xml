@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backround"
+    android:background="@drawable/background"
     android:padding="16dp">
 
     <LinearLayout
@@ -17,7 +17,7 @@
             android:layout_marginTop="50dp"
             android:layout_marginBottom="16dp"
             android:gravity="center"
-            android:text="פרטי חיה"
+            android:text="@string/pet_details"
             android:textColor="#213646"
             android:textSize="25sp"
             style="@style/titles"/>
@@ -25,36 +25,16 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="שם"
+            android:text="@string/weight"
             android:textColor="#213646"
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/name"
+            android:id="@+id/weight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:background="@drawable/rounded_corner"
-            android:hint="שדה חובה"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:padding="8dp"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="גיל"
-            android:textColor="#213646"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/age"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/rounded_corner"
-            android:hint="שדה חובה"
             android:importantForAutofill="no"
             android:inputType="number"
             android:padding="8dp"
@@ -63,40 +43,31 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="זן"
+            android:text="@string/medical_history"
             android:textColor="#213646"
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/typeOfPet"
+            android:id="@+id/medicalHistory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:background="@drawable/rounded_corner"
-            android:hint="שדה חובה"
+            android:hint="@string/mandatory_filed"
             android:importantForAutofill="no"
             android:inputType="text"
             android:padding="8dp"
             android:textSize="16sp" />
 
-
-        <TextView
-            android:id="@+id/errorMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="לא כל השדות מלאים"
-            android:textColor="#161313"
-            android:visibility="gone" />
-
         <Button
-            android:id="@+id/next"
+            android:id="@+id/update"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="הבא"
-            android:background="@drawable/rounded_bottom"
+            android:text="@string/update_details"
+            android:textSize="16sp"
             android:gravity="center"
-            android:textSize="16sp"/>
+            android:background="@drawable/rounded_bottom"/>
 
-                </LinearLayout>
-            </ScrollView>
+    </LinearLayout>
+</ScrollView>

@@ -4,19 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="@drawable/backround">
+    android:background="@drawable/background">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="80dp">
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:text="רישום בעלים:"
+            android:text="@string/title_activity_pet_sign_up"
             android:textColor="#213646"
             android:gravity="center"
             android:layout_marginTop="50dp"
@@ -26,7 +25,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="כתובת מגורים"
+            android:text="@string/fui_address_hint"
             android:textColor="#213646"
             android:layout_marginTop="30dp"
             android:textSize="20sp"
@@ -40,7 +39,7 @@
             android:gravity="center_vertical|start"
             android:autofillHints="postalAddress"
             android:background="@drawable/rounded_corner"
-            android:hint="שדה חובה"
+            android:hint="@string/mandatory_filed"
             android:inputType="textPostalAddress"
             android:padding="14dp"
             android:layout_gravity="center_horizontal"
@@ -52,14 +51,14 @@
             android:layout_height="wrap_content"
             android:textColor="#161313"
             android:visibility="gone"
-            android:text="לא כל השדות מלאים" />
+            android:text="@string/not_all_fields_filled" />
 
         <Button
             android:id="@+id/submitButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="הרשמה"
+            android:text="@string/action_sign_in_short"
             android:textSize="16sp"
             android:gravity="center"
             android:background="@drawable/rounded_bottom"/>

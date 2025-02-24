@@ -62,7 +62,7 @@ class UpdateVetDetails : AppCompatActivity() {
                             Log.i("Update vet details", "Vet details updated successfully")
                             Toast.makeText(
                                 this,
-                                "Vet details updated successfully",
+                                getString(R.string.vet_details_updated_successfully),
                                 Toast.LENGTH_SHORT
                             ).show()
 
@@ -71,7 +71,8 @@ class UpdateVetDetails : AppCompatActivity() {
                         }
                         .addOnFailureListener {
                             Log.e("Update vet details", "Vet details update failed")
-                            Toast.makeText(this, "Vet details update failed", Toast.LENGTH_SHORT)
+                            Toast.makeText(this,
+                                getString(R.string.vet_details_update_failed), Toast.LENGTH_SHORT)
                                 .show()
 
                 }
@@ -85,7 +86,8 @@ class UpdateVetDetails : AppCompatActivity() {
                 vetDocumentRef.set(newVetData)
                     .addOnSuccessListener {
                         Log.i("Update vet details", "Vet details saved successfully")
-                        Toast.makeText(this, "Vet details saved successfully", Toast.LENGTH_SHORT)
+                        Toast.makeText(this,
+                            getString(R.string.vet_details_saved_successfully), Toast.LENGTH_SHORT)
                             .show()
 
                         startActivity(Intent(this, VetWindow::class.java))
@@ -93,13 +95,14 @@ class UpdateVetDetails : AppCompatActivity() {
                     }
                     .addOnFailureListener {
                         Log.e("Update vet details", "Failed to save vet details")
-                        Toast.makeText(this, "Failed to save vet details", Toast.LENGTH_SHORT)
+                        Toast.makeText(this,
+                            getString(R.string.failed_to_save_vet_details), Toast.LENGTH_SHORT)
                             .show()
                     }
             }
         }.addOnFailureListener {
             Log.e("Update vet details", "Failed to check vet existence")
-            Toast.makeText(this, "Error checking vet details", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.error_checking_vet_details), Toast.LENGTH_SHORT).show()
         }
     }
 }}

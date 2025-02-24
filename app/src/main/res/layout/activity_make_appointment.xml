@@ -8,14 +8,14 @@
     tools:context=".MakeAppointment"
     android:padding="16dp"
     android:layout_marginBottom="10dp"
-    android:background="@drawable/backround">
+    android:background="@drawable/background">
 
     <TextView
         android:id="@+id/vetTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Vet Name"
+        android:text="@string/vet_name"
         style="@style/titles"/>
 
     <CalendarView
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Available appointments:"
+        android:text="@string/available_appointments"
         android:textSize="15dp"/>
 
     <ScrollView

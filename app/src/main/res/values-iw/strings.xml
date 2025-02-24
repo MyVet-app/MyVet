@@ -1,4 +1,115 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">MyVet</string>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="hello_pet">שלום %s</string>
+    <string name="pick_date">בחר תאריך:</string>
+    <string name="select_start_time">בחר שעת התחלה:</string>
+    <string name="start_time">שעת התחלה</string>
+    <string name="end_time">שעת סיום</string>
+    <string name="select_end_time">בחר שעת סיום:</string>
+    <string name="find_vet">חפש ווטרינר:</string>
+    <string name="vet_name">שם הווטרינר</string>
+    <string name="available_appointments">תורים זמינים:</string>
+    <string name="update_details_pet">עדכון פרטי חיה</string>
+    <string name="search_vet">חיפוש ווטרינר</string>
+    <string name="disconnect">התנתקות</string>
+    <string name="delete_account">מחיקת משתמש</string>
+    <string name="my_appointments">התורים שלי:</string>
+    <string name="who_are_you">מי אתה?</string>
+    <string name="i_am_a">אני:</string>
+    <string name="pet_owner">בעל חיית מחמד</string>
+    <string name="vet">ווטרינר</string>
+    <string name="pet_details">פרטי חיה:</string>
+    <string name="name">שם</string>
+    <string name="age">גיל</string>
+    <string name="breed">זן</string>
+    <string name="weight">משקל</string>
+    <string name="gender">מין</string>
+    <string name="medical_history">הסטוריה רפואית</string>
+    <string name="update_vet_details">עדכון פרטי ווטרינר</string>
+    <string name="area_of_expertise">תחום התמחות</string>
+    <string name="a_little_about_me">קצת עליי</string>
+    <string name="add_availability">הוסף תורים</string>
+    <string name="title_activity_vet_sign_up">רישום ווטרינר:</string>
+    <string name="the_name_of_the_clinic">שם מרפאה</string>
+    <string name="the_location_of_the_clinic">מיקום המרפאה</string>
+    <string name="years_of_experience">שנות ותק</string>
+    <string name="sign_in_with_google">כניסה עם גוגל</string>
+    <string name="sign_in_with_facebook">כניסה עם פייסבוק</string>
+    <string name="sign_in_with_gmail">כניסה עם מייל</string>
+    <string name="update_details">עדכון פרטים</string>
+    <string name="title_activity_login">כניסה</string>
+    <string name="prompt_email">כתובת מייל</string>
+    <string name="prompt_password">סיסמה</string>
+    <string name="action_sign_in">התחברות או הרשמה</string>
+    <string name="action_sign_in_short">הרשמה</string>
+    <string name="action_sign_in_short_connection">התחברות</string>
+    <string name="not_all_fields_filled">לא כל השדות מלאים</string>
+    <string name="welcome">"שלום!"</string>
+    <string name="invalid_username">שם משתמש לא חוקי</string>
+    <string name="title_activity_pet_sign_up">רישום בעלים:</string>
+    <string name="welcome_vet_or_pet">שלום</string>
+    <string name="appointments">תורים:</string>
+    <string name="delete_button">מחיקה</string>
+    <string name="add_to_calendar">הוסף ליומן</string>
+    <string name="avilable_windows">חלונות זמינים:</string>
+    <string name="doctor">ד"ר.</string>
+    <string name="select_button">בחר</string>
+    <string name="name_vet">שם:</string>
+    <string name="address">כתובת:</string>
+    <string name="toast_meetings_clash">הזמן שנבחר מתנגש עם חלון זמינות קיים</string>
+    <string name="toast_end_and_start_time">שעת הסיום חייבת להיות אחרי שעת ההתחלה</string>
+    <string name="start_time_add_availability">שעת התחלה:</string>"
+    <string name="end_time_add_availability">שעת סיום:</string>
+    <string name="select_start_time_first">נא לבחור שעת התחלה קודם</string>
+    <string name="availability_window_created_successfully">חלון הזמינות נוצר בהצלחה</string>"
+    <string name="availability_window_creation_failed">יצירת חלון הזמינות נכשלה</string>
+    <string name="availability_window_deleted_successfully">חלון הזמינות נמחק בהצלחה</string>
+    <string name="date">"תאריך: "</string>
+    <string name="appointment_deleted_successfully">הפגישה נמחקה בהצלחה</string>
+    <string name="permission_denied">הרשאה נדחתה</string>
+    <string name="appointment_made_successfully">הפגישה בוצעה בהצלחה</string>
+    <string name="pet_details_updated_successfully">פרטי חיית המחמד עודכנו בהצלחה</string>
+    <string name="pet_details_update_failed">עדכון פרטי חיית המחמד נכשל</string>
+    <string name="you_cannot_add_a_new_pet">אתה לא יכול להוסיף חיית מחמד חדשה!</string>
+    <string name="pet_details_saved_successfully">פרטי חיית המחמד נשמרו בהצלחה</string>
+    <string name="failed_to_save_pet_details">שמירת פרטי חיית המחמד נכשלה</string>
+    <string name="error_checking_pet_details">שגיאה בבדיקת פרטי חיית המחמד</string>
+    <string name="vet_details_updated_successfully">פרטי הוטרינר עודכנו בהצלחה</string>
+    <string name="vet_details_update_failed">עדכון פרטי הוטרינר נכשל</string>
+    <string name="vet_details_saved_successfully">פרטי הוטרינר נשמרו בהצלחה</string>
+    <string name="failed_to_save_vet_details">שמירת פרטי הוטרינר נכשלה</string>
+    <string name="error_checking_vet_details">שגיאה בבדיקת פרטי הוטרינר</string>
+    <string name="address_not_found">כתובת לא נמצאה</string>
+    <string name="time_range">%2$s - %1$s</string>
+    <string name="availability">תאריך: %1$s\n%3$s - %2$s</string>
+
+    <string name="fui_sign_in_default">התחברות</string>
+    <string name="fui_email_hint">כתובת מייל</string>
+    <string name="mandatory_filed">שדה חובה</string>
+    <string name="fui_address_hint">כתובת מגורים</string>
+    <string name="fui_next_default">הבא</string>
+    <string name="fui_name_hint">שם מלא</string>
+    <string name="fui_new_password_hint">סיסמה חדשה</string>
+    <string name="fui_password_hint">סיסמה</string>
+    <string name="fui_missing_first_and_last_name">נא להזין שם מלא</string>
+    <string name="fui_button_text_save">שמור</string>
+    <string name="fui_welcome_back_email_header">ברוכים השבים!</string>
+    <string name="fui_welcome_back_password_prompt_body">
+        כבר התחברת בעבר עם הכתובת  <xliff:g example="jane.doe@example.com" id="email_addr" translation_description="">%1$s</xliff:g>.
+        נא להזין סיסמה.
+    </string>
+    <string name="fui_trouble_signing_in">בעיות התחברות?</string>
+    <string name="fui_password_recovery_body">נא להזין כתובת מייל אליו יישלחו הוראות לאיפוס סיסמה</string>
+    <string name="fui_button_text_send">שליחה</string>
+    <string name="no_pet_details_found">לא נמצאו פרטי חיה</string>
+    <string name="pet_details_title">פרטי %1$s</string>
+    <string name="error_loading_pet_details">שגיאה בעת טעינת פרטי חיה</string>
+    <plurals name="fui_error_weak_password">
+        <item quantity="one">סיסמה לא מספיק חזקה. יש להשתמש בלפחות תו אחד וערבוב של אותיות ומספרים</item>
+        <item quantity="two">סיסמה לא מספיק חזקה. יש להשתמש בלפחות %1$d תוים וערבוב של אותיות ומספרים.</item>
+        <item quantity="other">סיסמה לא מספיק חזקה. יש להשתמש בלפחות %1$d תוים וערבוב של אותיות ומספרים.</item>
+    </plurals>
+
+<!--    <string name="facebook_application_id" translatable="false">3889928198001609</string>-->
+<!--    <string name="facebook_client_token" translatable="false">fdf813bfc8309a8c097e8ec28d35baf5</string>-->
+<!--    <string name="facebook_login_protocol_scheme" translatable="false">fb3889928198001609</string>-->
 </resources>

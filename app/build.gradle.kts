@@ -81,4 +81,12 @@ dependencies {
     implementation (libs.okhttp)
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
+    implementation(libs.glide)
+
+    // Mockito and PowerMock
+    testImplementation("org.mockito:mockito-core:3.12.4")
+    testImplementation("org.powermock:powermock-module-junit4:2.0.9")
+    testImplementation("org.powermock:powermock-api-mockito2:2.0.9")
+    testImplementation("androidx.arch.core:core-testing:2.2.0") // For LiveData testing
+    testImplementation("net.java.dev.jna:jna:5.12.1") // Required for Mockito inline mocking on Java 17+
 }

@@ -158,10 +158,11 @@ class FindVet : AppCompatActivity() {
 
             val vetText = TextView(this)
             vetText.text =
-                "Name: $name\nAddress: $address"
+                "${getString(R.string.name_vet)}: $name\n${getString(R.string.address)}: $address"
 
             val selectButton = Button(this)
-            selectButton.text = "Select"
+            selectButton.text = getString(R.string.select_button)
+
             selectButton.setOnClickListener {
                 val i = Intent(this, MakeAppointment::class.java)
                 i.putExtra("vetId", vet.id)
@@ -215,7 +216,7 @@ class FindVet : AppCompatActivity() {
 
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
-                    Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, getString(R.string.permission_denied), Toast.LENGTH_LONG).show()
 
                     // Check if we are in a state where the user has denied the permission and
                     // selected Don't ask again

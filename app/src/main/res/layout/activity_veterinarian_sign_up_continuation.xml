@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="@drawable/backround">
+    android:background="@drawable/background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:layout_marginTop="150dp"
             android:layout_marginBottom="20dp"
             android:gravity="center"
-            android:text="רישום וטרינר:"
+            android:text="@string/title_activity_vet_sign_up"
             android:textColor="#213646"
             android:textSize="25sp"
             style="@style/titles"/>
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="תחום התמחות"
+            android:text="@string/area_of_expertise"
             android:textColor="#213646"
             android:textSize="18sp" />
 
@@ -47,7 +47,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="קצת עליי"
+            android:text="@string/a_little_about_me"
             android:textColor="#213646"
             android:textSize="18sp" />
 
@@ -67,7 +67,7 @@
             android:id="@+id/errorMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="לא כל השדות מלאים"
+            android:text="@string/not_all_fields_filled"
             android:textColor="#161313"
             android:visibility="gone" />
 
@@ -76,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
-            android:text="הרשמה"
+            android:text="@string/action_sign_in_short"
             android:textSize="18sp"
             android:gravity="center"
             android:background="@drawable/rounded_bottom"/>
