@@ -130,12 +130,4 @@ class VetWindow {
     - updateAvailabilityWindows(snapshot: QuerySnapshot)
 }
 
-MainActivity *--> PetOwnerWindow
-MainActivity *--> VetWindow
-VetWindow o--> AddAvailability
-OwnerSignUp --> PetOwnerWindow
-FindVet --> MakeAppointment
-MainActivity --> OwnerSignUp
-MainActivity --> VeterinarianSignUp
-
 @enduml
