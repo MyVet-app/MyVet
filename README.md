@@ -2,6 +2,13 @@
 
 MyVet is a full-stack mobile application for Android, built to serve both veterinarians and pet owners. Developed entirely in **Kotlin** and powered by a **Firebase** backend, this platform provides a seamless, real-time, and multi-lingual experience (supporting **English and Hebrew**).
 
+## Demo
+
+Short demo showing the appointment booking flow between a pet owner and a veterinarian.
+https://github.com/user-attachments/assets/5c082ba3-2801-4ac3-9940-e60c8cd59e84
+
+
+
 ## Project Vision: Why MyVet?
 
 Small veterinary clinics often lack access to expensive, complex management software. MyVet was designed to bridge this gap by offering a **free, intuitive, and powerful mobile-first platform**. The goal is to empower veterinarians with a simple tool to manage their clients and appointments, while simultaneously providing pet owners with an easy way to find local care and manage their pet's health.
@@ -46,4 +53,5 @@ The app leverages core device hardware and Google services to provide a rich use
 - **Location-Aware Features:** Implemented the full flow for location services: requesting user permissions, fetching the device's current location.
 
 ### 5. Internationalization
+
 The application was built from the ground up to support multiple languages (**English and Hebrew**), demonstrating attention to user experience and the ability to manage string resources for a global audience.
